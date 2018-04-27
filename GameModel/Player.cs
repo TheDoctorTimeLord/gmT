@@ -12,6 +12,7 @@ namespace GameThief.GameModel
         public Point GetPosition()
         {
             return Position;
+
         }
 
         public void ChangePosition(Point newPosition)
