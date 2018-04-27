@@ -59,6 +59,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameModel\InanimateObject.cs" />
     <Compile Include="GameModel\Map.cs" />
     <Compile Include="GameModel\Map_Tests.cs" />
     <Compile Include="GameModel\Noise.cs" />
