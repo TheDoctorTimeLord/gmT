@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.AnimatedObjects;
+using GameThief.GameModel.Managers;
 
 namespace GameThief.GameModel
 {
     public class Player: MobileObject
     {
-        
     }
 }

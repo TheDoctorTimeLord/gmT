@@ -21,6 +21,7 @@ namespace GameThief.GameModel
             }
 
             TemporaryObjectsManager.UpdateTimers();
+            AnimatesManager.UpdateAnimates();
         }
 
         private bool IsRequestVerified(Query query, ICreature animate)

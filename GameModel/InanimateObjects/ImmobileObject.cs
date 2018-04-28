@@ -17,10 +17,10 @@ namespace GameThief.GameModel.InanimateObjects
 
             if (firstItem != null)
             {
-                var toRemove = Decors.First().InteractWith(creature);
+                var toRemove = firstItem.InteractWith(creature);
 
                 if (toRemove)
-                    Decors.Remove(Decors.First());
+                    Decors.Remove(firstItem);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace GameThief.GameModel.Managers
         public static Map Map;
         public static NoiseController NoiseController;
 
-        public static void CreateMap(int width, int height, IEnumerable<string> content)
+        public static void CreateMap(int width, int height, IEnumerable<IEnumerable<string>> content)
         {
             Map = new Map(width, height);
             FillMap(content);
@@ -87,7 +87,7 @@ namespace GameThief.GameModel.Managers
                 position.Y < Map.Cells.GetLength(1);
         }
 
-        public static void FillMap(IEnumerable<string> content)
+        public static void FillMap(IEnumerable<IEnumerable<string>> content)
         {
             throw new NotImplementedException();
         }

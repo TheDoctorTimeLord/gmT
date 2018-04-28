@@ -41,10 +41,6 @@
 
 -----------------СОВМЕСТНАЯ РАБОТА-----------------
 ФЁДОР:
-  ManagerMap - добавить AddCreatureFromMap(ICreature)
-  ManagerMap - добавить RemoveCreatureFromMap(ICreture)
-  ManagerMap - добавить MapManager.GetVisibleCells(Point Position, Direction SightDirection, int RangeVisibility)
-  ManagerMap - добавить MapManager.GetAudibleNoises(Point Position, int DelicacyHearing, int ThresholdAudibility)
 
 АНАСТАСИЯ:
   
