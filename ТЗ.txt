@@ -62,4 +62,11 @@
   Query.cs
 
 ¿Õ¿—“¿—»ﬂ:
+	Managers/MapManager.cs
+	MapSourse/Cell.cs
+	MapSourse/Map.cs
+	MapSourse/Noise.cs
+	MapSourse/NoiseController.cs
+	MapSourse/NoiseSource.cs
+	MapSourse/NoiseType.cs
   
