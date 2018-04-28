@@ -48,3 +48,18 @@
 
 ÀÍÀÑÒÀÑÈß:
   
+
+-----------------ĞÀÇÄÅËÅÍÈÅ ĞÀÁÎÒÛ-----------------
+Ô¨ÄÎĞ:
+  AnimatedObjects/MobileObject.cs
+  AnimatedObjects/ICreature.cs
+  AnimatedObjects/Player.cs
+  InanimateObjects/ImmobileObject.cs
+  Managers/AnimatesManager.cs
+  Managers/TimersManager.cs
+  GameState.cs
+  ITimer.cs
+  Query.cs
+
+ÀÍÀÑÒÀÑÈß:
+  
