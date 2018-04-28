@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using GameThief.GameModel.AnimatedObjects;
@@ -9,6 +10,14 @@ namespace GameThief.GameModel
 {
     public class GameState
     {
+        public GameState(string nameBeginActState)
+        {
+            var infoByMap = FileManager.ReadingMapState(nameBeginActState);
+            if (!infoByMap.IsSuccessfulReading)
+                throw new Exception("Некорректное задание стартовых данных. Файл: " + nameBeginActState);
+            MapManager.CreateMap(infoByMap.Width, infoByMap.Height, infoByMap.InfoAboutMap);
+        }
+
         public void UpdateState()
         {
             foreach (var animate in AnimatesManager.Animates)

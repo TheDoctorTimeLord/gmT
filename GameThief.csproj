@@ -55,7 +55,9 @@
     <Compile Include="GameModel\Direction.cs" />
     <Compile Include="GameModel\InanimateObjects\IDecor.cs" />
     <Compile Include="GameModel\Managers\AnimatesManager.cs" />
+    <Compile Include="GameModel\Managers\FileManager.cs" />
     <Compile Include="GameModel\MapSourse\Cell.cs" />
+    <Compile Include="GameModel\ServiceClasses\ResultReadingMapState.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
