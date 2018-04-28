@@ -61,10 +61,13 @@
     </Compile>
     <Compile Include="GameModel\InanimateObjects\InanimateObject.cs" />
     <Compile Include="GameModel\MapSourse\Map.cs" />
-    <Compile Include="Tests\Map_Tests.cs" />
+    <Compile Include="GameModel\Managers\MapManager.cs" />
     <Compile Include="GameModel\MapSourse\Noise.cs" />
+    <Compile Include="GameModel\Managers\NoiseManager.cs" />
     <Compile Include="GameModel\MapSourse\NoiseSource.cs" />
     <Compile Include="GameModel\MapSourse\NoiseType.cs" />
+    <Compile Include="GameModel\PointExtensions.cs" />
+    <Compile Include="Tests\Map_Tests.cs" />
     <Compile Include="GameModel\GameState.cs" />
     <Compile Include="GameModel\AnimatedObjects\ICreature.cs" />
     <Compile Include="GameModel\ITimer.cs" />

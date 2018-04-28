@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GameThief.GameModel.Managers;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.MapSourse
 {
     public class NoiseSource : ITimer
     {
@@ -22,22 +19,22 @@ namespace GameThief.GameModel
             Position = position;
         }
 
-        //public Point[] GetMaxScope()
-        //{
-        //    return Enumerable
-        //        .Range(-MaxIntensity, MaxIntensity)
-        //        .SelectMany(num => new[]
-        //        {
-        //            new Point(Position.X + num, Position.Y),
-        //            new Point(Position.X, Position.Y + num),
-        //            new Point(Position.X + num, Position.Y + num),
-        //            new Point(Position.X + num - 1, Position.Y + num),
-        //            new Point(Position.X + num, Position.Y + num - 1)
-        //        })
-        //        .Distinct()
-        //        .Where(p => p.X >= 0 && p.Y >= 0 && p.X < Map.Noises.GetLength(0) && p.Y < Map.Noises.GetLength(1))
-        //        .ToArray();
-        //}
+        public Point[] GetMaxScope(Map map)
+        {
+            return Enumerable
+                .Range(-MaxIntensity, MaxIntensity)
+                .SelectMany(num => new[]
+                {
+                    new Point(Position.X + num, Position.Y),
+                    new Point(Position.X, Position.Y + num),
+                    new Point(Position.X + num, Position.Y + num),
+                    new Point(Position.X + num - 1, Position.Y + num),
+                    new Point(Position.X + num, Position.Y + num - 1)
+                })
+                .Distinct()
+                .Where(p => p.X >= 0 && p.Y >= 0 && p.X < map.Noises.GetLength(0) && p.Y < map.Noises.GetLength(1))
+                .ToArray();
+        }
 
         public void Update()
         {
@@ -48,7 +45,7 @@ namespace GameThief.GameModel
 
         public void ActionAfterDeactivation()
         {
-            Map.RemoveNoiseSourse(Position, this);
+            NoiseManager.RemoveNoiseSourse(Position, this);
         }
     }
 }
