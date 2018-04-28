@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using GameThief.GameModel.MapSourse;
+using System.Linq;
+using GameThief.GameModel.Managers;
 
-namespace GameThief.GameModel.Managers
+namespace GameThief.GameModel.MapSourse
 {
-    public static class NoiseManager
+    public class NoiseController
     {
-        private static HashSet<NoiseSource> noiseSourses = new HashSet<NoiseSource>();
+        public List<Noise>[,] Noises;
+        private HashSet<NoiseSource> noiseSourses = new HashSet<NoiseSource>();
 
-        public static void AddNoiseSourse(Map map, NoiseSource source)
+        public void AddNoiseSourse(Map map, NoiseSource source)
         {
             var notVisited = source.GetMaxScope(map).ToList();
         }
 
-        public static void RemoveNoises(Map map)
+        public void RemoveNoises(Map map)
         {
             noiseSourses
                 .Select(ns =>
@@ -21,7 +23,7 @@ namespace GameThief.GameModel.Managers
                     if (!ns.IsActive())
                     {
                         foreach (var point in GetActualNoiseCoverage(map, ns))
-                            map.Noises[point.X, point.Y].Where(n => n.Source != ns);
+                            Noises[point.X, point.Y].Where(n => n.Source != ns);
 
                         return null;
                     }

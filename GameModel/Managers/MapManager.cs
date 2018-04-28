@@ -7,23 +7,36 @@ namespace GameThief.GameModel.Managers
 {
     public static class MapManager
     {
-        public static void MoveCreature(Map map, Point oldPosition, Point newPosition)
+        public static Map Map;
+        public static NoiseController NoiseController;
+
+        public static void MoveCreature(Point oldPosition, Point newPosition)
         {
-            var creature = map.Cells[oldPosition.X, oldPosition.Y].Creature;
-            map.Cells[oldPosition.X, oldPosition.Y].Creature = null;
-            map.Cells[newPosition.X, newPosition.Y].Creature = creature;
+            if (Map[newPosition.X, newPosition.Y].Creature != null || 
+                Map[newPosition.X, newPosition.Y].Object.IsSolid)
+                throw new ArgumentException();
+
+            var creature = Map[oldPosition.X, oldPosition.Y].Creature;
+            Map[oldPosition.X, oldPosition.Y].Creature = null;
+            Map[newPosition.X, newPosition.Y].Creature = creature;
         }
 
-        public static bool InBounds(Map map, Point position)
+        public static void RemoveCreature(ICreature creature)
+        {
+            var creaturePosition = creature.GetPosition();
+            Map[creaturePosition.X, creaturePosition.Y].Creature = null;
+        }
+
+        public static bool InBounds(Point position)
         {
             return
                 position.X >= 0 &&
                 position.Y >= 0 &&
-                position.X < map.Cells.GetLength(0) &&
-                position.Y < map.Cells.GetLength(1);
+                position.X < Map.Cells.GetLength(0) &&
+                position.Y < Map.Cells.GetLength(1);
         }
 
-        public static void FillMap(Map map, IEnumerable<string> content)
+        public static void FillMap(IEnumerable<string> content)
         {
             throw new NotImplementedException();
         }

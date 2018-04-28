@@ -45,7 +45,7 @@ namespace GameThief.GameModel.MapSourse
 
         public void ActionAfterDeactivation()
         {
-            NoiseManager.RemoveNoiseSourse(Position, this);
+            NoiseController.RemoveNoiseSourse(Position, this);
         }
     }
 }

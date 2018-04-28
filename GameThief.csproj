@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
-      <HintPath>..\Brainfuck\nunit.framework.dll</HintPath>
+      <HintPath>..\..\Brainfuck\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="nunitlite">
-      <HintPath>..\Brainfuck\nunitlite.dll</HintPath>
+      <HintPath>..\..\Brainfuck\nunitlite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,8 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameModel\AnimatedObjects\AnimateObject.cs" />
-    <Compile Include="GameModel\Managers\AnimatesManager.cs" />
+    <Compile Include="GameModel\AnimatedObjects\AnimatedObject.cs" />
     <Compile Include="GameModel\MapSourse\Cell.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
@@ -64,7 +63,7 @@
     <Compile Include="GameModel\MapSourse\Map.cs" />
     <Compile Include="GameModel\Managers\MapManager.cs" />
     <Compile Include="GameModel\MapSourse\Noise.cs" />
-    <Compile Include="GameModel\Managers\NoiseManager.cs" />
+    <Compile Include="GameModel\MapSourse\NoiseController.cs" />
     <Compile Include="GameModel\MapSourse\NoiseSource.cs" />
     <Compile Include="GameModel\MapSourse\NoiseType.cs" />
     <Compile Include="GameModel\PointExtensions.cs" />
