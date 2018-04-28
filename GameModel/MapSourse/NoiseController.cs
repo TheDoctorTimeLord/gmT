@@ -11,9 +11,14 @@ namespace GameThief.GameModel.MapSourse
     {
         public readonly List<Noise>[,] Noises;
 
+        public NoiseController(int width, int height)
+        {
+            Noises = new List<Noise>[width, height];
+        }
+
         public void AddNoiseSourse(NoiseSource source)
         {
-            var notVisited = source.GetMaxScope(MapManager.Map).ToList();
+            var notVisited = source.GetMaxScope().ToList();
             var noiseCoverage = new Dictionary<Point, int>();
             noiseCoverage[source.Position] =
                 source.MaxIntensity - MapManager.Map[source.Position.X, source.Position.Y].Object.NoiseInsulation;
