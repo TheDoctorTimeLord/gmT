@@ -15,7 +15,7 @@
 :: ICreature :: реализуют все объекты, имеющие тип Существа
 
 РОДИТЕЛЬСКИЕ КЛАССЫ:
-:: AnimateObject :: Класс, определяющий базовые поля Существ
+:: AnimateObject :: Класс, определяющий базовые поля Существ. Реализует ICreature
 :: InanimateObject :: Класс, определяющий базовые поля для Неодушивлённых существ
 
 НУЖНО:
@@ -23,8 +23,8 @@
 - Получение информации о начальном состоянии игры из файла
 - Создание карты с наполнением игровыми элементами
 
-  ----ОБНОВЛЕНИЕ ДАННЫХ О МИРЕ ДЛЯ СУЩЕСТВ----
-- Добавление для персонажей порога слышимости, дельты слышимости, дальности видмости
+  ----ОБНОВЛЕНИЕ ДАННЫХ О МИРЕ ДЛЯ СУЩЕСТВ---- (ФЁДОР)
++ Добавление для персонажей порога слышимости, дельты слышимости, дальности видмости
 - Персонаж, каждое состояние обновляет свои данные о мире, запрашивая набор Cell(позиция, дальность видимости) и набор 
   NoiseSource(позиция, порог слышимости, дельта слышимости) у MapManager
 
@@ -41,10 +41,10 @@
 
 -----------------СОВМЕСТНАЯ РАБОТА-----------------
 ФЁДОР:
-  ManagerMap - добавить public Map
-  ManagerMap - изменить InBounds(Map, Point) на InBounds(Point)
-  ManagerMap - добавить AddCreatureFromMap(ICreature, Point)
+  ManagerMap - добавить AddCreatureFromMap(ICreature)
   ManagerMap - добавить RemoveCreatureFromMap(ICreture)
+  ManagerMap - добавить MapManager.GetVisibleCells(Point Position, Direction SightDirection, int RangeVisibility)
+  ManagerMap - добавить MapManager.GetAudibleNoises(Point Position, int DelicacyHearing, int ThresholdAudibility)
 
 АНАСТАСИЯ:
   

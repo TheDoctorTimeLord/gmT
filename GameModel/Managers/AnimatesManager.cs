@@ -14,12 +14,20 @@ namespace GameThief.GameModel.Managers
 
         public static void CreateCreature(string nameCreature, Point position)
         {
-            if (nameCreature == "Player")
+            switch (nameCreature)
             {
-                var pl = new Player();
-                MapManager.AddCreatureFromMap(pl, position);
-                addedAnimations.Add(pl);
+                case "Player":
+                    AddCreature(new Player());
+                    break;
+                default:
+                    throw new Exception("Попытка создания несуществующего Creature: " + nameCreature);
             }
+        }
+
+        private static void AddCreature(ICreature creature)
+        {
+            addedAnimations.Add(creature);
+            MapManager.AddCreatureFromMap(creature);
         }
 
         public static void UpdateAnimates()
@@ -34,7 +42,7 @@ namespace GameThief.GameModel.Managers
                 return;
 
             Animates.Remove(creature);
-            MapManager.AddCreatureFromMap(creature);
+            MapManager.RemoveCreatureFromMap(creature);
         }
     }
 }
