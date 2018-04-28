@@ -1,28 +1,65 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using GameThief.GameModel.Managers;
 
 namespace GameThief.GameModel.MapSourse
 {
     public class NoiseController
     {
-        public List<Noise>[,] Noises;
+        public readonly List<Noise>[,] Noises;
         private HashSet<NoiseSource> noiseSourses = new HashSet<NoiseSource>();
 
         public void AddNoiseSourse(Map map, NoiseSource source)
         {
             var notVisited = source.GetMaxScope(map).ToList();
+            var noiseCoverage = new Dictionary<Point, int>();
+            noiseCoverage[source.Position] =
+                source.MaxIntensity - map[source.Position.X, source.Position.Y].Object.NoiseInsulation;
+
+            while (true)
+            {
+                Point toOpen = new Point(-1, -1);
+                var loudest = int.MinValue;
+
+                foreach (var p in notVisited)
+                {
+                    if (noiseCoverage.ContainsKey(p) && noiseCoverage[p] > loudest)
+                    {
+                        loudest = noiseCoverage[p];
+                        toOpen = p;
+                    }
+                }
+
+                if (toOpen == new Point(-1, -1))
+                    break;
+
+                foreach (var p in toOpen.FindNeighbours())
+                {
+                    if (!MapManager.InBounds(p))
+                        continue;
+                    var currentVolume = noiseCoverage[toOpen] - map[toOpen.X, toOpen.Y].Object.NoiseInsulation - 1;
+                }
+
+                notVisited.Remove(toOpen);
+            }
+
+            foreach (var p in noiseCoverage)
+            {
+                Noises[p.Key.X, p.Key.Y].Add(new Noise(source, p.Value));
+            }
         }
 
-        public void RemoveNoises(Map map)
+        public void UpdateNoises(Map map)
         {
             noiseSourses
                 .Select(ns =>
                 {
                     if (!ns.IsActive())
                     {
-                        foreach (var point in GetActualNoiseCoverage(map, ns))
+                        foreach (var point in ns.GetMaxScope(map))
                             Noises[point.X, point.Y].Where(n => n.Source != ns);
 
                         return null;
@@ -31,55 +68,6 @@ namespace GameThief.GameModel.MapSourse
                     return ns;
                 })
                 .Where(ns => ns != null);
-        }
-
-        public static void AddNoises(Map map, NoiseSource source)
-        {
-            GetActualNoiseCoverage(map, source)
-                .ForEach(p => map.Noises[p.X, p.Y]
-                    .Add(new Noise(source, source.MaxIntensity - map.Cells[p.X, p.Y].Object.NoiseInsulation)));
-        }
-
-        private static List<Point> GetActualNoiseCoverage(Map map, NoiseSource source)
-        {
-            var cellsQueue = new Queue<Point>();
-            var visitedCells = new HashSet<Point>();
-            var result = new List<Point>();
-
-            cellsQueue.Enqueue(source.Position);
-            visitedCells.Add(source.Position);
-
-            while (cellsQueue.Count != 0)
-            {
-                var currentCell = cellsQueue.Dequeue();
-                result.Add(currentCell);
-                EnqueueNeighbours(map, currentCell, source, cellsQueue, visitedCells);
-            }
-
-            return result;
-        }
-
-        private static void EnqueueNeighbours(Map map, Point cell, NoiseSource source, Queue<Point> cellsQueue, HashSet<Point> visitedCells)
-        {
-            foreach (var neighbour in cell.FindNeighbours())
-            {
-                if (!InIntensityField(map, neighbour, source) ||
-                    source.MaxIntensity - map.Cells[neighbour.X, neighbour.Y].Object.NoiseInsulation >= 0 ||
-                    visitedCells.Contains(neighbour))
-                    continue;
-
-                cellsQueue.Enqueue(neighbour);
-                visitedCells.Add(neighbour);
-            }
-        }
-
-        private static bool InIntensityField(Map map, Point cell, NoiseSource source)
-        {
-            return MapManager.InBounds(map, cell) &&
-                   cell.X >= source.Position.X - source.MaxIntensity &&
-                   cell.X <= source.Position.X + source.MaxIntensity &&
-                   cell.Y >= source.Position.Y - source.MaxIntensity &&
-                   cell.Y <= source.Position.Y + source.MaxIntensity;
         }
     }
 }

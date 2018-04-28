@@ -32,7 +32,7 @@ namespace GameThief.GameModel.MapSourse
                     new Point(Position.X + num, Position.Y + num - 1)
                 })
                 .Distinct()
-                .Where(p => p.X >= 0 && p.Y >= 0 && p.X < map.Noises.GetLength(0) && p.Y < map.Noises.GetLength(1))
+                .Where(p => p.X >= 0 && p.Y >= 0 && p.X < map.Cells.GetLength(0) && p.Y < map.Cells.GetLength(1))
                 .ToArray();
         }
 
