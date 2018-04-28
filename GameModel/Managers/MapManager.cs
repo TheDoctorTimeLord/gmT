@@ -11,6 +11,12 @@ namespace GameThief.GameModel.Managers
         public static Map Map;
         public static NoiseController NoiseController;
 
+        public static void CreateMap(int width, int height, IEnumerable<string> content)
+        {
+            Map = new Map(width, height);
+            FillMap(content);
+        }
+
         public static void MoveCreature(Point oldPosition, Point newPosition)
         {
             if (Map[newPosition.X, newPosition.Y].Creature != null || 

@@ -6,7 +6,7 @@ namespace GameThief.GameModel.MapSourse
     {
         public Cell[,] Cells;
 
-        public void CreateMap(int width, int height, IEnumerable<string> content)
+        public Map(int width, int height)
         {
             Cells = new Cell[width, height];
         }
