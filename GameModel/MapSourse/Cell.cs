@@ -9,7 +9,7 @@ namespace GameThief.GameModel
     public class Cell
     {
         public ICreature Creature { get; set; }
-        public InanimateObject Object { get; set; }
+        public ImmobileObject Object { get; set; }
 
         public Cell()
         {

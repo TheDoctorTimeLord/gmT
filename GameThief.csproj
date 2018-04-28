@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameModel\AnimatedObjects\AnimateObject.cs" />
+    <Compile Include="GameModel\AnimatedObjects\MobileObject.cs" />
     <Compile Include="GameModel\MapSourse\Cell.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
@@ -59,7 +59,7 @@
     <Compile Include="GUI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameModel\InanimateObjects\InanimateObject.cs" />
+    <Compile Include="GameModel\InanimateObjects\ImmobileObject.cs" />
     <Compile Include="GameModel\MapSourse\Map.cs" />
     <Compile Include="GameModel\Managers\MapManager.cs" />
     <Compile Include="GameModel\MapSourse\Noise.cs" />

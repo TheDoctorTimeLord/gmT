@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameThief.GameModel
 {
-    public class Player: AnimateObject, ICreature
+    public class Player: MobileObject, ICreature
     {
         public Point GetPosition()
         {
