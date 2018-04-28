@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GameThief.GameModel.AnimatedObjects;
 
 namespace GameThief.GameModel.InanimateObjects
 {
@@ -10,6 +11,17 @@ namespace GameThief.GameModel.InanimateObjects
 
         public SortedSet<IDecor> Decors = new SortedSet<IDecor>();
 
-        public void InteractWith() => Decors.First().InteractWith();
+        public void Interact(ICreature creature)
+        {
+            var firstItem = Decors.FirstOrDefault();
+
+            if (firstItem != null)
+            {
+                var toRemove = Decors.First().InteractWith(creature);
+
+                if (toRemove)
+                    Decors.Remove(Decors.First());
+            }
+        }
     }
 }
