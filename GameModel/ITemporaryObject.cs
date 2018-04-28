@@ -1,6 +1,6 @@
 ﻿namespace GameThief.GameModel
 {
-    public interface ITimer
+    public interface ITemporaryObject
     {
         void Update();
         bool IsActive();

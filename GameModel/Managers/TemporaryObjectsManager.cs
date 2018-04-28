@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.Managers
 {
-    public static class TimersManager
+    public static class TemporaryObjectsManager
     {
-        private static HashSet<ITimer> timers = new HashSet<ITimer>();
+        private static HashSet<ITemporaryObject> timers = new HashSet<ITemporaryObject>();
 
         public static void UpdateTimers()
         {
@@ -22,9 +18,9 @@ namespace GameThief.GameModel
             }
         }
 
-        public static void AddTimer(ITimer timer)
+        public static void AddTimer(ITemporaryObject temporaryObject)
         {
-            timers.Add(timer);
+            timers.Add(temporaryObject);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.AnimatedObjects
 {
     public interface ICreature
     {

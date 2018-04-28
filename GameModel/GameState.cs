@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GameThief.GameModel.AnimatedObjects;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSourse;
 
@@ -19,7 +20,7 @@ namespace GameThief.GameModel
                     animate.ActionRejected(query);
             }
 
-            TimersManager.UpdateTimers();
+            TemporaryObjectsManager.UpdateTimers();
         }
 
         private bool IsRequestVerified(Query query, ICreature animate)

@@ -10,14 +10,13 @@ namespace GameThief.GameModel.MapSourse
     public class NoiseController
     {
         public readonly List<Noise>[,] Noises;
-        private HashSet<NoiseSource> noiseSourses = new HashSet<NoiseSource>();
 
-        public void AddNoiseSourse(Map map, NoiseSource source)
+        public void AddNoiseSourse(NoiseSource source)
         {
-            var notVisited = source.GetMaxScope(map).ToList();
+            var notVisited = source.GetMaxScope(MapManager.Map).ToList();
             var noiseCoverage = new Dictionary<Point, int>();
             noiseCoverage[source.Position] =
-                source.MaxIntensity - map[source.Position.X, source.Position.Y].Object.NoiseInsulation;
+                source.MaxIntensity - MapManager.Map[source.Position.X, source.Position.Y].Object.NoiseInsulation;
 
             while (true)
             {
@@ -40,7 +39,7 @@ namespace GameThief.GameModel.MapSourse
                 {
                     if (!MapManager.InBounds(p))
                         continue;
-                    var currentVolume = noiseCoverage[toOpen] - map[toOpen.X, toOpen.Y].Object.NoiseInsulation - 1;
+                    var currentVolume = noiseCoverage[toOpen] - MapManager.Map[toOpen.X, toOpen.Y].Object.NoiseInsulation - 1;
                 }
 
                 notVisited.Remove(toOpen);
@@ -52,22 +51,10 @@ namespace GameThief.GameModel.MapSourse
             }
         }
 
-        public void UpdateNoises(Map map)
+        public void RemoveSourceNoises(NoiseSource source)
         {
-            noiseSourses
-                .Select(ns =>
-                {
-                    if (!ns.IsActive())
-                    {
-                        foreach (var point in ns.GetMaxScope(map))
-                            Noises[point.X, point.Y].Where(n => n.Source != ns);
-
-                        return null;
-                    }
-
-                    return ns;
-                })
-                .Where(ns => ns != null);
+            foreach (var point in source.GetMaxScope())
+                Noises[point.X, point.Y].Where(n => n.Source != source);
         }
     }
 }

@@ -4,7 +4,7 @@ using GameThief.GameModel.Managers;
 
 namespace GameThief.GameModel.MapSourse
 {
-    public class NoiseSource : ITimer
+    public class NoiseSource : ITemporaryObject
     {
         public NoiseType Type { get; }
         private int duration;
@@ -19,7 +19,7 @@ namespace GameThief.GameModel.MapSourse
             Position = position;
         }
 
-        public Point[] GetMaxScope(Map map)
+        public Point[] GetMaxScope()
         {
             return Enumerable
                 .Range(-MaxIntensity, MaxIntensity)
@@ -32,7 +32,7 @@ namespace GameThief.GameModel.MapSourse
                     new Point(Position.X + num, Position.Y + num - 1)
                 })
                 .Distinct()
-                .Where(p => p.X >= 0 && p.Y >= 0 && p.X < map.Cells.GetLength(0) && p.Y < map.Cells.GetLength(1))
+                .Where(p => p.X >= 0 && p.Y >= 0 && p.X < MapManager.Map.Cells.GetLength(0) && p.Y < MapManager.Map.Cells.GetLength(1))
                 .ToArray();
         }
 
@@ -45,7 +45,7 @@ namespace GameThief.GameModel.MapSourse
 
         public void ActionAfterDeactivation()
         {
-            NoiseController.RemoveNoiseSourse(Position, this);
+            MapManager.NoiseController.RemoveSourceNoises(this);
         }
     }
 }

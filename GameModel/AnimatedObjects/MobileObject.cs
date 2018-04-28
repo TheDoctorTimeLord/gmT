@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSourse;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.AnimatedObjects
 {
     public class MobileObject : ICreature
     {

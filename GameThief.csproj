@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="GameModel\AnimatedObjects\MobileObject.cs" />
     <Compile Include="GameModel\Direction.cs" />
+    <Compile Include="GameModel\InanimateObjects\IDecor.cs" />
     <Compile Include="GameModel\Managers\AnimatesManager.cs" />
     <Compile Include="GameModel\MapSourse\Cell.cs" />
     <Compile Include="GUI\Form1.cs">
@@ -72,9 +73,9 @@
     <Compile Include="Tests\Map_Tests.cs" />
     <Compile Include="GameModel\GameState.cs" />
     <Compile Include="GameModel\AnimatedObjects\ICreature.cs" />
-    <Compile Include="GameModel\ITimer.cs" />
+    <Compile Include="GameModel\ITemporaryObject.cs" />
     <Compile Include="GameModel\AnimatedObjects\Player.cs" />
-    <Compile Include="GameModel\Managers\TimersManager.cs" />
+    <Compile Include="GameModel\Managers\TemporaryObjectsManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameModel\Query.cs" />

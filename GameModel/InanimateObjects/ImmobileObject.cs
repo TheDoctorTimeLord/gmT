@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.InanimateObjects
 {
     public class ImmobileObject
     {
+        public bool IsSolid;
+        public int NoiseInsulation;
+
+        public SortedSet<IDecor> Decors;
     }
 }

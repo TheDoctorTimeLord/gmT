@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameThief.GameModel.AnimatedObjects;
+using GameThief.GameModel.InanimateObjects;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.MapSourse
 {
     public class Cell
     {

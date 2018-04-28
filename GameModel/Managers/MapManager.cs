@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GameThief.GameModel.AnimatedObjects;
 using GameThief.GameModel.MapSourse;
 
 namespace GameThief.GameModel.Managers
@@ -40,16 +41,14 @@ namespace GameThief.GameModel.Managers
             Map[creaturePosition.X, creaturePosition.Y].Creature = null;
         }
 
-        public static void UpdateNoises() => NoiseController.UpdateNoises(Map);
+        public static void AddNoiseSourse(NoiseSource source) => NoiseController.AddNoiseSourse(source);
 
-        public static void AddNoiseSourse(NoiseSource source) => NoiseController.AddNoiseSourse(Map, source);
-
-        public static IEnumerable<Cell> GetVisibleCells(Point position, Direction sightDirection, int rangeVisibility)
+        public static List<Cell> GetVisibleCells(Point position, Direction sightDirection, int rangeVisibility)
         {
             throw new NotImplementedException();
         }
 
-        public static IEnumerable<Noise> GetAudibleNoises(Point position, int delicacyHearing, int thresholdAudibility)
+        public static List<Noise> GetAudibleNoises(Point position, int delicacyHearing, int thresholdAudibility)
         { 
             var result = new List<Noise>();
             var isFirst = true;
@@ -74,7 +73,9 @@ namespace GameThief.GameModel.Managers
                 previous = noise;
             }
 
-            return result.Where(n => n.Intensity >= thresholdAudibility);
+            return result
+                .Where(n => n.Intensity >= thresholdAudibility)
+                .ToList();
         }
 
         public static bool InBounds(Point position)
