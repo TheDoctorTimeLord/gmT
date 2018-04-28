@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameModel\AnimatedObjects\AnimatedObject.cs" />
+    <Compile Include="GameModel\AnimatedObjects\AnimateObject.cs" />
     <Compile Include="GameModel\MapSourse\Cell.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
