@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSourse;
 
 namespace GameThief.GameModel
 {
     public class GameState
     {
-        public HashSet<ICreature> Animates { get; private set; } = new HashSet<ICreature>();
-        private static readonly HashSet<ICreature> addedAnimations = new HashSet<ICreature>();
-
         public void UpdateState()
         {
-            foreach (var animate in Animates)
+            foreach (var animate in AnimatesManager.Animates)
             {
                 var query = animate.GetIntention();
                 if (IsRequestVerified(query, animate))
@@ -22,8 +20,6 @@ namespace GameThief.GameModel
             }
 
             TimersManager.UpdateTimers();
-
-            Animates.UnionWith(addedAnimations);
         }
 
         private bool IsRequestVerified(Query query, ICreature animate)
@@ -32,22 +28,13 @@ namespace GameThief.GameModel
                 return true;
 
             var target = animate.GetPosition() + ConvertMoveToSize[query];
-            if (!Map.InBounds(target))
+            if (!MapManager.InBounds(target))
                 return false;
-            if (Map.Cells[target.X, target.Y].Creature != null)
+            if (MapManager.Map.Cells[target.X, target.Y].Creature != null)
                 return false;
-            if (Map.Cells[target.X, target.Y].Object.IsSolid)
+            if (MapManager.Map.Cells[target.X, target.Y].Object.IsSolid)
                 return false;
             return true;
-        }
-
-        public static void CreateCreatureByName(string nameCreature)
-        {
-            if (nameCreature == "Player")
-            {
-                var pl = new Player();
-                addedAnimations.Add(pl);
-            }
         }
 
         public static readonly Dictionary<Query, Size> ConvertMoveToSize = new Dictionary<Query, Size>

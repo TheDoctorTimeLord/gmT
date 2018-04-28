@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameThief.GameModel
 {
-    public class AnimatedObject
+    public class AnimateObject
     {
         protected Point Position;
         public int Health;
