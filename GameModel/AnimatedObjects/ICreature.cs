@@ -6,9 +6,13 @@ namespace GameThief.GameModel.AnimatedObjects
     {
         Point GetPosition();
         void ChangePosition(Point newPosition);
+        Direction GetDirection();
+        void ChangeDirection(Direction direction);
 
         Query GetIntention();
         void ActionTaken(Query query);
         void ActionRejected(Query query);
+
+        void Interative(ICreature creature);
     }
 }

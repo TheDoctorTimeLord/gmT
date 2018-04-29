@@ -9,21 +9,29 @@ namespace GameThief.GameModel.AnimatedObjects
     public class MobileObject : ICreature
     {
         protected Point Position;
-        public int health { get; private set; }
+        public int MaxHealth { get; private set; }
+        public int Health { get; private set; }
         public Direction SightDirection;
         public int ThresholdAudibility { get; private set; }
         public int DelicacyHearing { get; private set; }
         public int RangeVisibility { get; private set; }
 
         protected List<Cell> VisibleCells;
-        protected List<NoiseSource> AudibleNoises;
+        protected List<Noise> AudibleNoises;
 
 
         public void MakeDamage(int damage)
         {
-            health -= damage;
-            if (health <= 0)
+            Health -= damage;
+            if (Health <= 0)
                 AnimatesManager.DeleteCreature(this);
+        }
+
+        public void Healing(int healing)
+        {
+            Health += healing;
+            if (Health > MaxHealth)
+                Health = MaxHealth;
         }
 
         public Point GetPosition() => Position;
@@ -31,6 +39,16 @@ namespace GameThief.GameModel.AnimatedObjects
         public void ChangePosition(Point newPosition)
         {
             Position = newPosition;
+        }
+
+        public Direction GetDirection()
+        {
+            return SightDirection;
+        }
+
+        public void ChangeDirection(Direction direction)
+        {
+            SightDirection = direction;
         }
 
         public Query GetIntention()
@@ -51,6 +69,11 @@ namespace GameThief.GameModel.AnimatedObjects
         }
 
         public void ActionRejected(Query query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Interative(ICreature creature)
         {
             throw new NotImplementedException();
         }

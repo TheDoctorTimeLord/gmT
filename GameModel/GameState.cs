@@ -40,36 +40,52 @@ namespace GameThief.GameModel
         {
             switch (query)
             {
-                case Query.Interaction:
-
+                case Query.None:
                     break;
+                case Query.Interaction:
+                    var target = animate.GetPosition() + ConvertDirectionToSize[animate.GetDirection()];
+                    if (MapManager.Map[target.X, target.Y].Creature != null)
+                        MapManager.Map[target.X, target.Y].Creature.Interative(animate);
+                    else
+                        MapManager.Map[target.X, target.Y].Object.Interact(animate);
+                    break;
+
+                case Query.Move:
+                    target = animate.GetPosition() + ConvertDirectionToSize[animate.GetDirection()];
+                    MapManager.MoveCreature(animate, target);
+                    break;
+
+                case Query.RotateLeft:
+                    animate.ChangeDirection(RotateFromTo(animate.GetDirection(), true));
+                    break;
+
+                case Query.RotateRight:
+                    animate.ChangeDirection(RotateFromTo(animate.GetDirection(), false));
+                    break;
+                default:
+                    throw new Exception("Не обработанное намерение: " + query.ToString() + ". " + animate);
             }
         }
 
         private bool IsRequestVerified(Query query, ICreature animate)
         {
-            if ()
+            var delta = Size.Empty;
+            if (query == Query.Move || query == Query.Interaction)
+                delta = ConvertDirectionToSize[animate.GetDirection()];
+
+            var target = animate.GetPosition() + delta;
+            if (!MapManager.InBounds(target))
+                return false;
 
             if (query == Query.Interaction)
                 return true;
 
-            var target = animate.GetPosition() + ConvertMoveToSize[query];
-            if (!MapManager.InBounds(target))
-                return false;
             if (MapManager.Map.Cells[target.X, target.Y].Creature != null)
                 return false;
             if (MapManager.Map.Cells[target.X, target.Y].Object.IsSolid)
                 return false;
             return true;
         }
-
-        public static readonly Dictionary<Query, Size> ConvertMoveToSize = new Dictionary<Query, Size>
-        {
-            { Query.MoveUp, new Size(0, -1) },
-            { Query.MoveLeft, new Size(-1, 0) },
-            { Query.MoveDown, new Size(0, 1) },
-            { Query.MoveRight, new Size(1, 0) }
-        };
 
         public static readonly Dictionary<Direction, Size> ConvertDirectionToSize = new Dictionary<Direction, Size>
         {
@@ -78,5 +94,15 @@ namespace GameThief.GameModel
             { Direction.Down, new Size(0, 1) },
             { Direction.Right, new Size(1, 0) }
         };
+
+        public static Direction RotateFromTo(Direction from, bool isLeftRotate)
+        {
+            var direction = (int)from;
+            if (isLeftRotate)
+                direction = (direction + 3) % 4;
+            else
+                direction = (direction + 1) % 4;
+            return (Direction) direction;
+        }
     }
 }
