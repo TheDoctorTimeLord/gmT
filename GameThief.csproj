@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameModel\FieldOfView\FieldOfViewRectangle.cs" />
     <Compile Include="GameModel\MobileObjects\MobileObject.cs" />
     <Compile Include="GameModel\Direction.cs" />
     <Compile Include="GameModel\ImmobileObjects\IDecor.cs" />

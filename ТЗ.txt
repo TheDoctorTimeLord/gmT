@@ -69,3 +69,4 @@
 	InanimateObjects/ImmobileObject.cs
 	InanimateObjects/IDecor.cs
 	InanimateObjects/ObjectsContainer.cs
+	FieldOfView/FieldOfViewRectangle.cs
