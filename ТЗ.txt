@@ -43,7 +43,7 @@
 
 -----------------—Œ¬Ã≈—“Õ¿ﬂ –¿¡Œ“¿-----------------
 ‘®ƒŒ–:
-
+  
 ¿Õ¿—“¿—»ﬂ:
   
 
@@ -70,3 +70,8 @@
 	InanimateObjects/IDecor.cs
 	InanimateObjects/ObjectsContainer.cs
 	FieldOfView/FieldOfViewRectangle.cs
+
+-----------------SAMPLE-----------------
+2 1
+nameBackground.png decorName1 decorName2
+nameBackground1.png decorName3 decorName1
