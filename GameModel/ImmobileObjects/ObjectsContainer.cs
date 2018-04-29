@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using GameThief.GameModel.AnimatedObjects;
+using GameThief.GameModel.MobileObjects;
 
-namespace GameThief.GameModel.InanimateObjects
+namespace GameThief.GameModel.ImmobileObjects
 {
     public class ObjectsContainer
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using GameThief.GameModel.Managers;
-using GameThief.GameModel.MapSourse;
+using GameThief.GameModel.MapSource;
 
-namespace GameThief.GameModel.AnimatedObjects
+namespace GameThief.GameModel.MobileObjects
 {
     public class MobileObject : ICreature
     {

@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GameThief.GameModel.AnimatedObjects;
+using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.Managers
 {
@@ -13,15 +13,15 @@ namespace GameThief.GameModel.Managers
         public static HashSet<ICreature> MobileObjects { get; private set; } = new HashSet<ICreature>();
         private static readonly HashSet<ICreature> addedMobileObjects = new HashSet<ICreature>();
 
-        public static void CreateCreature(string creatureName, Point position)
+        public static void CreateCreature(string nameCreature, Point position)
         {
-            switch (creatureName)
+            switch (nameCreature)
             {
                 case "Player":
                     AddCreature(new Player());
                     break;
                 default:
-                    throw new Exception("Попытка создания несуществующего Creature: " + creatureName);
+                    throw new Exception("Попытка создания несуществующего Creature: " + nameCreature);
             }
         }
 

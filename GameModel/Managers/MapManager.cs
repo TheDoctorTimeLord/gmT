@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using GameThief.GameModel.AnimatedObjects;
-using GameThief.GameModel.MapSourse;
+using GameThief.GameModel.MapSource;
+using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.Managers
 {

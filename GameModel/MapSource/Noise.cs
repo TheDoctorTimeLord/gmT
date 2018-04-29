@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameThief.GameModel.MapSourse
+namespace GameThief.GameModel.MapSource
 {
     public class Noise : IComparable
     {

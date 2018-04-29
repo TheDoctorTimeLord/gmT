@@ -1,7 +1,7 @@
-﻿using GameThief.GameModel.AnimatedObjects;
-using GameThief.GameModel.InanimateObjects;
+﻿using GameThief.GameModel.ImmobileObjects;
+using GameThief.GameModel.MobileObjects;
 
-namespace GameThief.GameModel.MapSourse
+namespace GameThief.GameModel.MapSource
 {
     public class Cell
     {

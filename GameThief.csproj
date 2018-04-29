@@ -51,13 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameModel\AnimatedObjects\MobileObject.cs" />
+    <Compile Include="GameModel\MobileObjects\MobileObject.cs" />
     <Compile Include="GameModel\Direction.cs" />
-    <Compile Include="GameModel\InanimateObjects\IDecor.cs" />
-    <Compile Include="GameModel\InanimateObjects\ImmobileObject.cs" />
+    <Compile Include="GameModel\ImmobileObjects\IDecor.cs" />
+    <Compile Include="GameModel\ImmobileObjects\ImmobileObject.cs" />
     <Compile Include="GameModel\Managers\MobileObjectsManager.cs" />
     <Compile Include="GameModel\Managers\FileManager.cs" />
-    <Compile Include="GameModel\MapSourse\Cell.cs" />
+    <Compile Include="GameModel\MapSource\Cell.cs" />
     <Compile Include="GameModel\ServiceClasses\MapStateReadingResult.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
@@ -65,19 +65,19 @@
     <Compile Include="GUI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameModel\InanimateObjects\ObjectsContainer.cs" />
-    <Compile Include="GameModel\MapSourse\Map.cs" />
+    <Compile Include="GameModel\ImmobileObjects\ObjectsContainer.cs" />
+    <Compile Include="GameModel\MapSource\Map.cs" />
     <Compile Include="GameModel\Managers\MapManager.cs" />
-    <Compile Include="GameModel\MapSourse\Noise.cs" />
-    <Compile Include="GameModel\MapSourse\NoiseController.cs" />
-    <Compile Include="GameModel\MapSourse\NoiseSource.cs" />
-    <Compile Include="GameModel\MapSourse\NoiseType.cs" />
+    <Compile Include="GameModel\MapSource\Noise.cs" />
+    <Compile Include="GameModel\MapSource\NoiseController.cs" />
+    <Compile Include="GameModel\MapSource\NoiseSource.cs" />
+    <Compile Include="GameModel\MapSource\NoiseType.cs" />
     <Compile Include="GameModel\PointExtensions.cs" />
     <Compile Include="Tests\Map_Tests.cs" />
     <Compile Include="GameModel\GameState.cs" />
-    <Compile Include="GameModel\AnimatedObjects\ICreature.cs" />
+    <Compile Include="GameModel\MobileObjects\ICreature.cs" />
     <Compile Include="GameModel\ITemporaryObject.cs" />
-    <Compile Include="GameModel\AnimatedObjects\Player.cs" />
+    <Compile Include="GameModel\MobileObjects\Player.cs" />
     <Compile Include="GameModel\Managers\TemporaryObjectsManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

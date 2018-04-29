@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace GameThief.GameModel.AnimatedObjects
+namespace GameThief.GameModel.MobileObjects
 {
     public interface ICreature
     {

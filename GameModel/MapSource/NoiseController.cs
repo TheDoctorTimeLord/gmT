@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using GameThief.GameModel.Managers;
 
-namespace GameThief.GameModel.MapSourse
+namespace GameThief.GameModel.MapSource
 {
     public class NoiseController
     {
