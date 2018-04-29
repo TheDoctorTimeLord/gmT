@@ -7,6 +7,7 @@ namespace GameThief.GameModel.InanimateObjects
     public class ImmobileObject
     {
         public bool IsSolid { get; set; } = false;
+        public bool IsTransparent { get; set; } = true;
         public int NoiseInsulation { get; set; } = 0;
 
         public SortedSet<IDecor> Decors = new SortedSet<IDecor>();
