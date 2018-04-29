@@ -2,10 +2,9 @@
 {
     public enum Query
     {
-        MoveLeft,
-        MoveUp,
-        MoveRight,
-        MoveDown,
+        Move,
+        RotateLeft,
+        RotateRight,
         Interaction,
         None
     }

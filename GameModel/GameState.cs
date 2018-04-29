@@ -24,7 +24,10 @@ namespace GameThief.GameModel
             {
                 var query = animate.GetIntention();
                 if (IsRequestVerified(query, animate))
+                {
+                    ActionIntention(query, animate);
                     animate.ActionTaken(query);
+                }
                 else
                     animate.ActionRejected(query);
             }
@@ -33,8 +36,20 @@ namespace GameThief.GameModel
             AnimatesManager.UpdateAnimates();
         }
 
+        private void ActionIntention(Query query, ICreature animate)
+        {
+            switch (query)
+            {
+                case Query.Interaction:
+
+                    break;
+            }
+        }
+
         private bool IsRequestVerified(Query query, ICreature animate)
         {
+            if ()
+
             if (query == Query.Interaction)
                 return true;
 
@@ -54,6 +69,14 @@ namespace GameThief.GameModel
             { Query.MoveLeft, new Size(-1, 0) },
             { Query.MoveDown, new Size(0, 1) },
             { Query.MoveRight, new Size(1, 0) }
+        };
+
+        public static readonly Dictionary<Direction, Size> ConvertDirectionToSize = new Dictionary<Direction, Size>
+        {
+            { Direction.Up, new Size(0, -1) },
+            { Direction.Left, new Size(-1, 0) },
+            { Direction.Down, new Size(0, 1) },
+            { Direction.Right, new Size(1, 0) }
         };
     }
 }
