@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GameThief.GameModel.ServiceClasses
 {
-    public class ResultReadingMapState
+    public class MapStateReadingResult
     {
-        public bool IsSuccessfulReading = true;
+        public bool WasSuccessful = true;
         public int Width = -1;
         public int Height = -1;
-        public List<List<string>> InfoAboutMap = new List<List<string>>();
+        public List<List<string>> MapInfo = new List<List<string>>();
     }
 }

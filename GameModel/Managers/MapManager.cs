@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using GameThief.GameModel.AnimatedObjects;
-using GameThief.GameModel.MapSourse;
+using GameThief.GameModel.MapSource;
+using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.Managers
 {
@@ -21,7 +21,7 @@ namespace GameThief.GameModel.Managers
         public static void MoveCreature(ICreature creature, Point newPosition)
         {
             if (Map[newPosition.X, newPosition.Y].Creature != null || 
-                Map[newPosition.X, newPosition.Y].Object.IsSolid)
+                Map[newPosition.X, newPosition.Y].ObjectContainer.IsSolid)
                 throw new ArgumentException();
             
             var oldPosition = creature.GetPosition();
@@ -42,7 +42,7 @@ namespace GameThief.GameModel.Managers
             Map[creaturePosition.X, creaturePosition.Y].Creature = null;
         }
 
-        public static void AddNoiseSourse(NoiseSource source) => NoiseController.AddNoiseSourse(source);
+        public static void AddNoiseSourse(NoiseSource source) => NoiseController.AddNoiseSource(source);
 
         public static List<Cell> GetVisibleCells(Point position, Direction sightDirection, int rangeVisibility)
         {

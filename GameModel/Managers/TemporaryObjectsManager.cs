@@ -4,23 +4,23 @@ namespace GameThief.GameModel.Managers
 {
     public static class TemporaryObjectsManager
     {
-        private static HashSet<ITemporaryObject> timers = new HashSet<ITemporaryObject>();
+        private static HashSet<ITemporaryObject> temporaryObjects = new HashSet<ITemporaryObject>();
 
-        public static void UpdateTimers()
+        public static void UpdateTemporaryObjects()
         {
-            foreach (var timer in timers)
+            foreach (var obj in temporaryObjects)
             {
-                timer.Update();
-                if (timer.IsActive())
+                obj.Update();
+                if (obj.IsActive())
                     continue;
-                timer.ActionAfterDeactivation();
-                timers.Remove(timer);
+                obj.ActionAfterDeactivation();
+                temporaryObjects.Remove(obj);
             }
         }
 
-        public static void AddTimer(ITemporaryObject temporaryObject)
+        public static void AddTemporaryObject(ITemporaryObject temporaryObject)
         {
-            timers.Add(temporaryObject);
+            temporaryObjects.Add(temporaryObject);
         }
     }
 }

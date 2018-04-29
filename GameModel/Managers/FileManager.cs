@@ -11,26 +11,26 @@ namespace GameThief.GameModel.Managers
 {
     static class FileManager
     {
-        private const string NameMapState = "map-state.txt";
-        private const string NameAnimateState = "animate-state.txt";
+        private const string MapStateFilename = "map-state.txt";
+        private const string MobileObjectsStateFilename = "mobile-objects-state.txt";
 
-        public static ResultReadingMapState ReadingMapState(string nameSource)
+        public static MapStateReadingResult ReadMapState(string sourceName)
         {
-            var result = new ResultReadingMapState();
-            var pathToSource = GetPathToSours(nameSource);
+            var result = new MapStateReadingResult();
+            var pathToSource = GetPathToSource(sourceName);
 
             if (!Directory.Exists(pathToSource))
                 throw new Exception("Не существует директории сохранения: " + pathToSource);
 
-            var pathToMapState = Path.Combine(pathToSource, NameMapState);
+            var pathToMapStateFile = Path.Combine(pathToSource, MapStateFilename);
 
-            if (!File.Exists(pathToMapState))
-                throw new Exception("Не существует файла информации о карте: " + pathToMapState);
+            if (!File.Exists(pathToMapStateFile))
+                throw new Exception("Не существует файла информации о карте: " + pathToMapStateFile);
 
-            var content = File.ReadLines(pathToMapState);
+            var content = File.ReadLines(pathToMapStateFile);
             if (!content.Any())
             {
-                result.IsSuccessfulReading = false;
+                result.WasSuccessful = false;
                 return result;
             }
 
@@ -43,20 +43,20 @@ namespace GameThief.GameModel.Managers
                     var size = line.Split(' ').Select(int.Parse).ToList();
                     if (size.Count != 2)
                     {
-                        result.IsSuccessfulReading = false;
+                        result.WasSuccessful = false;
                         return result;
                     }
                     result.Width = size[0];
                     result.Height = size[1];
                 }
-                result.InfoAboutMap.Add(line.Split(' ').ToList());
+                result.MapInfo.Add(line.Split(' ').ToList());
             }
-            if (result.InfoAboutMap.Count != result.Width * result.Height)
-                result.IsSuccessfulReading = false;
+            if (result.MapInfo.Count != result.Width * result.Height)
+                result.WasSuccessful = false;
             return result;
         }
 
-        private static string GetPathToSours(string nameSource) =>
+        private static string GetPathToSource(string nameSource) =>
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Saves", nameSource);
     }
 }

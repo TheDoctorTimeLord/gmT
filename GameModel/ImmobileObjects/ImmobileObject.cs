@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameThief.GameModel.AnimatedObjects;
+using GameThief.GameModel.MobileObjects;
 
-namespace GameThief.GameModel.InanimateObjects
+namespace GameThief.GameModel.ImmobileObjects
 {
     public class ImmobileObject : IDecor
     {
         private readonly bool isSolid = false;
         private readonly bool isTransparent = true;
-        private readonly int noiseInsulation = 0;
+        private readonly int noiseSuppression = 0;
         private readonly int priority = 0;
 
-        public ImmobileObject(bool isSolid, bool isTransparent, int noiseInsulation, int priority)
+        public ImmobileObject(bool isSolid, bool isTransparent, int noiseSuppression, int priority)
         {
             this.isSolid = isSolid;
             this.isTransparent = isTransparent;
-            this.noiseInsulation = noiseInsulation;
+            this.noiseSuppression = noiseSuppression;
             this.priority = priority;
         }
 
@@ -35,9 +31,9 @@ namespace GameThief.GameModel.InanimateObjects
             return priority.CompareTo(((ImmobileObject)obj).GetPriority());
         }
 
-        public int GetNoiseInsulation()
+        public int GetNoiseSuppression()
         {
-            return noiseInsulation;
+            return noiseSuppression;
         }
 
         public int GetPriority()

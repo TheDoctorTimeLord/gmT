@@ -2,7 +2,7 @@
 using System.Linq;
 using GameThief.GameModel.Managers;
 
-namespace GameThief.GameModel.MapSourse
+namespace GameThief.GameModel.MapSource
 {
     public class NoiseSource : ITemporaryObject
     {

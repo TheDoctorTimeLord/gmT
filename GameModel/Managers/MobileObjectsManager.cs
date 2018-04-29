@@ -4,14 +4,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GameThief.GameModel.AnimatedObjects;
+using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.Managers
 {
-    public static class AnimatesManager
+    public static class MobileObjectsManager
     {
-        public static HashSet<ICreature> Animates { get; private set; } = new HashSet<ICreature>();
-        private static readonly HashSet<ICreature> addedAnimations = new HashSet<ICreature>();
+        public static HashSet<ICreature> MobileObjects { get; private set; } = new HashSet<ICreature>();
+        private static readonly HashSet<ICreature> addedMobileObjects = new HashSet<ICreature>();
 
         public static void CreateCreature(string nameCreature, Point position)
         {
@@ -27,22 +27,22 @@ namespace GameThief.GameModel.Managers
 
         private static void AddCreature(ICreature creature)
         {
-            addedAnimations.Add(creature);
+            addedMobileObjects.Add(creature);
             MapManager.AddCreatureFromMap(creature);
         }
 
         public static void UpdateAnimates()
         {
-            Animates.UnionWith(addedAnimations);
-            addedAnimations.Clear();
+            MobileObjects.UnionWith(addedMobileObjects);
+            addedMobileObjects.Clear();
         }
 
         public static void DeleteCreature(ICreature creature)
         {
-            if (!Animates.Contains(creature))
+            if (!MobileObjects.Contains(creature))
                 return;
 
-            Animates.Remove(creature);
+            MobileObjects.Remove(creature);
             MapManager.RemoveCreatureFromMap(creature);
         }
     }

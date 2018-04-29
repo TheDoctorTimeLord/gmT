@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GameThief.GameModel.MapSourse
+﻿namespace GameThief.GameModel.MapSource
 {
     public class Map
     {
