@@ -1,56 +1,58 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using GameThief.GameModel.AnimatedObjects;
 
 namespace GameThief.GameModel.InanimateObjects
 {
-    public class ImmobileObject
+    public class ImmobileObject : IDecor
     {
-        public bool IsSolid { get; set; } = false;
-        public bool IsTransparent { get; set; } = true;
-        public int NoiseInsulation { get; set; } = 0;
+        private readonly bool isSolid = false;
+        private readonly bool isTransparent = true;
+        private readonly int noiseInsulation = 0;
+        private readonly int priority = 0;
 
-        public SortedSet<IDecor> Decors = new SortedSet<IDecor>();
-
-        public void AddDecor(IDecor decor)
+        public ImmobileObject(bool isSolid, bool isTransparent, int noiseInsulation, int priority)
         {
-            IsSolid = IsSolid || decor.IsSolid();
-            IsTransparent = IsTransparent || decor.IsTransparent();
-            NoiseInsulation += decor.GetNoiseInsulation();
-            Decors.Add(decor);
+            this.isSolid = isSolid;
+            this.isTransparent = isTransparent;
+            this.noiseInsulation = noiseInsulation;
+            this.priority = priority;
         }
 
-        public void RemoveDecor(IDecor decor)
+        public bool InteractWith(ICreature creature)
         {
-            Decors.Remove(decor);
-            NoiseInsulation -= decor.GetNoiseInsulation();
-
-            if (decor.IsSolid())
-            {
-                IsSolid = false;
-                foreach (var dec in Decors)
-                    IsSolid = IsSolid || dec.IsSolid();
-            }
-
-            if (!decor.IsTransparent())
-            {
-                IsTransparent = true;
-                foreach (var dec in Decors)
-                    IsTransparent = IsTransparent || dec.IsTransparent();
-            }
+            throw new NotImplementedException();
         }
 
-        public void Interact(ICreature creature)
+        public int CompareTo(object obj)
         {
-            var firstItem = Decors.FirstOrDefault();
+            if (!(obj is ImmobileObject))
+                throw new ArgumentException();
 
-            if (firstItem != null)
-            {
-                var toRemove = firstItem.InteractWith(creature);
+            return priority.CompareTo(((ImmobileObject)obj).GetPriority());
+        }
 
-                if (toRemove)
-                    Decors.Remove(firstItem);
-            }
+        public int GetNoiseInsulation()
+        {
+            return noiseInsulation;
+        }
+
+        public int GetPriority()
+        {
+            return priority;
+        }
+
+        public bool IsSolid()
+        {
+            return isSolid;
+        }
+
+        public bool IsTransparent()
+        {
+            return isTransparent;
         }
     }
 }

@@ -18,13 +18,14 @@ namespace GameThief.GameModel.Managers
             FillMap(content);
         }
 
-        public static void MoveCreature(Point oldPosition, Point newPosition)
+        public static void MoveCreature(ICreature creature, Point newPosition)
         {
             if (Map[newPosition.X, newPosition.Y].Creature != null || 
                 Map[newPosition.X, newPosition.Y].Object.IsSolid)
                 throw new ArgumentException();
-
-            var creature = Map[oldPosition.X, oldPosition.Y].Creature;
+            
+            var oldPosition = creature.GetPosition();
+            creature.ChangePosition(newPosition);
             Map[oldPosition.X, oldPosition.Y].Creature = null;
             Map[newPosition.X, newPosition.Y].Creature = creature;
         }
