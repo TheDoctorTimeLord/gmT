@@ -12,9 +12,9 @@ namespace GameThief.GameModel.AnimatedObjects
         public int MaxHealth { get; private set; }
         public int Health { get; private set; }
         public Direction SightDirection;
-        public int ThresholdAudibility { get; private set; }
-        public int DelicacyHearing { get; private set; }
-        public int RangeVisibility { get; private set; }
+        public int MinHearingVolume { get; private set; }
+        public int MaxHearingDelta { get; private set; }
+        public int FieldOfView { get; private set; }
 
         protected List<Cell> VisibleCells;
         protected List<Noise> AudibleNoises;
@@ -24,7 +24,7 @@ namespace GameThief.GameModel.AnimatedObjects
         {
             Health -= damage;
             if (Health <= 0)
-                AnimatesManager.DeleteCreature(this);
+                MobileObjectsManager.DeleteCreature(this);
         }
 
         public void Healing(int healing)
@@ -53,8 +53,8 @@ namespace GameThief.GameModel.AnimatedObjects
 
         public Query GetIntention()
         {
-            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, RangeVisibility);
-            AudibleNoises = MapManager.GetAudibleNoises(Position, DelicacyHearing, ThresholdAudibility);
+            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, FieldOfView);
+            AudibleNoises = MapManager.GetAudibleNoises(Position, MaxHearingDelta, MinHearingVolume);
             return GetIntentionOfCreature();
         }
 

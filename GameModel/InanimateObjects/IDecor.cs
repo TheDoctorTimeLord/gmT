@@ -10,7 +10,7 @@ namespace GameThief.GameModel.InanimateObjects
     public interface IDecor : IComparable
     {
         int GetPriority();
-        int GetNoiseInsulation();
+        int GetNoiseSuppression();
         bool IsSolid();
         bool IsTransparent();
         bool InteractWith(ICreature creature);

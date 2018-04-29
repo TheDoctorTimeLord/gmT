@@ -6,6 +6,6 @@ namespace GameThief.GameModel.MapSourse
     public class Cell
     {
         public ICreature Creature { get; set; } = null;
-        public ObjectsContainer Object { get; set; } = new ObjectsContainer();
+        public ObjectsContainer ObjectContainer { get; set; } = new ObjectsContainer();
     }
 }

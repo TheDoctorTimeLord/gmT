@@ -8,7 +8,7 @@ namespace GameThief.GameModel.InanimateObjects
     {
         public bool IsSolid { get; set; } = false;
         public bool IsTransparent { get; set; } = true;
-        public int NoiseInsulation { get; set; } = 0;
+        public int TotalNoiseSuppression { get; set; } = 0;
 
         public SortedSet<IDecor> Decors = new SortedSet<IDecor>();
 
@@ -16,14 +16,14 @@ namespace GameThief.GameModel.InanimateObjects
         {
             IsSolid = IsSolid || decor.IsSolid();
             IsTransparent = IsTransparent || decor.IsTransparent();
-            NoiseInsulation += decor.GetNoiseInsulation();
+            TotalNoiseSuppression += decor.GetNoiseSuppression();
             Decors.Add(decor);
         }
 
         public void RemoveDecor(IDecor decor)
         {
             Decors.Remove(decor);
-            NoiseInsulation -= decor.GetNoiseInsulation();
+            TotalNoiseSuppression -= decor.GetNoiseSuppression();
 
             if (decor.IsSolid())
             {

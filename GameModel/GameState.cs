@@ -10,70 +10,70 @@ namespace GameThief.GameModel
 {
     public class GameState
     {
-        public GameState(string nameBeginActState)
+        public GameState(string gameConfigurationFilename)
         {
-            var infoByMap = FileManager.ReadingMapState(nameBeginActState);
-            if (!infoByMap.IsSuccessfulReading)
-                throw new Exception("Некорректное задание стартовых данных. Файл: " + nameBeginActState);
-            MapManager.CreateMap(infoByMap.Width, infoByMap.Height, infoByMap.InfoAboutMap);
+            var mapInfo = FileManager.ReadMapState(gameConfigurationFilename);
+            if (!mapInfo.WasSuccessful)
+                throw new Exception("Некорректное задание стартовых данных. Файл: " + gameConfigurationFilename);
+            MapManager.CreateMap(mapInfo.Width, mapInfo.Height, mapInfo.MapInfo);
         }
 
         public void UpdateState()
         {
-            foreach (var animate in AnimatesManager.Animates)
+            foreach (var creature in MobileObjectsManager.MobileObjects)
             {
-                var query = animate.GetIntention();
-                if (IsRequestVerified(query, animate))
+                var query = creature.GetIntention();
+                if (ValidateRequest(query, creature))
                 {
-                    ActionIntention(query, animate);
-                    animate.ActionTaken(query);
+                    ExecuteIntention(query, creature);
+                    creature.ActionTaken(query);
                 }
                 else
-                    animate.ActionRejected(query);
+                    creature.ActionRejected(query);
             }
 
-            TemporaryObjectsManager.UpdateTimers();
-            AnimatesManager.UpdateAnimates();
+            TemporaryObjectsManager.UpdateTemporaryObjects();
+            MobileObjectsManager.UpdateAnimates();
         }
 
-        private void ActionIntention(Query query, ICreature animate)
+        private void ExecuteIntention(Query query, ICreature creature)
         {
             switch (query)
             {
                 case Query.None:
                     break;
                 case Query.Interaction:
-                    var target = animate.GetPosition() + ConvertDirectionToSize[animate.GetDirection()];
+                    var target = creature.GetPosition() + ConvertDirectionToSize[creature.GetDirection()];
                     if (MapManager.Map[target.X, target.Y].Creature != null)
-                        MapManager.Map[target.X, target.Y].Creature.Interative(animate);
+                        MapManager.Map[target.X, target.Y].Creature.Interative(creature);
                     else
-                        MapManager.Map[target.X, target.Y].Object.Interact(animate);
+                        MapManager.Map[target.X, target.Y].ObjectContainer.Interact(creature);
                     break;
 
                 case Query.Move:
-                    target = animate.GetPosition() + ConvertDirectionToSize[animate.GetDirection()];
-                    MapManager.MoveCreature(animate, target);
+                    target = creature.GetPosition() + ConvertDirectionToSize[creature.GetDirection()];
+                    MapManager.MoveCreature(creature, target);
                     break;
 
                 case Query.RotateLeft:
-                    animate.ChangeDirection(RotateFromTo(animate.GetDirection(), true));
+                    creature.ChangeDirection(RotateFromTo(creature.GetDirection(), true));
                     break;
 
                 case Query.RotateRight:
-                    animate.ChangeDirection(RotateFromTo(animate.GetDirection(), false));
+                    creature.ChangeDirection(RotateFromTo(creature.GetDirection(), false));
                     break;
                 default:
-                    throw new Exception("Не обработанное намерение: " + query.ToString() + ". " + animate);
+                    throw new Exception("Не обработанное намерение: " + query.ToString() + ". " + creature);
             }
         }
 
-        private bool IsRequestVerified(Query query, ICreature animate)
+        private bool ValidateRequest(Query query, ICreature creature)
         {
             var delta = Size.Empty;
             if (query == Query.Move || query == Query.Interaction)
-                delta = ConvertDirectionToSize[animate.GetDirection()];
+                delta = ConvertDirectionToSize[creature.GetDirection()];
 
-            var target = animate.GetPosition() + delta;
+            var target = creature.GetPosition() + delta;
             if (!MapManager.InBounds(target))
                 return false;
 
@@ -82,7 +82,7 @@ namespace GameThief.GameModel
 
             if (MapManager.Map.Cells[target.X, target.Y].Creature != null)
                 return false;
-            if (MapManager.Map.Cells[target.X, target.Y].Object.IsSolid)
+            if (MapManager.Map.Cells[target.X, target.Y].ObjectContainer.IsSolid)
                 return false;
             return true;
         }

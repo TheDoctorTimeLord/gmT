@@ -16,12 +16,12 @@ namespace GameThief.GameModel.MapSourse
             Noises = new List<Noise>[width, height];
         }
 
-        public void AddNoiseSourse(NoiseSource source)
+        public void AddNoiseSource(NoiseSource source)
         {
             var notVisited = source.GetMaxScope().ToList();
             var noiseCoverage = new Dictionary<Point, int>();
             noiseCoverage[source.Position] =
-                source.MaxIntensity - MapManager.Map[source.Position.X, source.Position.Y].Object.NoiseInsulation;
+                source.MaxIntensity - MapManager.Map[source.Position.X, source.Position.Y].ObjectContainer.TotalNoiseSuppression;
 
             while (true)
             {
@@ -45,7 +45,7 @@ namespace GameThief.GameModel.MapSourse
                     if (!InScope(p, source))
                         continue;
 
-                    var currentVolume = noiseCoverage[toOpen] - MapManager.Map[toOpen.X, toOpen.Y].Object.NoiseInsulation - 1;
+                    var currentVolume = noiseCoverage[toOpen] - MapManager.Map[toOpen.X, toOpen.Y].ObjectContainer.TotalNoiseSuppression - 1;
                     
                     if (!noiseCoverage.ContainsKey(p) || noiseCoverage[p] < currentVolume)
                         noiseCoverage[p] = currentVolume;
