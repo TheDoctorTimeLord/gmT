@@ -49,7 +49,8 @@ namespace GameThief.GameModel.Managers
                     result.Width = size[0];
                     result.Height = size[1];
                 }
-                result.MapInfo.Add(line.Split(' ').ToList());
+                var parameters = line.Split(' ').ToList();
+                result.MapInfo.Add(parameters);
             }
             if (result.MapInfo.Count != result.Width * result.Height)
                 result.WasSuccessful = false;

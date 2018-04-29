@@ -2,5 +2,9 @@
 {
     public class Player: MobileObject
     {
+        protected new Query GetIntentionOfCreature()
+        {
+            
+        }
     }
 }
