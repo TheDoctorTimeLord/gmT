@@ -64,4 +64,5 @@
 	MapSourse/NoiseController.cs
 	MapSourse/NoiseSource.cs
 	MapSourse/NoiseType.cs
-  
+	InanimateObjects/ImmobileObject.cs
+	InanimateObjects/IDecor.cs
