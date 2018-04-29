@@ -42,9 +42,13 @@ namespace GameThief.GameModel.MapSourse
 
                 foreach (var p in toOpen.FindNeighbours())
                 {
-                    if (!MapManager.InBounds(p))
+                    if (!InScope(p, source))
                         continue;
+
                     var currentVolume = noiseCoverage[toOpen] - MapManager.Map[toOpen.X, toOpen.Y].Object.NoiseInsulation - 1;
+                    
+                    if (!noiseCoverage.ContainsKey(p) || noiseCoverage[p] < currentVolume)
+                        noiseCoverage[p] = currentVolume;
                 }
 
                 notVisited.Remove(toOpen);
@@ -60,6 +64,15 @@ namespace GameThief.GameModel.MapSourse
         {
             foreach (var point in source.GetMaxScope())
                 Noises[point.X, point.Y].Where(n => n.Source != source);
+        }
+
+        private bool InScope(Point position, NoiseSource source)
+        {
+            return MapManager.InBounds(position) &&
+                   position.X >= source.Position.X - source.MaxIntensity &&
+                   position.X <= source.Position.X + source.MaxIntensity &&
+                   position.Y >= source.Position.Y - source.MaxIntensity &&
+                   position.Y <= source.Position.Y + source.MaxIntensity;
         }
     }
 }

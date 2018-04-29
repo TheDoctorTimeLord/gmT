@@ -50,7 +50,6 @@
   AnimatedObjects/MobileObject.cs
   AnimatedObjects/ICreature.cs
   AnimatedObjects/Player.cs
-  InanimateObjects/ImmobileObject.cs
   Managers/AnimatesManager.cs
   Managers/TimersManager.cs
   GameState.cs
@@ -65,4 +64,6 @@
 	MapSourse/NoiseController.cs
 	MapSourse/NoiseSource.cs
 	MapSourse/NoiseType.cs
+	InanimateObjects/ImmobileObject.cs
+	InanimateObjects/IDecor.cs
   
