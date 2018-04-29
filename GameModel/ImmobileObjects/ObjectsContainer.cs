@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GameThief.GameModel.MobileObjects;
 
@@ -18,6 +19,15 @@ namespace GameThief.GameModel.ImmobileObjects
             IsTransparent = IsTransparent || decor.IsTransparent();
             TotalNoiseSuppression += decor.GetNoiseSuppression();
             Decors.Add(decor);
+        }
+
+        public static IDecor ParseDecor(string decorName)
+        {
+            switch (decorName)
+            {
+                default:
+                    throw new Exception("Попытка создания несуществующего элемента декора: " + decorName);
+            }
         }
 
         public void RemoveDecor(IDecor decor)

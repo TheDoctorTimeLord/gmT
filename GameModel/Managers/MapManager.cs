@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
+using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;
 
@@ -12,7 +14,7 @@ namespace GameThief.GameModel.Managers
         public static Map Map;
         public static NoiseController NoiseController;
 
-        public static void CreateMap(int width, int height, IEnumerable<IEnumerable<string>> content)
+        public static void CreateMap(int width, int height, List<List<string>> content)
         {
             Map = new Map(width, height);
             FillMap(content);
@@ -88,9 +90,18 @@ namespace GameThief.GameModel.Managers
                 position.Y < Map.Cells.GetLength(1);
         }
 
-        public static void FillMap(IEnumerable<IEnumerable<string>> content)
+        public static void FillMap(List<List<string>> content)
         {
-            throw new NotImplementedException();
+            for (var i = 0; i < content.Count; i++)
+            {
+                var background = content[i][0];
+                var newCell = new Cell(background);
+
+                foreach (var dec in content[i].Skip(1))
+                    newCell.ObjectContainer.AddDecor(ObjectsContainer.ParseDecor(dec));
+
+                Map[i % Map.Wigth, i / Map.Height] = newCell;
+            }
         }
     }
 }

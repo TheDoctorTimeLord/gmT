@@ -5,7 +5,15 @@ namespace GameThief.GameModel.MapSource
 {
     public class Cell
     {
-        public ICreature Creature { get; set; } = null;
-        public ObjectsContainer ObjectContainer { get; set; } = new ObjectsContainer();
+        public string BackgroundFilename { get; set; }
+        public ICreature Creature { get; set; }
+        public ObjectsContainer ObjectContainer { get; set; }
+
+        public Cell(string backgroundFilename)
+        {
+            BackgroundFilename = backgroundFilename;
+            Creature = null;
+            ObjectContainer = new ObjectsContainer();
+        }
     }
 }
