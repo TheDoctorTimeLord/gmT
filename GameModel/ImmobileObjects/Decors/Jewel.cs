@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Decors
 {
-    public class Wall : ImmobileObject
+    public class Jewel : ImmobileObject
     {
-        public Wall() : base(true, false, 20, 1, "wall.png") { }
+        public Jewel() : base(false, true, 0, 30, "jewel.png") { }
     }
 }
