@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;

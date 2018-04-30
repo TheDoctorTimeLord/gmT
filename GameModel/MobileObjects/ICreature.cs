@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using GameThief.GameModel.Enums;
 
 namespace GameThief.GameModel.MobileObjects
 {

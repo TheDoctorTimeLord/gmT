@@ -1,4 +1,4 @@
-﻿namespace GameThief.GameModel
+﻿namespace GameThief.GameModel.Enums
 {
     public enum Query
     {

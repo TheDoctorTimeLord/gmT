@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.ServiceClasses
 {
-    public enum Direction
+    class Instruction
     {
-        Up,
-        Right,
-        Down,
-        Left
     }
 }

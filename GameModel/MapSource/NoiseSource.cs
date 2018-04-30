@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Linq;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 
 namespace GameThief.GameModel.MapSource
