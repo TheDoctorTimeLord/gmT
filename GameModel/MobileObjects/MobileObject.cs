@@ -22,7 +22,8 @@ namespace GameThief.GameModel.MobileObjects
                 SightDirection = init.Direction;
                 MinHearingVolume = init.MinHearingVolume;
                 MaxHearingDelta = init.MaxHearingDelta;
-                FieldOfView = init.FieldOfView;
+                ViewDistanse = init.ViewDistanse;
+                ViewWidth = init.ViewWidth;
             }
         }
 
@@ -32,7 +33,8 @@ namespace GameThief.GameModel.MobileObjects
         public Direction SightDirection;
         public int MinHearingVolume { get; private set; }
         public int MaxHearingDelta { get; private set; }
-        public int FieldOfView { get; private set; }
+        public int ViewDistanse { get; private set; }
+        public int ViewWidth { get; private set; }
 
         public List<Point> VisibleCells;
         public List<Noise> AudibleNoises;
@@ -71,7 +73,7 @@ namespace GameThief.GameModel.MobileObjects
 
         public Query GetIntention()
         {
-            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, FieldOfView);
+            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse);
             AudibleNoises = MapManager.GetAudibleNoises(Position, MaxHearingDelta, MinHearingVolume);
             return GetIntentionOfCreature();
         }

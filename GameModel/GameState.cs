@@ -31,10 +31,10 @@ namespace GameThief.GameModel
                 if (ValidateRequest(query, creature))
                 {
                     ExecuteIntention(query, creature);
-                    creature.ActionTaken(query);
+                    creature.ActionTaken();
                 }
                 else
-                    creature.ActionRejected(query);
+                    creature.ActionRejected();
             }
 
             TemporaryObjectsManager.UpdateTemporaryObjects();

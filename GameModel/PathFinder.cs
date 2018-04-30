@@ -23,7 +23,7 @@ namespace GameThief.GameModel
             return MapManager.InBounds(target) &&
                    MapManager.Map[target.X, target.Y].Creature == null &&
                    (!MapManager.Map[target.X, target.Y].ObjectContainer.IsSolid ||
-                    MapManager.Map[target.X, target.Y].ObjectContainer.GetTopDecor() is ClosedDoor);
+                    MapManager.Map[target.X, target.Y].ObjectContainer.ShowDecor() is ClosedDoor);
         }
 
         private class LinkedNode

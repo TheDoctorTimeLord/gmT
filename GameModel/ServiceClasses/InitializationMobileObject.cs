@@ -16,7 +16,7 @@ namespace GameThief.GameModel.ServiceClasses
         }
 
         public InitializationMobileObject(Point position, int maxHealth, int health, Direction direction,
-            int minHearingVolume, int maxHearingDelta, int fieldOfView, List<Tuple<string, string>> parameters)
+            int minHearingVolume, int maxHearingDelta, int viewWidth, int viewDistanse, List<Tuple<string, string>> parameters)
         {
             IsDefaultInitialization = false;
             Position = position;
@@ -25,7 +25,8 @@ namespace GameThief.GameModel.ServiceClasses
             Direction = direction;
             MinHearingVolume = minHearingVolume;
             MaxHearingDelta = maxHearingDelta;
-            FieldOfView = fieldOfView;
+            ViewWidth = viewWidth;
+            ViewDistanse = viewDistanse;
             Parameters = parameters;
         }
 
@@ -37,7 +38,8 @@ namespace GameThief.GameModel.ServiceClasses
         public Direction Direction;
         public int MinHearingVolume;
         public int MaxHearingDelta;
-        public int FieldOfView;
+        public int ViewDistanse;
+        public int ViewWidth;
 
         public List<Tuple<string, string>> Parameters;
     }
