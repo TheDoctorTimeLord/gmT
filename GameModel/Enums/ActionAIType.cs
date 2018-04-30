@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameThief.GameModel.Enums
 {
-    public enum ActionAiType
+    public enum ActionAIType
     {
         MoveTo
     }
