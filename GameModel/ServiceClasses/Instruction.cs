@@ -12,5 +12,6 @@ namespace GameThief.GameModel.ServiceClasses
     {
         public AIActionType InstructionType;
         public Point Position;
+        public int Duration;
     }
 }

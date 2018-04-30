@@ -12,20 +12,20 @@ namespace GameThief.GameModel.MobileObjects
         {
         }
 
-        protected new Query GetIntentionOfCreature()
+        protected override Query GetIntentionOfCreature()
         {
             return GameState.GetCurrentQuery();
         }
 
-        public new void ActionTaken(Query query)
+        public override void ActionTaken()
         {
         }
 
-        public new void ActionRejected(Query query)
+        public override void ActionRejected()
         {
         }
 
-        public void Interative(ICreature creature)
+        public override void Interative(ICreature creature)
         {
         }
 

@@ -34,8 +34,8 @@ namespace GameThief.GameModel.MobileObjects
         public int MaxHearingDelta { get; private set; }
         public int FieldOfView { get; private set; }
 
-        protected List<Cell> VisibleCells;
-        protected List<Noise> AudibleNoises;
+        public List<Point> VisibleCells;
+        public List<Noise> AudibleNoises;
 
 
         public void MakeDamage(int damage)
@@ -76,22 +76,22 @@ namespace GameThief.GameModel.MobileObjects
             return GetIntentionOfCreature();
         }
 
-        protected Query GetIntentionOfCreature()
+        protected virtual Query GetIntentionOfCreature()
         {
             throw new NotImplementedException();
         }
 
-        public void ActionTaken(Query query)
+        public virtual void ActionTaken()
         {
             throw new NotImplementedException();
         }
 
-        public void ActionRejected(Query query)
+        public virtual void ActionRejected()
         {
             throw new NotImplementedException();
         }
 
-        public void Interative(ICreature creature)
+        public virtual void Interative(ICreature creature)
         {
             throw new NotImplementedException();
         }
