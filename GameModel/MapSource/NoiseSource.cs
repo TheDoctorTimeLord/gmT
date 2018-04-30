@@ -11,13 +11,15 @@ namespace GameThief.GameModel.MapSource
         private int duration;
         public int MaxIntensity { get; set; }
         public Point Position { get; set; }
+        public string Message { get; set; }
 
-        public NoiseSource(NoiseType type, int duration, int maxIntensity, Point position)
+        public NoiseSource(NoiseType type, int duration, int maxIntensity, Point position, string message)
         {
             Type = type;
             this.duration = duration;
             MaxIntensity = maxIntensity;
             Position = position;
+            Message = message;
         }
 
         public Point[] GetMaxScope()

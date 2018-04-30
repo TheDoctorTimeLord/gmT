@@ -7,21 +7,13 @@ using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Decors
 {
-    public class Door : ImmobileObject
+    public class OpenedDoor : ImmobileObject
     {
-        private bool IsClosed;
-
-        public Door() : base(true, false, 10, 10, "door.png")
-        {
-            IsClosed = true;
-        }
+        public OpenedDoor() : base(false, true, 0, 1, "opened_door.png") { }
 
         public override bool InteractWith(ICreature creature)
         {
-            if (IsClosed)
-                return false;
-
-            return true;
+            throw new NotImplementedException();
         }
     }
 }

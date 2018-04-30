@@ -7,9 +7,9 @@ using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Decors
 {
-    public class Button : ImmobileObject
+    public class ClosedDoor : ImmobileObject
     {
-        public Button() : base(false, true, 0, 10, "button.png") { }
+        public ClosedDoor() : base(true, false, 20, 1, "closed_door.png") { }
 
         public override bool InteractWith(ICreature creature)
         {
