@@ -10,7 +10,7 @@ namespace GameThief.GameModel.ServiceClasses
 {
     public class Instruction
     {
-        public ActionAIType InstructionType;
+        public AIActionType InstructionType;
         public Point Position;
     }
 }

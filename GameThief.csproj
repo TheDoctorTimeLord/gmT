@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameModel\ConverterPressedKey.cs" />
-    <Compile Include="GameModel\Enums\ActionAIType.cs" />
+    <Compile Include="GameModel\Enums\AIActionType.cs" />
     <Compile Include="GameModel\FieldOfView\FieldOfViewRectangle.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Button.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Door.cs" />
