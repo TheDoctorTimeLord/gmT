@@ -8,6 +8,6 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 {
     public class Vase : ImmobileObject
     {
-        public Vase() : base(false, true, 0, 30, "vase.png") { }
+        public Vase() : base(false, false, 0, 30, "vase.png") { }
     }
 }

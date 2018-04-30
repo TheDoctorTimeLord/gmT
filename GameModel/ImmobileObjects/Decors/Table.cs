@@ -8,6 +8,6 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 {
     public class Table : ImmobileObject
     {
-        public Table() : base(true, true, 0, 10, "table.png") { }
+        public Table() : base(true, false, 0, 10, "table.png") { }
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameThief.GameModel.ImmobileObjects.Decors
 {
-    public class DoorLock : ImmobileObject
+    public class Lock : ImmobileObject
     {
-        public DoorLock() : base(false, true, 0, 10, "door_lock.png") { }
+        public Lock() : base(false, false, 0, 10, "door_lock.png") { }
     }
 }

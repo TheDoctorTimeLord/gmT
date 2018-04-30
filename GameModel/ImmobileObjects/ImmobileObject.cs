@@ -6,15 +6,15 @@ namespace GameThief.GameModel.ImmobileObjects
     public class ImmobileObject : IDecor
     {
         private readonly bool isSolid;
-        private readonly bool isTransparent;
+        private readonly bool isOpaque;
         private readonly int noiseSuppression;
         private readonly int priority;
         private readonly string imageName;
 
-        public ImmobileObject(bool isSolid, bool isTransparent, int noiseSuppression, int priority, string imageName)
+        public ImmobileObject(bool isSolid, bool isOpaque, int noiseSuppression, int priority, string imageName)
         {
             this.isSolid = isSolid;
-            this.isTransparent = isTransparent;
+            this.isOpaque = isOpaque;
             this.noiseSuppression = noiseSuppression;
             this.priority = priority;
             this.imageName = imageName;
@@ -55,7 +55,7 @@ namespace GameThief.GameModel.ImmobileObjects
 
         public bool IsTransparent()
         {
-            return isTransparent;
+            return isOpaque;
         }
     }
 }
