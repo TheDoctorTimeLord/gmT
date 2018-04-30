@@ -44,32 +44,46 @@ namespace GameThief.GameModel.MobileObjects
             UpdateLevelOfAlertness();
             if (actionQueue.Count == 0 && levelOfAlertness == Calm)
             {
-                ExecuteTheCurrentInstruction();
+                ExecuteCurrentInstruction();
             }
 
             return actionQueue.Count == 0 ? Query.None : actionQueue.Peek();
         }
 
+        private void ExecuteCurrentInstruction()
+        {
+            switch (normalGuardTrack[currentInstruction].InstructionType)
+            {
+                case AIActionType.MoveTo:
+                    var instructions = PathFinder.GetPathFromTo(Position, normalGuardTrack[currentInstruction].Position, SightDirection);
+                    foreach (var instruction in instructions)
+                        actionQueue.Enqueue(instruction);
+                    break;
+            }
+            currentInstruction = (currentInstruction + 1) % normalGuardTrack.Count;
+        }
+
         private void UpdateLevelOfAlertness()
         {
-            foreach (var possition in VisibleCells)
-            {
-                var currentCell = MapManager.Map[possition.X, possition.Y];
-                if (!previouslyVisibleCells.ContainsKey(possition))
-                {
-                    previouslyVisibleCells.Add(currentCell.ObjectContainer.ShowDecor());
-                }
-                else
-                {
-                    if (currentCell.Creature is Player)
-                        levelOfAlertness = Math.Max(levelOfAlertness, Angry);
-                    else if (currentCell.ObjectContainer.ShowDecor() != previouslyVisibleCells[possition])
-                    {
-                        levelOfAlertness = Math.Max(levelOfAlertness, Alert);
-                        previouslyVisibleCells[possition] = currentCell.ObjectContainer.ShowDecor();
-                    }
-                }
-            }
+
+            //foreach (var possition in VisibleCells)
+            //{
+            //    var currentCell = MapManager.Map[possition.X, possition.Y];
+            //    if (!previouslyVisibleCells.ContainsKey(possition))
+            //    {
+            //        previouslyVisibleCells.Add(possition, currentCell.ObjectContainer.GetTopDecor());
+            //    }
+            //    else
+            //    {
+            //        if (currentCell.Creature is Player)
+            //            levelOfAlertness = Math.Max(levelOfAlertness, Angry);
+            //        else if (currentCell.ObjectContainer.GetTopDecor() != previouslyVisibleCells[possition])
+            //        {
+            //            levelOfAlertness = Math.Max(levelOfAlertness, Alert);
+            //            previouslyVisibleCells[possition] = currentCell.ObjectContainer.GetTopDecor();
+            //        }
+            //    }
+            //}
         }
 
         public override void ActionTaken()
