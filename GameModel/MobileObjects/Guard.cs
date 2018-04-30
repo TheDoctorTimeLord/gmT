@@ -13,6 +13,9 @@ namespace GameThief.GameModel.MobileObjects
     public class Guard : MobileObject
     {
         private List<Instruction> normalGuardTrack;
+        private int currentInstruction;
+        private Queue<Query> actionQueue;
+        private int levelOfAlertness = 0;
 
         public Guard(InitializationMobileObject init) : base(init)
         {
@@ -30,22 +33,23 @@ namespace GameThief.GameModel.MobileObjects
             }
         }
 
-        protected Query GetIntentionOfCreature()
+        protected override Query GetIntentionOfCreature()
+        {
+            UpdateLevelOfAlertness();
+            
+        }
+
+        public override void ActionTaken(Query query)
         {
             throw new NotImplementedException();
         }
 
-        public void ActionTaken(Query query)
+        public override void ActionRejected(Query query)
         {
             throw new NotImplementedException();
         }
 
-        public void ActionRejected(Query query)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Interative(ICreature creature)
+        public override void Interative(ICreature creature)
         {
         }
     }
