@@ -55,9 +55,11 @@
     <Compile Include="GameModel\ImmobileObjects\Decors\Button.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Carpet.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Chair.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\ClosedCupboard.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\ClosedDoor.cs" />
-    <Compile Include="GameModel\ImmobileObjects\Decors\DoorLock.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Lock.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Jewel.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\OpenedCupboard.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\OpenedDoor.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Painting.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Table.cs" />
@@ -65,6 +67,8 @@
     <Compile Include="GameModel\ImmobileObjects\Decors\Vase.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Wall.cs" />
     <Compile Include="GameModel\Managers\GameInformationManager.cs" />
+    <Compile Include="GameModel\MapSource\LightController.cs" />
+    <Compile Include="GameModel\MapSource\LightSource.cs" />
     <Compile Include="GameModel\MobileObjects\Guard.cs" />
     <Compile Include="GameModel\MobileObjects\MobileObject.cs" />
     <Compile Include="GameModel\Enums\Direction.cs" />

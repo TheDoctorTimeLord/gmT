@@ -14,10 +14,13 @@ namespace GameThief.GameModel.Managers
     {
         public static Map Map;
         public static NoiseController NoiseController;
+        public static LightController LightController;
 
         public static void CreateMap(int width, int height, List<List<string>> content)
         {
             Map = new Map(width, height);
+            NoiseController = new NoiseController(width, height);
+            LightController = new LightController(width, height);
             FillMap(content);
         }
 
@@ -46,6 +49,10 @@ namespace GameThief.GameModel.Managers
         }
 
         public static void AddNoiseSourse(NoiseSource source) => NoiseController.AddNoiseSource(source);
+        public static void AddLightSource(LightSource source) => LightController.AddLightSource(source);
+
+        public static void RemoveNoiseSource(NoiseSource source) => NoiseController.RemoveSourceNoises(source);
+        public static void RemoveLightSource(LightSource source) => LightController.RemoveLightSource(source);
 
         public static List<Point> GetVisibleCells(Point position, Direction sightDirection, int viewWidth, int viewDistance)
         {
@@ -77,10 +84,13 @@ namespace GameThief.GameModel.Managers
 
                 foreach (var point in pointsToCheck)
                 {
-                    if (!InBounds(point) || !Map[point.X, point.Y].ObjectContainer.IsTransparent || Map[point.X, point.Y].Creature != null)
+                    if (!InBounds(point) || !Map[point.X, point.Y].ObjectContainer.IsTransparent ||
+                        Map[point.X, point.Y].Creature != null)
                         continue;
 
-                    yield return point;
+                    if (LightController[point.X, point.Y])
+                        yield return point;
+
                     nextPoints.Add(new Point(new Size(point + sightDirection)));
                 }
 

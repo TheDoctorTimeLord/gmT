@@ -8,6 +8,6 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 {
     public class Jewel : ImmobileObject
     {
-        public Jewel() : base(false, true, 0, 30, "jewel.png") { }
+        public Jewel() : base(false, false, 0, 30, "jewel.png") { }
     }
 }

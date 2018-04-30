@@ -63,7 +63,7 @@ namespace GameThief.GameModel.ImmobileObjects
             }
         }
 
-        public IDecor GetTopDecor()
+        public IDecor ShowDecor()
         {
             return Decors.FirstOrDefault();
         }

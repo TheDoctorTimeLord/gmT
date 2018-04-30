@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameThief.GameModel.ImmobileObjects.Decors
 {
-    public class BrokenPieces : ImmobileObject
+    public class ClosedCupboard : ImmobileObject
     {
-        public BrokenPieces() : base(false, false, 0, 1, "broken_pieces.png") { }
+        public ClosedCupboard() : base(true, true, 0, 20, "closed_cupboard.png") { }
     }
 }

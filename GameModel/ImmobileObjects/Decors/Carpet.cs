@@ -8,6 +8,6 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 {
     public class Carpet : ImmobileObject
     {
-        public Carpet() : base(false, true, 0, 1, "carpet.png") { }
+        public Carpet() : base(false, false, 0, 1, "carpet.png") { }
     }
 }

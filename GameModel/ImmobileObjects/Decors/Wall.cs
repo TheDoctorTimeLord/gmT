@@ -9,6 +9,6 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 {
     public class Wall : ImmobileObject
     {
-        public Wall() : base(true, false, 20, 1, "wall.png") { }
+        public Wall() : base(true, true, 20, 1, "wall.png") { }
     }
 }

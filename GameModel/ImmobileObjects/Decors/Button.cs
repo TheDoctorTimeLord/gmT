@@ -9,7 +9,7 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 {
     public class Button : ImmobileObject
     {
-        public Button() : base(false, true, 0, 10, "button.png") { }
+        public Button() : base(false, false, 0, 10, "button.png") { }
 
         public override bool InteractWith(ICreature creature)
         {
