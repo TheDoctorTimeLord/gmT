@@ -16,7 +16,7 @@ namespace GameThief.GameModel.ImmobileObjects
         public void AddDecor(IDecor decor)
         {
             IsSolid = IsSolid || decor.IsSolid();
-            IsTransparent = IsTransparent || decor.IsTransparent();
+            IsTransparent = IsTransparent && decor.IsTransparent();
             TotalNoiseSuppression += decor.GetNoiseSuppression();
             Decors.Add(decor);
         }
@@ -46,7 +46,7 @@ namespace GameThief.GameModel.ImmobileObjects
             {
                 IsTransparent = true;
                 foreach (var dec in Decors)
-                    IsTransparent = IsTransparent || dec.IsTransparent();
+                    IsTransparent = IsTransparent && dec.IsTransparent();
             }
         }
 
