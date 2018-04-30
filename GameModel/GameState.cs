@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
 
@@ -9,6 +11,10 @@ namespace GameThief.GameModel
 {
     public class GameState
     {
+        public static Keys KeyPressed;
+
+        public static Query GetCurrentQuery() => ConverterPressedKey.Convert(KeyPressed);
+
         public GameState(string gameConfigurationFilename)
         {
             var mapInfo = FileManager.ReadMapState(gameConfigurationFilename);

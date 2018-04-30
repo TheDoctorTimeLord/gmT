@@ -1,4 +1,4 @@
-﻿namespace GameThief.GameModel.MapSource
+﻿namespace GameThief.GameModel.Enums
 {
     public enum NoiseType
     {

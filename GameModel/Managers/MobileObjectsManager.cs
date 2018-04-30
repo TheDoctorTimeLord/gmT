@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.MobileObjects;
+using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.Managers
 {
@@ -13,12 +14,19 @@ namespace GameThief.GameModel.Managers
         public static HashSet<ICreature> MobileObjects { get; private set; } = new HashSet<ICreature>();
         private static readonly HashSet<ICreature> addedMobileObjects = new HashSet<ICreature>();
 
-        public static void CreateCreature(string nameCreature, Point position)
+        public static void CreateCreature(string nameCreature, InitializationMobileObject init)
         {
             switch (nameCreature)
             {
                 case "Player":
-                    AddCreature(new Player());
+                    AddCreature(init.IsDefaultInitialization
+                        ? new Player(new InitializationMobileObject())
+                        : new Player(init));
+                    break;
+                case "Guard":
+                    AddCreature(init.IsDefaultInitialization
+                        ? new Guard(new InitializationMobileObject())
+                        : new Guard(init));
                     break;
                 default:
                     throw new Exception("Попытка создания несуществующего Creature: " + nameCreature);

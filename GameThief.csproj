@@ -48,18 +48,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameModel\ConverterPressedKey.cs" />
+    <Compile Include="GameModel\Enums\ActionAiType.cs" />
     <Compile Include="GameModel\FieldOfView\FieldOfViewRectangle.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Button.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Door.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Table.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Wall.cs" />
+    <Compile Include="GameModel\Managers\GameInformationManager.cs" />
+    <Compile Include="GameModel\MobileObjects\Guard.cs" />
     <Compile Include="GameModel\MobileObjects\MobileObject.cs" />
-    <Compile Include="GameModel\Direction.cs" />
+    <Compile Include="GameModel\Enums\Direction.cs" />
     <Compile Include="GameModel\ImmobileObjects\IDecor.cs" />
     <Compile Include="GameModel\ImmobileObjects\ImmobileObject.cs" />
     <Compile Include="GameModel\Managers\MobileObjectsManager.cs" />
     <Compile Include="GameModel\Managers\FileManager.cs" />
     <Compile Include="GameModel\MapSource\Cell.cs" />
+    <Compile Include="GameModel\ServiceClasses\InitializationMobileObject.cs" />
+    <Compile Include="GameModel\ServiceClasses\Instruction.cs" />
     <Compile Include="GameModel\ServiceClasses\MapStateReadingResult.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
@@ -73,7 +79,7 @@
     <Compile Include="GameModel\MapSource\Noise.cs" />
     <Compile Include="GameModel\MapSource\NoiseController.cs" />
     <Compile Include="GameModel\MapSource\NoiseSource.cs" />
-    <Compile Include="GameModel\MapSource\NoiseType.cs" />
+    <Compile Include="GameModel\Enums\NoiseType.cs" />
     <Compile Include="GameModel\PointExtensions.cs" />
     <Compile Include="Tests\Map_Tests.cs" />
     <Compile Include="GameModel\GameState.cs" />
@@ -83,7 +89,7 @@
     <Compile Include="GameModel\Managers\TemporaryObjectsManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameModel\Query.cs" />
+    <Compile Include="GameModel\Enums\Query.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

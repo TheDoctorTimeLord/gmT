@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.Enums
 {
-    public enum Direction
+    public enum ActionAiType
     {
-        Up,
-        Right,
-        Down,
-        Left
+        MoveTo
     }
 }

@@ -1,13 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
+using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.MobileObjects
 {
     public class MobileObject : ICreature
     {
+        public MobileObject(InitializationMobileObject init)
+        {
+            if (init.IsDefaultInitialization)
+                GenerateRandomMobileObject();
+            else
+            {
+                Position = init.Position;
+                Health = init.Health;
+                MaxHealth = init.MaxHealth;
+                SightDirection = init.Direction;
+                MinHearingVolume = init.MinHearingVolume;
+                MaxHearingDelta = init.MaxHearingDelta;
+                FieldOfView = init.FieldOfView;
+            }
+        }
+
         protected Point Position;
         public int MaxHealth { get; private set; }
         public int Health { get; private set; }
