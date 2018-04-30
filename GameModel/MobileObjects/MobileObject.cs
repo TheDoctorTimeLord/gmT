@@ -34,7 +34,7 @@ namespace GameThief.GameModel.MobileObjects
         public int MaxHearingDelta { get; private set; }
         public int FieldOfView { get; private set; }
 
-        public List<Cell> VisibleCells;
+        public List<Point> VisibleCells;
         public List<Noise> AudibleNoises;
 
 
@@ -81,12 +81,12 @@ namespace GameThief.GameModel.MobileObjects
             throw new NotImplementedException();
         }
 
-        public virtual void ActionTaken(Query query)
+        public virtual void ActionTaken()
         {
             throw new NotImplementedException();
         }
 
-        public virtual void ActionRejected(Query query)
+        public virtual void ActionRejected()
         {
             throw new NotImplementedException();
         }

@@ -17,11 +17,11 @@ namespace GameThief.GameModel.MobileObjects
             return GameState.GetCurrentQuery();
         }
 
-        public override void ActionTaken(Query query)
+        public override void ActionTaken()
         {
         }
 
-        public override void ActionRejected(Query query)
+        public override void ActionRejected()
         {
         }
 

@@ -11,8 +11,8 @@ namespace GameThief.GameModel.MobileObjects
         void ChangeDirection(Direction direction);
 
         Query GetIntention();
-        void ActionTaken(Query query);
-        void ActionRejected(Query query);
+        void ActionTaken();
+        void ActionRejected();
 
         void Interative(ICreature creature);
     }
