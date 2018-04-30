@@ -32,7 +32,7 @@ namespace GameThief.GameModel.Managers
             Map[newPosition.X, newPosition.Y].Creature = creature;
         }
 
-        public static void AddCreatureFromMap(ICreature creature)
+        public static void AddCreatureToMap(ICreature creature)
         {
             var creaturePosition = creature.GetPosition();
             Map[creaturePosition.X, creaturePosition.Y].Creature = creature;
@@ -46,12 +46,49 @@ namespace GameThief.GameModel.Managers
 
         public static void AddNoiseSourse(NoiseSource source) => NoiseController.AddNoiseSource(source);
 
-        public static List<Cell> GetVisibleCells(Point position, Direction sightDirection, int rangeVisibility)
+        public static List<Point> GetVisibleCells(Point position, Direction sightDirection, int viewWidth, int viewDistance)
         {
-            throw new NotImplementedException();
+            var oppositeDirection = GameState.ConvertDirectionToSize[GameState.RotateFromTo(sightDirection, true)];
+            var startPoint = new Point(new Size(position + GameState.ConvertDirectionToSize[sightDirection]));
+
+            var pointsToCheck = Enumerable
+                .Range(0, viewWidth)
+                .SelectMany(num => new[]
+                {
+                    new Size(startPoint + new Size(oppositeDirection.Width * num, oppositeDirection.Height * num)),
+                    new Size(startPoint - new Size(oppositeDirection.Width * num, oppositeDirection.Height * num))
+                })
+                .Distinct()
+                .Select(sz => new Point(sz))
+                .ToList();
+
+            return GetFieldOfView(viewDistance, GameState.ConvertDirectionToSize[sightDirection], pointsToCheck).ToList();
         }
 
-        public static List<Noise> GetAudibleNoises(Point position, int delicacyHearing, int thresholdAudibility)
+        private static IEnumerable<Point> GetFieldOfView(int viewDistance, Size sightDirection, List<Point> pointsToCheck)
+        {
+            while (true)
+            {
+                if (viewDistance < 0 || pointsToCheck.Count == 0)
+                    yield break;
+
+                var nextPoints = new List<Point>();
+
+                foreach (var point in pointsToCheck)
+                {
+                    if (!InBounds(point) || !Map[point.X, point.Y].ObjectContainer.IsTransparent || Map[point.X, point.Y].Creature != null)
+                        continue;
+
+                    yield return point;
+                    nextPoints.Add(new Point(new Size(point + sightDirection)));
+                }
+
+                viewDistance--;
+                pointsToCheck = nextPoints;
+            }
+        }
+
+        public static List<Noise> GetAudibleNoises(Point position, int maxHearingDelta, int minHearingVolume)
         { 
             var result = new List<Noise>();
             var isFirst = true;
@@ -69,7 +106,7 @@ namespace GameThief.GameModel.Managers
                     continue;
                 }
                 
-                if (noise.Intensity - previous.Intensity < delicacyHearing)
+                if (noise.Intensity - previous.Intensity < maxHearingDelta)
                     break;
                 
                 result.Add(noise);
@@ -77,7 +114,7 @@ namespace GameThief.GameModel.Managers
             }
 
             return result
-                .Where(n => n.Intensity >= thresholdAudibility)
+                .Where(n => n.Intensity >= minHearingVolume)
                 .ToList();
         }
 

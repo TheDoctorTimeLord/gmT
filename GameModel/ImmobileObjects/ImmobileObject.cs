@@ -5,22 +5,24 @@ namespace GameThief.GameModel.ImmobileObjects
 {
     public class ImmobileObject : IDecor
     {
-        private readonly bool isSolid = false;
-        private readonly bool isTransparent = true;
-        private readonly int noiseSuppression = 0;
-        private readonly int priority = 0;
+        private readonly bool isSolid;
+        private readonly bool isTransparent;
+        private readonly int noiseSuppression;
+        private readonly int priority;
+        private readonly string imageName;
 
-        public ImmobileObject(bool isSolid, bool isTransparent, int noiseSuppression, int priority)
+        public ImmobileObject(bool isSolid, bool isTransparent, int noiseSuppression, int priority, string imageName)
         {
             this.isSolid = isSolid;
             this.isTransparent = isTransparent;
             this.noiseSuppression = noiseSuppression;
             this.priority = priority;
+            this.imageName = imageName;
         }
 
-        public bool InteractWith(ICreature creature)
+        public virtual bool InteractWith(ICreature creature)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public int CompareTo(object obj)
@@ -28,7 +30,12 @@ namespace GameThief.GameModel.ImmobileObjects
             if (!(obj is ImmobileObject))
                 throw new ArgumentException();
 
-            return priority.CompareTo(((ImmobileObject)obj).GetPriority());
+            return -priority.CompareTo(((ImmobileObject)obj).GetPriority());
+        }
+
+        public string GetImageName()
+        {
+            return imageName;
         }
 
         public int GetNoiseSuppression()

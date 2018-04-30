@@ -49,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameModel\FieldOfView\FieldOfViewRectangle.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Button.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Door.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Table.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Wall.cs" />
     <Compile Include="GameModel\MobileObjects\MobileObject.cs" />
     <Compile Include="GameModel\Direction.cs" />
     <Compile Include="GameModel\ImmobileObjects\IDecor.cs" />
