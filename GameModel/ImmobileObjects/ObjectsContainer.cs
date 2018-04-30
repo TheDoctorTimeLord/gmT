@@ -11,7 +11,7 @@ namespace GameThief.GameModel.ImmobileObjects
         public bool IsTransparent { get; set; } = true;
         public int TotalNoiseSuppression { get; set; } = 0;
 
-        public SortedSet<IDecor> Decors = new SortedSet<IDecor>();
+        public readonly SortedSet<IDecor> Decors = new SortedSet<IDecor>();
 
         public void AddDecor(IDecor decor)
         {
