@@ -49,7 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameModel\ConverterPressedKey.cs" />
+    <Compile Include="GameModel\Enums\ActionAiType.cs" />
     <Compile Include="GameModel\FieldOfView\FieldOfViewRectangle.cs" />
+    <Compile Include="GameModel\Managers\GameInformationManager.cs" />
     <Compile Include="GameModel\MobileObjects\Guard.cs" />
     <Compile Include="GameModel\MobileObjects\MobileObject.cs" />
     <Compile Include="GameModel\Enums\Direction.cs" />

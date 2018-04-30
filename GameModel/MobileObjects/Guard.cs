@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
+using GameThief.GameModel.Managers;
 using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.MobileObjects
 {
     public class Guard : MobileObject
     {
-        private List<Instruction> normalGuardProgramm = new List<Instruction>();
+        private List<Instruction> normalGuardTrack;
 
         public Guard(InitializationMobileObject init) : base(init)
         {
@@ -20,6 +21,8 @@ namespace GameThief.GameModel.MobileObjects
                 switch (pameter.Item1)
                 {
                     case "path":
+                        var track = GameInformationManager.GetTrackByName(pameter.Item2);
+                        normalGuardTrack = track;
                         break;
                     default:
                         break;
