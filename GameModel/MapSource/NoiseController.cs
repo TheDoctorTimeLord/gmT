@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using GameThief.GameModel.Managers;
+using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.MapSource
 {

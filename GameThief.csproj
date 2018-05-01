@@ -98,7 +98,7 @@
     <Compile Include="GameModel\MapSource\NoiseController.cs" />
     <Compile Include="GameModel\MapSource\NoiseSource.cs" />
     <Compile Include="GameModel\Enums\NoiseType.cs" />
-    <Compile Include="GameModel\PointExtensions.cs" />
+    <Compile Include="GameModel\ServiceClasses\PointExtensions.cs" />
     <Compile Include="Tests\Map_Tests.cs" />
     <Compile Include="GameModel\GameState.cs" />
     <Compile Include="GameModel\MobileObjects\ICreature.cs" />

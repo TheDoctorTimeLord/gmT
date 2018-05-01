@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.ServiceClasses
 {
     public static class PointExtensions
     {
