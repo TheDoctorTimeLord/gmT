@@ -99,7 +99,7 @@ namespace GameThief
                         c = MapManager.Map[j, i].Creature is Guard ? "G" : c;
                     }
                     else
-                        c = " ";
+                        c = "x";
 
                     str.Append(c);
                 }

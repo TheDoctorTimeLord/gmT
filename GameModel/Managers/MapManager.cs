@@ -88,7 +88,7 @@ namespace GameThief.GameModel.Managers
                         Map[point.X, point.Y].Creature != null)
                         continue;
 
-                    if (LightController[point.X, point.Y])
+                    //if (LightController[point.X, point.Y])
                         yield return point;
 
                     nextPoints.Add(new Point(new Size(point + sightDirection)));
