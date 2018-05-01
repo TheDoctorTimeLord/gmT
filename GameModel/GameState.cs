@@ -36,17 +36,17 @@ namespace GameThief.GameModel
                 new List<string>{"."},
                 new List<string>{"."},
                 new List<string>{"."},
-                new List<string>{".", "wall", "painting"},
+                new List<string>{".", "wall"},
                 new List<string>{"."},
                 new List<string>{"."},
                 new List<string>{"."},
                 new List<string>{"."},
+                new List<string>{".", "wall"},
                 new List<string>{"."},
                 new List<string>{"."},
                 new List<string>{"."},
                 new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
+                new List<string>{".", "wall"},
                 new List<string>{"."},
                 new List<string>{"."},
             };
@@ -55,8 +55,8 @@ namespace GameThief.GameModel
             //MobileObjectsManager.CreateCreature("Player",
             //    new InitializationMobileObject(new Point(1, 1), Direction.Right));
 
-            //MobileObjectsManager.CreateCreature("Guard",
-            //    new InitializationMobileObject(new Point(2, 2), Direction.Left));
+            MobileObjectsManager.CreateCreature("Guard",
+                new InitializationMobileObject(new Point(3, 2), Direction.Left));
 
             //MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Cat, 3, 10, new Point(3, 2), "meow"));
 

@@ -35,9 +35,9 @@ namespace GameThief.GameModel.MobileObjects
             MaxHealth = 10;
             Health = 10;
             MaxHearingDelta = 5;
-            MinHearingVolume = 2;
+            MinHearingVolume = 1;
             ViewDistanse = 5;
-            ViewWidth = 2;
+            ViewWidth = 3;
         }
 
         protected Point Position;
