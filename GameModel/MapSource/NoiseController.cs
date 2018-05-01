@@ -68,7 +68,9 @@ namespace GameThief.GameModel.MapSource
         public void RemoveSourceNoises(NoiseSource source)
         {
             foreach (var point in source.GetMaxScope())
-                Noises[point.X, point.Y].Where(n => n.Source != source);
+                Noises[point.X, point.Y] = Noises[point.X, point.Y]
+                    .Where(n => n.Source != source)
+                    .ToList();
         }
 
         private bool InScope(Point position, NoiseSource source)

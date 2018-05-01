@@ -31,6 +31,8 @@ namespace GameThief
 
             while (true)
             {
+                st.UpdateState();
+
                 var noises = player.AudibleNoises == null
                     ? new List<Point>()
                     : player.AudibleNoises.Select(n => n.Source.Position).ToList();
@@ -38,7 +40,6 @@ namespace GameThief
                 var a = Console.ReadKey();
                 Console.WriteLine("");
                 GameState.KeyPressed = Conv(a.KeyChar);
-                st.UpdateState();
                 Console.Clear();
             }
         }
