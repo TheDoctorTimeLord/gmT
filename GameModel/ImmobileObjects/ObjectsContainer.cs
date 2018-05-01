@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects
 {
     public class ObjectsContainer
     {
-        public bool IsSolid { get; set; } = false;
-        public bool IsOpaque { get; set; } = true;
-        public int TotalNoiseSuppression { get; set; } = 0;
+        public bool IsSolid { get; set; }
+        public bool IsOpaque { get; set; }
+        public int TotalNoiseSuppression { get; set; }
 
         private readonly SortedSet<IDecor> Decors = new SortedSet<IDecor>();
 
@@ -25,6 +26,34 @@ namespace GameThief.GameModel.ImmobileObjects
         {
             switch (decorName)
             {
+                case "broken_pieces":
+                    return new BrokenPieces();
+                case "button":
+                    return new Button();
+                case "carpet":
+                    return new Carpet();
+                case "chair":
+                    return new Chair();
+                case "closed_cupboard":
+                    return new ClosedCupboard();
+                case "closed_door":
+                    return new ClosedDoor();
+                case "jewel":
+                    return new Jewel();
+                case "lock":
+                    return new Lock();
+                case "opened_cupboard":
+                    return new OpenedCupboard();
+                case "opened_door":
+                    return new OpenedDoor();
+                case "painting":
+                    return new Painting();
+                case "treasure":
+                    return new Treasure();
+                case "vase":
+                    return new Vase();
+                case "wall":
+                    return new Wall();
                 default:
                     throw new Exception("Попытка создания несуществующего элемента декора: " + decorName);
             }
