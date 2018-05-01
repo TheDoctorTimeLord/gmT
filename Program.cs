@@ -36,7 +36,14 @@ namespace GameThief
 
             while (true)
             {
+                var a = Console.ReadKey();
+                GameState.KeyPressed = Conv(a.KeyChar);
+                Console.WriteLine("");
+
+                Console.Clear();
+
                 st.UpdateState();
+
                 if (flag)
                 {
                     flag = false;
@@ -50,10 +57,6 @@ namespace GameThief
                     ? new List<Point>()
                     : player.VisibleCells.Concat(new List<Point> { player.GetPosition() }).ToList();
                 Console.WriteLine(Colol(vis));
-                var a = Console.ReadKey();
-                Console.WriteLine("");
-                GameState.KeyPressed = Conv(a.KeyChar);
-                Console.Clear();
             }
         }
 
