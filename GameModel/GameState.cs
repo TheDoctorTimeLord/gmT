@@ -71,10 +71,10 @@ namespace GameThief.GameModel
                 if (ValidateRequest(query, creature))
                 {
                     ExecuteIntention(query, creature);
-                    creature.ActionTaken();
+                    creature.ActionTaken(query);
                 }
                 else
-                    creature.ActionRejected();
+                    creature.ActionRejected(query);
             }
 
             TemporaryObjectsManager.UpdateTemporaryObjects();
@@ -122,14 +122,17 @@ namespace GameThief.GameModel
             if (!MapManager.InBounds(target))
                 return false;
 
-            if (query == Query.Interaction)
-                return true;
-
-            if (MapManager.Map.Cells[target.X, target.Y].Creature != null)
-                return false;
-            if (MapManager.Map.Cells[target.X, target.Y].ObjectContainer.IsSolid)
-                return false;
-            return true;
+            switch (query)
+            {
+                case Query.Interaction:
+                    return true;
+                case Query.Move when MapManager.Map.Cells[target.X, target.Y].Creature != null:
+                    return false;
+                case Query.Move when MapManager.Map.Cells[target.X, target.Y].ObjectContainer.IsSolid:
+                    return false;
+                default:
+                    return true;
+            }
         }
 
         public static readonly Dictionary<Direction, Size> ConvertDirectionToSize = new Dictionary<Direction, Size>
