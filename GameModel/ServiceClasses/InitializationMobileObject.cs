@@ -10,9 +10,11 @@ namespace GameThief.GameModel.ServiceClasses
 {
     public class InitializationMobileObject
     {
-        public InitializationMobileObject()
+        public InitializationMobileObject(Point position, Direction direction)
         {
             IsDefaultInitialization = true;
+            Position = position;
+            Direction = direction;
         }
 
         public InitializationMobileObject(Point position, int maxHealth, int health, Direction direction,

@@ -52,6 +52,9 @@ namespace GameThief.GameModel.MobileObjects
 
         private void ExecuteCurrentInstruction()
         {
+            if (normalGuardTrack.Count == 0)
+                return;
+
             switch (normalGuardTrack[currentInstruction].InstructionType)
             {
                 case AIActionType.MoveTo:
@@ -65,7 +68,6 @@ namespace GameThief.GameModel.MobileObjects
 
         private void UpdateLevelOfAlertness()
         {
-
             //foreach (var possition in VisibleCells)
             //{
             //    var currentCell = MapManager.Map[possition.X, possition.Y];

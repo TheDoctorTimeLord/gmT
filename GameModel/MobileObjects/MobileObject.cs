@@ -13,7 +13,7 @@ namespace GameThief.GameModel.MobileObjects
         public MobileObject(InitializationMobileObject init)
         {
             if (init.IsDefaultInitialization)
-                GenerateRandomMobileObject();
+                GenerateRandomMobileObject(init.Position, init.Direction);
             else
             {
                 Position = init.Position;
@@ -25,6 +25,19 @@ namespace GameThief.GameModel.MobileObjects
                 ViewDistanse = init.ViewDistanse;
                 ViewWidth = init.ViewWidth;
             }
+        }
+
+        private void GenerateRandomMobileObject(Point position, Direction direction) //TODO ГЕНЕРАТОР В РАЗРАБОТКЕ
+        {
+            Position = position;
+            SightDirection = direction;
+
+            MaxHealth = 10;
+            Health = 10;
+            MaxHearingDelta = 5;
+            MinHearingVolume = 2;
+            ViewDistanse = 5;
+            ViewWidth = 2;
         }
 
         protected Point Position;
