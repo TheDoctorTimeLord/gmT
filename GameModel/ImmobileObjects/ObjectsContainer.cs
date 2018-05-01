@@ -8,7 +8,7 @@ namespace GameThief.GameModel.ImmobileObjects
     public class ObjectsContainer
     {
         public bool IsSolid { get; set; } = false;
-        public bool IsTransparent { get; set; } = true;
+        public bool IsOpaque { get; set; } = true;
         public int TotalNoiseSuppression { get; set; } = 0;
 
         private readonly SortedSet<IDecor> Decors = new SortedSet<IDecor>();
@@ -16,7 +16,7 @@ namespace GameThief.GameModel.ImmobileObjects
         public void AddDecor(IDecor decor)
         {
             IsSolid = IsSolid || decor.IsSolid();
-            IsTransparent = IsTransparent && decor.IsTransparent();
+            IsOpaque = IsOpaque || decor.IsOpaque();
             TotalNoiseSuppression += decor.GetNoiseSuppression();
             Decors.Add(decor);
         }
@@ -42,11 +42,11 @@ namespace GameThief.GameModel.ImmobileObjects
                     IsSolid = IsSolid || dec.IsSolid();
             }
 
-            if (!decor.IsTransparent())
+            if (!decor.IsOpaque())
             {
-                IsTransparent = true;
+                IsOpaque = true;
                 foreach (var dec in Decors)
-                    IsTransparent = IsTransparent && dec.IsTransparent();
+                    IsOpaque = IsOpaque || dec.IsOpaque();
             }
         }
 

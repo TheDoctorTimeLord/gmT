@@ -53,7 +53,7 @@ namespace GameThief.GameModel.ImmobileObjects
             return isSolid;
         }
 
-        public bool IsTransparent()
+        public bool IsOpaque()
         {
             return isOpaque;
         }

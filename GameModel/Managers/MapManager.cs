@@ -84,7 +84,7 @@ namespace GameThief.GameModel.Managers
 
                 foreach (var point in pointsToCheck)
                 {
-                    if (!InBounds(point) || !Map[point.X, point.Y].ObjectContainer.IsTransparent ||
+                    if (!InBounds(point) || !Map[point.X, point.Y].ObjectContainer.IsOpaque ||
                         Map[point.X, point.Y].Creature != null)
                         continue;
 
