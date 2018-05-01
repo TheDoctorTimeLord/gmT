@@ -96,12 +96,12 @@ namespace GameThief.GameModel.MobileObjects
             throw new NotImplementedException();
         }
 
-        public virtual void ActionTaken()
+        public virtual void ActionTaken(Query query)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void ActionRejected()
+        public virtual void ActionRejected(Query query)
         {
             throw new NotImplementedException();
         }
