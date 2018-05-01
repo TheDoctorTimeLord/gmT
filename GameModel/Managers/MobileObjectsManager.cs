@@ -36,12 +36,15 @@ namespace GameThief.GameModel.Managers
         private static void AddCreature(ICreature creature)
         {
             addedMobileObjects.Add(creature);
-            MapManager.AddCreatureToMap(creature);
         }
 
         public static void UpdateAnimates()
         {
-            MobileObjects.UnionWith(addedMobileObjects);
+            foreach (var addedMobileObject in addedMobileObjects)
+            {
+                MobileObjects.Add(addedMobileObject);
+                MapManager.AddCreatureToMap(addedMobileObject);
+            }
             addedMobileObjects.Clear();
         }
 
