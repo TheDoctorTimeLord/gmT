@@ -43,6 +43,6 @@ namespace GameThief.GameModel.ServiceClasses
         public int ViewDistanse;
         public int ViewWidth;
 
-        public List<Tuple<string, string>> Parameters;
+        public List<Tuple<string, string>> Parameters = new List<Tuple<string, string>>();
     }
 }
