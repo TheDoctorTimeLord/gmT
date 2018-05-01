@@ -20,12 +20,12 @@ namespace GameThief.GameModel.Managers
             {
                 case "Player":
                     AddCreature(init.IsDefaultInitialization
-                        ? new Player(new InitializationMobileObject())
+                        ? new Player(new InitializationMobileObject(init.Position, init.Direction))
                         : new Player(init));
                     break;
                 case "Guard":
                     AddCreature(init.IsDefaultInitialization
-                        ? new Guard(new InitializationMobileObject())
+                        ? new Guard(new InitializationMobileObject(init.Position, init.Direction))
                         : new Guard(init));
                     break;
                 default:

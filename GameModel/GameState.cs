@@ -15,13 +15,13 @@ namespace GameThief.GameModel
 
         public static Query GetCurrentQuery() => ConverterPressedKey.Convert(KeyPressed);
 
-        public GameState(string gameConfigurationFilename)
-        {
-            var mapInfo = FileManager.ReadMapState(gameConfigurationFilename);
-            if (!mapInfo.WasSuccessful)
-                throw new Exception("Некорректное задание стартовых данных. Файл: " + gameConfigurationFilename);
-            MapManager.CreateMap(mapInfo.Width, mapInfo.Height, mapInfo.MapInfo);
-        }
+        //public GameState(string gameConfigurationFilename)
+        //{
+        //    var mapInfo = FileManager.ReadMapState(gameConfigurationFilename);
+        //    if (!mapInfo.WasSuccessful)
+        //        throw new Exception("Некорректное задание стартовых данных. Файл: " + gameConfigurationFilename);
+        //    MapManager.CreateMap(mapInfo.Width, mapInfo.Height, mapInfo.MapInfo);
+        //}
 
         public void UpdateState()
         {
