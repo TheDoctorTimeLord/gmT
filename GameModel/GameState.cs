@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
+using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;
 using GameThief.GameModel.ServiceClasses;
 
@@ -54,8 +55,10 @@ namespace GameThief.GameModel
             MobileObjectsManager.CreateCreature("Player",
                 new InitializationMobileObject(new Point(1, 1), Direction.Right));
 
-            MobileObjectsManager.CreateCreature("Guard",
-                new InitializationMobileObject(new Point(2, 2), Direction.Left));
+            //MobileObjectsManager.CreateCreature("Guard",
+            //    new InitializationMobileObject(new Point(2, 2), Direction.Left));
+
+            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Cat, 3, 10, new Point(3, 2), "meow"));
 
             ConverterPressedKey.CreateConverter(new Dictionary<Keys, Query>
             {
