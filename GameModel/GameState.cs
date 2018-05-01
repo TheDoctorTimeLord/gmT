@@ -52,7 +52,15 @@ namespace GameThief.GameModel
 
             MapManager.CreateMap(5, 4, lll);
             MobileObjectsManager.CreateCreature("Player",
-                new InitializationMobileObject(new Point(1, 1), Direction.Down));
+                new InitializationMobileObject(new Point(1, 1), Direction.Right));
+
+            ConverterPressedKey.CreateConverter(new Dictionary<Keys, Query>
+            {
+                {Keys.D, Query.RotateRight},
+                {Keys.W, Query.Move},
+                {Keys.A, Query.RotateLeft},
+                {Keys.E, Query.Interaction}
+            });
         }
 
         public void UpdateState()

@@ -12,6 +12,12 @@ namespace GameThief.GameModel.MapSource
         public NoiseController(int width, int height)
         {
             Noises = new List<Noise>[width, height];
+
+            for (var i = 0; i < width; i++) 
+            for (var j = 0; j < height; j++)
+            {
+                Noises[i,j] = new List<Noise>();
+            }
         }
 
         public void AddNoiseSource(NoiseSource source)

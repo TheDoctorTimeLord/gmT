@@ -13,6 +13,12 @@ namespace GameThief.GameModel.MapSource
         public LightController(int width, int height)
         {
             lightCoverage = new HashSet<LightSource>[width, height];
+
+            for (var i = 0; i < width; i++)
+            for (var j = 0; j < height; j++)
+            {
+                lightCoverage[i, j] = new HashSet<LightSource>();
+            }
         }
 
         public void AddLightSource(LightSource source)

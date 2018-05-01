@@ -22,6 +22,7 @@ namespace GameThief
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
             var st = new GameState();
+            var pl = true;
 
             while (true)
             {
@@ -29,6 +30,7 @@ namespace GameThief
                 var a = Console.ReadKey();
                 GameState.KeyPressed = Conv(a.KeyChar);
                 st.UpdateState();
+
                 //Console.Clear();
             }
         }
@@ -37,8 +39,16 @@ namespace GameThief
         {
             switch (a)
             {
-                 default:
-                     return Keys.None;
+                case 'd':
+                    return Keys.D;
+                case 'e':
+                    return Keys.E;
+                case 'w':
+                    return Keys.W;
+                case 'a':
+                    return Keys.A;
+                default:
+                    return Keys.None;
             }
         }
 
