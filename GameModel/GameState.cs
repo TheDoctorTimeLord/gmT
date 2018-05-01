@@ -36,7 +36,7 @@ namespace GameThief.GameModel
                 new List<string>{"."},
                 new List<string>{"."},
                 new List<string>{"."},
-                new List<string>{"."},
+                new List<string>{".", "wall", "painting"},
                 new List<string>{"."},
                 new List<string>{"."},
                 new List<string>{"."},
@@ -58,7 +58,7 @@ namespace GameThief.GameModel
             //MobileObjectsManager.CreateCreature("Guard",
             //    new InitializationMobileObject(new Point(2, 2), Direction.Left));
 
-            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Cat, 3, 10, new Point(3, 2), "meow"));
+            //MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Cat, 3, 10, new Point(3, 2), "meow"));
 
             ConverterPressedKey.CreateConverter(new Dictionary<Keys, Query>
             {
