@@ -148,7 +148,7 @@ namespace GameThief.GameModel.Managers
                 foreach (var dec in content[i].Skip(1))
                     newCell.ObjectContainer.AddDecor(ObjectsContainer.ParseDecor(dec));
 
-                Map[i % Map.Wigth, i / Map.Height] = newCell;
+                Map[i % Map.Wigth, i / Map.Wigth] = newCell;
             }
         }
     }

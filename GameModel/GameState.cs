@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
+using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel
 {
@@ -22,6 +23,37 @@ namespace GameThief.GameModel
         //        throw new Exception("Некорректное задание стартовых данных. Файл: " + gameConfigurationFilename);
         //    MapManager.CreateMap(mapInfo.Width, mapInfo.Height, mapInfo.MapInfo);
         //}
+
+        public GameState()
+        {
+            var lll = new List<List<string>>()
+            {
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+                new List<string>{"1"},
+            };
+
+            MapManager.CreateMap(5, 4, lll);
+            MobileObjectsManager.CreateCreature("Player",
+                new InitializationMobileObject(new Point(1, 1), Direction.Down));
+        }
 
         public void UpdateState()
         {
