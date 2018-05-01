@@ -84,14 +84,15 @@ namespace GameThief.GameModel.Managers
 
                 foreach (var point in pointsToCheck)
                 {
-                    if (!InBounds(point) || !Map[point.X, point.Y].ObjectContainer.IsOpaque ||
-                        Map[point.X, point.Y].Creature != null)
+                    if (!InBounds(point))
                         continue;
 
                     //if (LightController[point.X, point.Y])
                         yield return point;
 
-                    nextPoints.Add(new Point(new Size(point + sightDirection)));
+                    if (!Map[point.X, point.Y].ObjectContainer.IsOpaque ||
+                        Map[point.X, point.Y].Creature != null)
+                        nextPoints.Add(new Point(new Size(point + sightDirection)));
                 }
 
                 viewDistance--;
