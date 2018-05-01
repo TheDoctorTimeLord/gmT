@@ -17,11 +17,20 @@ namespace GameThief.GameModel.MobileObjects
             return GameState.GetCurrentQuery();
         }
 
-        public override void ActionTaken()
+        public override void ActionTaken(Query query)
         {
+            switch (query)
+            {
+                case Query.RotateLeft:
+                    SightDirection = GameState.RotateFromTo(SightDirection, true);
+                    break;
+                case Query.RotateRight:
+                    SightDirection = GameState.RotateFromTo(SightDirection, false);
+                    break;
+            }
         }
 
-        public override void ActionRejected()
+        public override void ActionRejected(Query query)
         {
         }
 
