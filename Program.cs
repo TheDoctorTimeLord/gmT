@@ -28,6 +28,7 @@ namespace GameThief
             {
                 Console.WriteLine(Colol());
                 var a = Console.ReadKey();
+                Console.WriteLine("");
                 GameState.KeyPressed = Conv(a.KeyChar);
                 st.UpdateState();
 
