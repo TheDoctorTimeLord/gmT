@@ -24,46 +24,56 @@ namespace GameThief.GameModel.MapSource
         public void AddNoiseSource(NoiseSource source)
         {
             TemporaryObjectsManager.AddTemporaryObject(source);
-            var notVisited = source.GetMaxScope().ToList();
-            var noiseCoverage = new Dictionary<Point, int>();
-            noiseCoverage[source.Position] =
-                source.MaxIntensity - MapManager.Map[source.Position.X, source.Position.Y].ObjectContainer.TotalNoiseSuppression;
+            var pointList = new List<Point>();
 
-            while (true)
+            for (var i = 0; i < Noises.GetLength(0); i++)
+            for (var j = 0; j < Noises.GetLength(1); j++)
             {
-                Point toOpen = new Point(-1, -1);
-                var loudest = int.MinValue;
-
-                foreach (var p in notVisited)
-                {
-                    if (noiseCoverage.ContainsKey(p) && noiseCoverage[p] > loudest)
-                    {
-                        loudest = noiseCoverage[p];
-                        toOpen = p;
-                    }
-                }
-
-                if (toOpen == new Point(-1, -1))
-                    break;
-
-                foreach (var p in toOpen.FindNeighbours())
-                {
-                    if (!InScope(p, source))
-                        continue;
-
-                    var currentVolume = noiseCoverage[toOpen] - MapManager.Map[toOpen.X, toOpen.Y].ObjectContainer.TotalNoiseSuppression - 1;
-                    
-                    if (!noiseCoverage.ContainsKey(p) || noiseCoverage[p] < currentVolume)
-                        noiseCoverage[p] = currentVolume;
-                }
-
-                notVisited.Remove(toOpen);
+                pointList.Add(new Point(i, j));
             }
 
-            foreach (var p in noiseCoverage)
-            {
-                Noises[p.Key.X, p.Key.Y].Add(new Noise(source, p.Value));
-            }
+            Dijkstra.DijkstraTraversal(pointList.ToArray(), source.Position,
+                (p, v) => Noises[p.X, p.Y].Add(new Noise(source, source.MaxIntensity - v)));
+            //var notVisited = source.GetMaxScope().ToList();
+            //var noiseCoverage = new Dictionary<Point, int>();
+            //noiseCoverage[source.Position] =
+            //    source.MaxIntensity - MapManager.Map[source.Position.X, source.Position.Y].ObjectContainer.TotalNoiseSuppression;
+
+            //while (true)
+            //{
+            //    Point toOpen = new Point(-1, -1);
+            //    var loudest = int.MinValue;
+
+            //    foreach (var p in notVisited)
+            //    {
+            //        if (noiseCoverage.ContainsKey(p) && noiseCoverage[p] > loudest)
+            //        {
+            //            loudest = noiseCoverage[p];
+            //            toOpen = p;
+            //        }
+            //    }
+
+            //    if (toOpen == new Point(-1, -1))
+            //        break;
+
+            //    foreach (var p in toOpen.FindNeighbours())
+            //    {
+            //        if (!InScope(p, source))
+            //            continue;
+
+            //        var currentVolume = noiseCoverage[toOpen] - MapManager.Map[toOpen.X, toOpen.Y].ObjectContainer.TotalNoiseSuppression - 1;
+
+            //        if (!noiseCoverage.ContainsKey(p) || noiseCoverage[p] < currentVolume)
+            //            noiseCoverage[p] = currentVolume;
+            //    }
+
+            //    notVisited.Remove(toOpen);
+            //}
+
+            //foreach (var p in noiseCoverage)
+            //{
+            //    Noises[p.Key.X, p.Key.Y].Add(new Noise(source, p.Value));
+            //}
         }
 
         public void RemoveSourceNoises(NoiseSource source)

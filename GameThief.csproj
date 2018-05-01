@@ -82,6 +82,7 @@
     <Compile Include="GameModel\MapSource\Cell.cs" />
     <Compile Include="GameModel\PathFinder.cs" />
     <Compile Include="GameModel\ServiceClasses\Deque.cs" />
+    <Compile Include="GameModel\ServiceClasses\Dijkstra.cs" />
     <Compile Include="GameModel\ServiceClasses\InitializationMobileObject.cs" />
     <Compile Include="GameModel\ServiceClasses\Instruction.cs" />
     <Compile Include="GameModel\ServiceClasses\MapStateReadingResult.cs" />
