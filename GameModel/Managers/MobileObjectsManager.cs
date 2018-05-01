@@ -33,6 +33,11 @@ namespace GameThief.GameModel.Managers
             }
         }
 
+        public static void CreateCreature(ICreature creature)
+        {
+            AddCreature(creature);
+        }
+
         private static void AddCreature(ICreature creature)
         {
             addedMobileObjects.Add(creature);
