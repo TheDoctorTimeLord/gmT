@@ -18,7 +18,7 @@ namespace GameThief.GameModel.MobileObjects
         private const int Alert = 1;
         private const int Angry = 1;
 
-        private List<Instruction> normalGuardTrack;
+        private readonly List<Instruction> normalGuardTrack = new List<Instruction>();
         private int currentInstruction;
         private readonly Queue<Query> actionQueue = new Queue<Query>();
         private int levelOfAlertness = 0;
