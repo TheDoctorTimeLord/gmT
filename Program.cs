@@ -31,8 +31,7 @@ namespace GameThief
                 Console.WriteLine("");
                 GameState.KeyPressed = Conv(a.KeyChar);
                 st.UpdateState();
-
-                //Console.Clear();
+                Console.Clear();
             }
         }
 
@@ -64,6 +63,7 @@ namespace GameThief
                 {
                     c = MapManager.Map[j, i].BackgroundFilename;
                     c = MapManager.Map[j, i].Creature is Player ? "P" : c;
+                    c = MapManager.Map[j, i].Creature is Guard ? "G" : c;
                     str.Append(c);
                 }
 

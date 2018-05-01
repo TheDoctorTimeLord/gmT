@@ -88,13 +88,13 @@ namespace GameThief.GameModel.MobileObjects
             //}
         }
 
-        public override void ActionTaken()
+        public override void ActionTaken(Query query)
         {
             if (actionQueue.Count != 0)
                 actionQueue.Dequeue();
         }
 
-        public override void ActionRejected()
+        public override void ActionRejected(Query query)
         {
         }
 
