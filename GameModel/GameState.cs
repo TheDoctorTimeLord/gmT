@@ -52,8 +52,8 @@ namespace GameThief.GameModel
             };
 
             MapManager.CreateMap(5, 4, lll);
-            MobileObjectsManager.CreateCreature("Player",
-                new InitializationMobileObject(new Point(1, 1), Direction.Right));
+            //MobileObjectsManager.CreateCreature("Player",
+            //    new InitializationMobileObject(new Point(1, 1), Direction.Right));
 
             //MobileObjectsManager.CreateCreature("Guard",
             //    new InitializationMobileObject(new Point(2, 2), Direction.Left));

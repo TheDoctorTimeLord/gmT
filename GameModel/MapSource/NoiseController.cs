@@ -22,6 +22,7 @@ namespace GameThief.GameModel.MapSource
 
         public void AddNoiseSource(NoiseSource source)
         {
+            TemporaryObjectsManager.AddTemporaryObject(source);
             var notVisited = source.GetMaxScope().ToList();
             var noiseCoverage = new Dictionary<Point, int>();
             noiseCoverage[source.Position] =

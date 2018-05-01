@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameThief.GameModel;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
+using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief
 {
@@ -23,17 +25,20 @@ namespace GameThief
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
             var st = new GameState();
-            var pl = true;
-            Player plyer;
+            //var pl = true;
+            var player = new Player(new InitializationMobileObject(new Point(1, 1), Direction.Right));
+            MobileObjectsManager.CreateCreature(player);
 
             while (true)
             {
-                Console.WriteLine(Colol());
+                var noises = player.AudibleNoises == null
+                    ? new List<Point>()
+                    : player.AudibleNoises.Select(n => n.Source.Position).ToList();
+                Console.WriteLine(Colol(noises));
                 var a = Console.ReadKey();
                 Console.WriteLine("");
                 GameState.KeyPressed = Conv(a.KeyChar);
                 st.UpdateState();
-                plyer = 
                 Console.Clear();
             }
         }
