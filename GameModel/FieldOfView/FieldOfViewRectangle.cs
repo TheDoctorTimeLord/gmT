@@ -45,7 +45,7 @@ namespace GameThief.GameModel.FieldOfView
 
                 foreach (var point in pointsToCheck)
                 {
-                    if (!MapManager.InBounds(point) || !MapManager.Map[point.X, point.Y].ObjectContainer.IsTransparent)
+                    if (!MapManager.InBounds(point) || !MapManager.Map[point.X, point.Y].ObjectContainer.IsOpaque)
                         continue;
 
                     yield return point;

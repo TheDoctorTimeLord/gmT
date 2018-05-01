@@ -9,7 +9,7 @@ namespace GameThief.GameModel.ImmobileObjects
         int GetPriority();
         int GetNoiseSuppression();
         bool IsSolid();
-        bool IsTransparent();
+        bool IsOpaque();
         bool InteractWith(ICreature creature);
     }
 }
