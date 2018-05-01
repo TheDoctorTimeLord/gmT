@@ -13,9 +13,9 @@ namespace GameThief.GameModel
 {
     public static class PathFinder
     {
-        public static IEnumerable<Query> GetPathFromTo(Point from, Point to, Direction currentDirectionCreature)
+        public static List<Query> GetPathFromTo(Point from, Point to, Direction currentDirectionCreature)
         {
-            
+            return new List<Query>();
         }
 
         private static bool CheckMove(Point target)
