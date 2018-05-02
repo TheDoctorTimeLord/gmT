@@ -15,17 +15,31 @@ using NUnit.Framework;
 namespace GameThief.Tests
 {
     [TestFixture]
-    public class MapManagerTests
+    public class MapManager_Tests
     {
+        readonly List<List<string>> mapSamle = new List<List<string>>();
+
         void TestFieldOfView(Point position, Direction direction, int viewDistance, int viewWidth, List<Point> expectedResult)
         {
             var result = MapManager.GetVisibleCells(position, direction, viewDistance, viewWidth).ToList();
             CollectionAssert.AreEquivalent(expectedResult, result);
         }
 
+        void FillMap(int width, int height)
+        {
+            for (var y = 0; y < height; y++)
+            {
+                for (var x = 0; x < width; x++)
+                {
+                    mapSamle.Add(new List<string> { "." });
+                }
+            }
+        }
+
         [Test]
         public void TestNoWalls()
         {
+            FillMap(5, 5);
             MapManager.CreateMap(5, 5, mapSamle);
 
             var expectedResult = new List<Point>
@@ -46,11 +60,13 @@ namespace GameThief.Tests
             };
 
             TestFieldOfView(new Point(2, 0), Direction.Down, 3, 2, expectedResult);
+            mapSamle.Clear();
         }
 
         [Test]
         public void TestSingleWall()
         {
+            FillMap(5, 5);
             MapManager.CreateMap(5, 5, mapSamle);
             MapManager.Map[2, 2].ObjectContainer.AddDecor(new Wall());
 
@@ -71,11 +87,13 @@ namespace GameThief.Tests
             };
 
             TestFieldOfView(new Point(2, 0), Direction.Down, 3, 2, expectedResult);
+            mapSamle.Clear();
         }
 
         [Test]
         public void TestLongWall()
         {
+            FillMap(5, 5);
             MapManager.CreateMap(5, 5, mapSamle);
             for (var i = 0; i < 5; i++)
                 MapManager.Map[i, 2].ObjectContainer.AddDecor(new Wall());
@@ -93,11 +111,13 @@ namespace GameThief.Tests
             };
 
             TestFieldOfView(new Point(2, 0), Direction.Down, 3, 2, expectedResult);
+            mapSamle.Clear();
         }
 
         [Test]
         public void TestTransparentObjects()
         {
+            FillMap(5, 5);
             MapManager.CreateMap(5, 5, mapSamle);
             for (var i = 0; i < 5; i++)
                 MapManager.Map[i, 2].ObjectContainer.AddDecor(new Table());
@@ -120,11 +140,13 @@ namespace GameThief.Tests
             };
 
             TestFieldOfView(new Point(2, 0), Direction.Down, 3, 2, expectedResult);
+            mapSamle.Clear();
         }
 
         [Test]
         public void TestMapEdgeRight()
         {
+            FillMap(5, 5);
             MapManager.CreateMap(5, 5, mapSamle);
 
             var expectedResult = new List<Point>
@@ -137,11 +159,13 @@ namespace GameThief.Tests
             };
 
             TestFieldOfView(new Point(2, 0), Direction.Right, 3, 2, expectedResult);
+            mapSamle.Clear();
         }
 
         [Test]
         public void TestMapEdgeLeft()
         {
+            FillMap(5, 5);
             MapManager.CreateMap(5, 5, mapSamle);
 
             var expectedResult = new List<Point>
@@ -154,11 +178,13 @@ namespace GameThief.Tests
             };
 
             TestFieldOfView(new Point(2, 0), Direction.Left, 3, 2, expectedResult);
+            mapSamle.Clear();
         }
 
         [Test]
         public void TestMapEdgeUp()
         {
+            FillMap(5, 5);
             MapManager.CreateMap(5, 5, mapSamle);
 
             var expectedResult = new List<Point>
@@ -174,11 +200,13 @@ namespace GameThief.Tests
             };
 
             TestFieldOfView(new Point(2, 2), Direction.Up, 3, 2, expectedResult);
+            mapSamle.Clear();
         }
 
         [Test]
         public void TestCreature()
         {
+            FillMap(5, 5);
             MapManager.CreateMap(5, 5, mapSamle);
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
@@ -202,35 +230,7 @@ namespace GameThief.Tests
             };
 
             TestFieldOfView(new Point(2, 0), Direction.Down, 3, 2, expectedResult);
+            mapSamle.Clear();
         }
-
-        private readonly List<List<string>> mapSamle = new List<List<string>>
-        {
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."},
-            new List<string> {"."}
-        };
     }
 }

@@ -111,7 +111,7 @@
     <Compile Include="Tests\Dijkstra_tests.cs" />
     <Compile Include="Tests\NoiseController_tests.cs" />
     <Compile Include="Tests\PathFinder_Tests.cs" />
-    <Compile Include="Tests\MapManagerTests.cs" />
+    <Compile Include="Tests\MapManager_Tests.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
