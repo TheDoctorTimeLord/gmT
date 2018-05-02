@@ -54,27 +54,6 @@ namespace GameThief.GameModel.Managers
         public static void RemoveNoiseSource(NoiseSource source) => NoiseController.RemoveSourceNoises(source);
         public static void RemoveLightSource(LightSource source) => LightController.RemoveLightSource(source);
 
-        //public static List<Point> GetVisibleCells(Point position, Direction sightDirection, int viewWidth, int viewDistance)
-        //{
-        //    //var oppositeDirection = GameState.ConvertDirectionToSize[GameState.RotateFromTo(sightDirection, true)];
-        //    //var startPoint = new Point(new Size(position + GameState.ConvertDirectionToSize[sightDirection]));
-
-        //    //var pointsToCheck = Enumerable
-        //    //    .Range(0, viewWidth)
-        //    //    .SelectMany(num => new[]
-        //    //    {
-        //    //        new Size(startPoint + new Size(oppositeDirection.Width * num, oppositeDirection.Height * num)),
-        //    //        new Size(startPoint - new Size(oppositeDirection.Width * num, oppositeDirection.Height * num))
-        //    //    })
-        //    //    .Distinct()
-        //    //    .Select(sz => new Point(sz))
-        //    //    .ToList();
-
-        //    return GetFieldOfView(viewDistance, viewWidth, position, sightDirection).ToList();
-        //}
-
-
-
         public static IEnumerable<Point> GetVisibleCells(Point position, Direction sightDirection, int viewDistance, int viewWidth)
         {
             var direction = GameState.ConvertDirectionToSize[sightDirection];
