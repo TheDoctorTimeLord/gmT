@@ -180,10 +180,6 @@ namespace GameThief.Tests
         public void TestCreature()
         {
             MapManager.CreateMap(5, 5, mapSamle);
-            //var state =  new GameState();
-            //MobileObjectsManager.CreateCreature("Guard",
-            //    new InitializationMobileObject(new Point(2, 2), Direction.Left));
-            //state.UpdateState();
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 new Guard(new InitializationMobileObject(new Point(2, 2), Direction.Up))
