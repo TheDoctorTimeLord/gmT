@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
@@ -86,7 +87,7 @@ namespace GameThief.GameModel.MobileObjects
 
         public Query GetIntention()
         {
-            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse);
+            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse).ToList();
             AudibleNoises = MapManager.GetAudibleNoises(Position, MaxHearingDelta, MinHearingVolume);
             return GetIntentionOfCreature();
         }

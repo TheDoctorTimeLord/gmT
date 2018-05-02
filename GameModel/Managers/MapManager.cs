@@ -26,10 +26,10 @@ namespace GameThief.GameModel.Managers
 
         public static void MoveCreature(ICreature creature, Point newPosition)
         {
-            if (Map[newPosition.X, newPosition.Y].Creature != null || 
+            if (Map[newPosition.X, newPosition.Y].Creature != null ||
                 Map[newPosition.X, newPosition.Y].ObjectContainer.IsSolid)
                 throw new ArgumentException();
-            
+
             var oldPosition = creature.GetPosition();
             creature.ChangePosition(newPosition);
             Map[oldPosition.X, oldPosition.Y].Creature = null;
@@ -54,30 +54,39 @@ namespace GameThief.GameModel.Managers
         public static void RemoveNoiseSource(NoiseSource source) => NoiseController.RemoveSourceNoises(source);
         public static void RemoveLightSource(LightSource source) => LightController.RemoveLightSource(source);
 
-        public static List<Point> GetVisibleCells(Point position, Direction sightDirection, int viewWidth, int viewDistance)
+        //public static List<Point> GetVisibleCells(Point position, Direction sightDirection, int viewWidth, int viewDistance)
+        //{
+        //    //var oppositeDirection = GameState.ConvertDirectionToSize[GameState.RotateFromTo(sightDirection, true)];
+        //    //var startPoint = new Point(new Size(position + GameState.ConvertDirectionToSize[sightDirection]));
+
+        //    //var pointsToCheck = Enumerable
+        //    //    .Range(0, viewWidth)
+        //    //    .SelectMany(num => new[]
+        //    //    {
+        //    //        new Size(startPoint + new Size(oppositeDirection.Width * num, oppositeDirection.Height * num)),
+        //    //        new Size(startPoint - new Size(oppositeDirection.Width * num, oppositeDirection.Height * num))
+        //    //    })
+        //    //    .Distinct()
+        //    //    .Select(sz => new Point(sz))
+        //    //    .ToList();
+
+        //    return GetFieldOfView(viewDistance, viewWidth, position, sightDirection).ToList();
+        //}
+
+
+
+        public static IEnumerable<Point> GetVisibleCells(Point position, Direction sightDirection, int viewDistance, int viewWidth)
         {
+            var direction = GameState.ConvertDirectionToSize[sightDirection];
             var oppositeDirection = GameState.ConvertDirectionToSize[GameState.RotateFromTo(sightDirection, true)];
-            var startPoint = new Point(new Size(position + GameState.ConvertDirectionToSize[sightDirection]));
+            var startPoint = new Point(new Size(position + direction));
+            var pointsToCheck = GetSidePoints(new List<Point> { startPoint }, oppositeDirection).ToList();
+            pointsToCheck.Add(startPoint);
+            var currentWidth = 1;
 
-            var pointsToCheck = Enumerable
-                .Range(0, viewWidth)
-                .SelectMany(num => new[]
-                {
-                    new Size(startPoint + new Size(oppositeDirection.Width * num, oppositeDirection.Height * num)),
-                    new Size(startPoint - new Size(oppositeDirection.Width * num, oppositeDirection.Height * num))
-                })
-                .Distinct()
-                .Select(sz => new Point(sz))
-                .ToList();
-
-            return GetFieldOfView(viewDistance, GameState.ConvertDirectionToSize[sightDirection], pointsToCheck).ToList();
-        }
-
-        private static IEnumerable<Point> GetFieldOfView(int viewDistance, Size sightDirection, List<Point> pointsToCheck)
-        {
             while (true)
             {
-                if (viewDistance < 0 || pointsToCheck.Count == 0)
+                if (viewDistance <= 0 || pointsToCheck.Count == 0)
                     yield break;
 
                 var nextPoints = new List<Point>();
@@ -86,22 +95,44 @@ namespace GameThief.GameModel.Managers
                 {
                     if (!InBounds(point))
                         continue;
-
                     //if (LightController[point.X, point.Y])
-                        yield return point;
+                    yield return point;
 
                     if (!Map[point.X, point.Y].ObjectContainer.IsOpaque ||
                         Map[point.X, point.Y].Creature != null)
-                        nextPoints.Add(new Point(new Size(point + sightDirection)));
+                        nextPoints.Add(new Point(new Size(point + direction)));
                 }
 
                 viewDistance--;
                 pointsToCheck = nextPoints;
+                if (currentWidth <= viewWidth && nextPoints.Count > 0)
+                {
+                    pointsToCheck = pointsToCheck.Concat(GetSidePoints(nextPoints, oppositeDirection)).ToList();
+                    currentWidth++;
+                }
             }
         }
 
+        private static IEnumerable<Point> GetSidePoints(List<Point> points, Size oppositeDirection)
+        {
+            var sidePoints = points.OrderBy(p =>
+            {
+                if (oppositeDirection.Width == 1)
+                    return p.X;
+                return p.Y;
+            }).ToList();
+
+            return new List<Size>
+                {
+                    new Size(sidePoints[0] - new Size(oppositeDirection.Width, oppositeDirection.Height)),
+                    new Size(sidePoints[sidePoints.Count - 1] +
+                             new Size(oppositeDirection.Width, oppositeDirection.Height))
+                }
+                .Select(sz => new Point(sz));
+        }
+
         public static List<Noise> GetAudibleNoises(Point position, int maxHearingDelta, int minHearingVolume)
-        { 
+        {
             var result = new List<Noise>();
             var isFirst = true;
             Noise previous = null;
@@ -117,10 +148,10 @@ namespace GameThief.GameModel.Managers
                     isFirst = false;
                     continue;
                 }
-                
+
                 if (noise.Intensity - previous.Intensity < maxHearingDelta)
                     break;
-                
+
                 result.Add(noise);
                 previous = noise;
             }

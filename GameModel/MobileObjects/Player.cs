@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.ServiceClasses;
@@ -20,7 +21,7 @@ namespace GameThief.GameModel.MobileObjects
 
         public override void ActionTaken(Query query)
         {
-            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse);
+            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse).ToList();
         }
 
         public override void ActionRejected(Query query)

@@ -56,7 +56,7 @@ namespace GameThief
                 var vis = player.VisibleCells == null
                     ? new List<Point>()
                     : player.VisibleCells.Concat(new List<Point> { player.GetPosition() }).ToList();
-                var noises = player.AudibleNoises;
+                //var noises = player.AudibleNoises;
                 Console.WriteLine(Colol(vis));
             }
         }

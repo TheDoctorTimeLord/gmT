@@ -100,7 +100,6 @@
     <Compile Include="GameModel\MapSource\NoiseSource.cs" />
     <Compile Include="GameModel\Enums\NoiseType.cs" />
     <Compile Include="GameModel\ServiceClasses\PointExtensions.cs" />
-    <Compile Include="Tests\Map_Tests.cs" />
     <Compile Include="GameModel\GameState.cs" />
     <Compile Include="GameModel\MobileObjects\ICreature.cs" />
     <Compile Include="GameModel\ITemporaryObject.cs" />
@@ -109,6 +108,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameModel\Enums\Query.cs" />
+    <Compile Include="Tests\MapManagerTests.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
