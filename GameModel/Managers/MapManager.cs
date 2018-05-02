@@ -115,20 +115,22 @@ namespace GameThief.GameModel.Managers
 
         private static IEnumerable<Point> GetSidePoints(List<Point> points, Size oppositeDirection)
         {
-            var sidePoints = points.OrderBy(p =>
-            {
-                if (oppositeDirection.Width == 1)
-                    return p.X;
-                return p.Y;
-            }).ToList();
+            var result = new List<Size>();
 
-            return new List<Size>
-                {
-                    new Size(sidePoints[0] - new Size(oppositeDirection.Width, oppositeDirection.Height)),
-                    new Size(sidePoints[sidePoints.Count - 1] +
-                             new Size(oppositeDirection.Width, oppositeDirection.Height))
-                }
-                .Select(sz => new Point(sz));
+            if (Math.Abs(oppositeDirection.Width) == 1)
+            {
+                var sidePoints = points.OrderBy(p => p.X).ToList();
+                result.Add(new Size(sidePoints[0] - new Size(1, 0)));
+                result.Add(new Size(sidePoints[sidePoints.Count - 1] + new Size(1, 0)));
+            }
+            else
+            {
+                var sidePoints = points.OrderBy(p => p.Y).ToList();
+                result.Add(new Size(sidePoints[0] - new Size(0, 1)));
+                result.Add(new Size(sidePoints[sidePoints.Count - 1] + new Size(0, 1)));
+            }
+
+            return result.Select(sz => new Point(sz));
         }
 
         public static List<Noise> GetAudibleNoises(Point position, int maxHearingDelta, int minHearingVolume)
