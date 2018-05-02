@@ -1,19 +1,19 @@
 ﻿namespace GameThief.GameModel.MapSource
 {
-    public class Map
+    public class Map<T>
     {
-        public Cell[,] Cells;
+        public T[,] Cells;
         public int Wigth { get; set; }
         public int Height { get; set; }
 
         public Map(int width, int height)
         {
-            Cells = new Cell[width, height];
+            Cells = new T[width, height];
             Wigth = width;
             Height = height;
         }
 
-        public Cell this[int i, int j]
+        public T this[int i, int j]
         {
             get { return Cells[i, j]; }
             set { Cells[i, j] = value; }

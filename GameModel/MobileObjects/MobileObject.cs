@@ -51,7 +51,7 @@ namespace GameThief.GameModel.MobileObjects
         public int ViewWidth { get; private set; }
 
         public List<Point> VisibleCells;
-        public List<Noise> AudibleNoises;
+        public HashSet<Noise> AudibleNoises;
 
 
         public void MakeDamage(int damage)
@@ -87,9 +87,14 @@ namespace GameThief.GameModel.MobileObjects
 
         public Query GetIntention()
         {
+            UpdateWorldData();
+            return GetIntentionOfCreature();
+        }
+
+        protected void UpdateWorldData()
+        {
             VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse).ToList();
             AudibleNoises = MapManager.GetAudibleNoises(Position, MaxHearingDelta, MinHearingVolume);
-            return GetIntentionOfCreature();
         }
 
         protected virtual Query GetIntentionOfCreature()

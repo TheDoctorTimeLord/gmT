@@ -8,23 +8,17 @@ namespace GameThief.GameModel.MapSource
 {
     public class NoiseController
     {
-        public readonly HashSet<Noise>[,] Noises;
+        public readonly Map<HashSet<Noise>> Noises;
 
         public NoiseController(int width, int height)
         {
-            Noises = new HashSet<Noise>[width, height];
-
-            for (var i = 0; i < width; i++) 
-            for (var j = 0; j < height; j++)
-            {
-                Noises[i, j] = new HashSet<Noise>();
-            }
+            Noises = new Map<HashSet<Noise>>(width, height);
         }
 
         public void AddNoiseSource(NoiseSource source)
         {
             TemporaryObjectsManager.AddTemporaryObject(source);
-            Dijkstra.DijkstraTraversal(Noises, source, (noises, noise) =>
+            Dijkstra.DijkstraTraversal(Noises.Cells, source, (noises, noise) =>
             {
                 noises.Add(noise);
             });
@@ -32,7 +26,7 @@ namespace GameThief.GameModel.MapSource
 
         public void RemoveSourceNoises(NoiseSource source)
         {
-            Dijkstra.DijkstraTraversal(Noises, source, (noises, noise) =>
+            Dijkstra.DijkstraTraversal(Noises.Cells, source, (noises, noise) =>
             {
                 if (noises.Contains(noise))
                     noises.Remove(noise);

@@ -21,7 +21,7 @@ namespace GameThief.GameModel.MobileObjects
 
         public override void ActionTaken(Query query)
         {
-            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse).ToList();
+            UpdateWorldData();
         }
 
         public override void ActionRejected(Query query)

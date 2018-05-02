@@ -12,13 +12,13 @@ namespace GameThief.GameModel.Managers
 {
     public static class MapManager
     {
-        public static Map Map;
+        public static Map<Cell> Map;
         public static NoiseController NoiseController;
         public static LightController LightController;
 
         public static void CreateMap(int width, int height, List<List<string>> content)
         {
-            Map = new Map(width, height);
+            Map = new Map<Cell>(width, height);
             NoiseController = new NoiseController(width, height);
             LightController = new LightController(width, height);
             FillMap(content);
@@ -133,9 +133,9 @@ namespace GameThief.GameModel.Managers
             return result.Select(sz => new Point(sz));
         }
 
-        public static List<Noise> GetAudibleNoises(Point position, int maxHearingDelta, int minHearingVolume)
+        public static HashSet<Noise> GetAudibleNoises(Point position, int maxHearingDelta, int minHearingVolume)
         {
-            var result = new List<Noise>();
+            var result = new HashSet<Noise>();
             var isFirst = true;
             Noise previous = null;
 
@@ -143,6 +143,9 @@ namespace GameThief.GameModel.Managers
                 .Noises[position.X, position.Y]
                 .OrderBy(n => n))
             {
+                if (noise.Intensity < minHearingVolume)
+                    break;
+
                 if (isFirst)
                 {
                     result.Add(noise);
@@ -158,9 +161,7 @@ namespace GameThief.GameModel.Managers
                 previous = noise;
             }
 
-            return result
-                .Where(n => n.Intensity >= minHearingVolume)
-                .ToList();
+            return result;
         }
 
         public static bool InBounds(Point position)
@@ -183,6 +184,7 @@ namespace GameThief.GameModel.Managers
                     newCell.ObjectContainer.AddDecor(ObjectsContainer.ParseDecor(dec));
 
                 Map[i % Map.Wigth, i / Map.Wigth] = newCell;
+                NoiseController.Noises[i % Map.Wigth, i / Map.Wigth] = new HashSet<Noise>();
             }
         }
     }

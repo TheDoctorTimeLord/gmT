@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
+using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
 using GameThief.GameModel.ServiceClasses;
@@ -226,6 +227,34 @@ namespace GameThief.Tests
                 Tuple.Create(new Point(1, 0), new Noise(sourse1, 1)),
                 Tuple.Create(new Point(1, 1), new Noise(sourse1, 2)));
 
+            CheckMap(map, mapAnswer);
+        }
+
+        [Test]
+        public void TestCreateNoiseSourceWhisWall()
+        {
+            var width = 3;
+            var height = 3;
+            SetMap(width, height, new List<Tuple<Point, IDecor>>
+            {
+                Tuple.Create(new Point(1, 1), (IDecor)new Wall()),
+                Tuple.Create(new Point(1, 0), (IDecor)new Wall())
+            });
+            var map = GetMap(width, height);
+            var sourse = new NoiseSource(NoiseType.Guard, 1, 4, new Point(2, 1), "");
+            Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
+            {
+                noises.Add(noise);
+            });
+            var mapAnswer = GetMap(width, height);
+            ChangeMap(mapAnswer,
+                Tuple.Create(new Point(0, 0), new Noise(sourse, 1)),
+                Tuple.Create(new Point(0, 1), new Noise(sourse, 2)),
+                Tuple.Create(new Point(0, 2), new Noise(sourse, 2)),
+                Tuple.Create(new Point(1, 2), new Noise(sourse, 3)),
+                Tuple.Create(new Point(2, 0), new Noise(sourse, 3)),
+                Tuple.Create(new Point(2, 1), new Noise(sourse, 4)),
+                Tuple.Create(new Point(2, 2), new Noise(sourse, 3)));
             CheckMap(map, mapAnswer);
         }
     }

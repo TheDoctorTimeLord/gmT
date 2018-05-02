@@ -27,39 +27,6 @@ namespace GameThief.GameModel
 
         public GameState()
         {
-            var lll = new List<List<string>>()
-            {
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{".", "wall"},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{".", "wall"},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{"."},
-                new List<string>{".", "wall"},
-                new List<string>{"."},
-                new List<string>{"."},
-            };
-
-            MapManager.CreateMap(5, 4, lll);
-            //MobileObjectsManager.CreateCreature("Player",
-            //    new InitializationMobileObject(new Point(1, 1), Direction.Right));
-
-            MobileObjectsManager.CreateCreature("Guard",
-                new InitializationMobileObject(new Point(3, 2), Direction.Left));
-
-            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Cat, 30, 10, new Point(3, 2), "meow"));
-
             ConverterPressedKey.CreateConverter(new Dictionary<Keys, Query>
             {
                 {Keys.D, Query.RotateRight},
