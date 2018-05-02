@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
+using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
 using GameThief.GameModel.ServiceClasses;
@@ -20,7 +21,7 @@ namespace GameThief.GameModel.MobileObjects
 
         private readonly List<Instruction> normalGuardTrack = new List<Instruction>();
         private int currentInstruction;
-        private readonly Queue<Query> actionQueue = new Queue<Query>();
+        private readonly Deque<Query> actionQueue = new Deque<Query>();
         private int levelOfAlertness = 0;
 
         private Dictionary<Point, IDecor> previouslyVisibleCells = new Dictionary<Point, IDecor>();
@@ -47,7 +48,7 @@ namespace GameThief.GameModel.MobileObjects
                 ExecuteCurrentInstruction();
             }
 
-            return actionQueue.Count == 0 ? Query.None : actionQueue.Peek();
+            return actionQueue.Count == 0 ? Query.None : actionQueue.PeekFront();
         }
 
         private void ExecuteCurrentInstruction()
@@ -60,7 +61,7 @@ namespace GameThief.GameModel.MobileObjects
                 case AIActionType.MoveTo:
                     var instructions = PathFinder.GetPathFromTo(Position, normalGuardTrack[currentInstruction].Position, SightDirection);
                     foreach (var instruction in instructions)
-                        actionQueue.Enqueue(instruction);
+                        actionQueue.PushBack(instruction);
                     break;
             }
             currentInstruction = (currentInstruction + 1) % normalGuardTrack.Count;
@@ -91,11 +92,14 @@ namespace GameThief.GameModel.MobileObjects
         public override void ActionTaken(Query query)
         {
             if (actionQueue.Count != 0)
-                actionQueue.Dequeue();
+                actionQueue.PopFront();
         }
 
         public override void ActionRejected(Query query)
         {
+            var target = Position + GameState.ConvertDirectionToSize[SightDirection];
+            if (MapManager.Map[target.X, target.Y].ObjectContainer.ShowDecor() is ClosedDoor)
+                actionQueue.PushFront(Query.Interaction);
         }
 
         public override void Interative(ICreature creature)
