@@ -11,7 +11,7 @@ namespace GameThief.GameModel.ServiceClasses
 {
     public static class Dijkstra
     {
-        public static void DijkstraTraversal(HashSet<Noise>[,] noises, NoiseSource source,
+        public static void DijkstraTraversal(Map<HashSet<Noise>> noises, NoiseSource source,
             Action<HashSet<Noise>, Noise> changer)
         {
             var visited = new HashSet<Point>();
@@ -31,7 +31,7 @@ namespace GameThief.GameModel.ServiceClasses
         }
 
         private static void UpdateNeighboringPoint(Tuple<Point, Noise> currentNoise,
-            Dictionary<Point, Noise> potentialTransition, HashSet<Point> visited, HashSet<Noise>[,] noises)
+            Dictionary<Point, Noise> potentialTransition, HashSet<Point> visited, Map<HashSet<Noise>> noises)
         {
             foreach (var point in GetPossibleTransition(currentNoise.Item1, noises, visited))
             {
@@ -47,17 +47,17 @@ namespace GameThief.GameModel.ServiceClasses
             }
         }
 
-        private static IEnumerable<Point> GetPossibleTransition(Point position, HashSet<Noise>[,] noises, HashSet<Point> visited)
+        private static IEnumerable<Point> GetPossibleTransition(Point position, Map<HashSet<Noise>> noises, HashSet<Point> visited)
         {
             return offsets
                 .Select(offset => position + offset)
                 .Where(point => InBound(noises, point) && !visited.Contains(point));
         }
 
-        private static bool InBound(HashSet<Noise>[,] noises, Point point)
+        private static bool InBound(Map<HashSet<Noise>> noises, Point point)
         {
-            return point.X >= 0 && point.X < noises.GetLength(0) &&
-                   point.Y >= 0 && point.Y < noises.GetLength(1);
+            return point.X >= 0 && point.X < noises.Wigth &&
+                   point.Y >= 0 && point.Y < noises.Height;
         }
 
         private static Tuple<Point, Noise> GetLowestCostPoint(Dictionary<Point, Noise> potentialTransition)

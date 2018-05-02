@@ -18,31 +18,29 @@ namespace GameThief.Tests
     [TestFixture]
     public class Dijkstra_tests
     {
-        public HashSet<Noise>[,] GetMap(int width, int height)
+        public Map<HashSet<Noise>> GetMap(int width, int height)
         {
-            var result = new HashSet<Noise>[width, height];
+            var map = new Map<HashSet<Noise>>(width, height);
+            for (var x = 0; x < width; x++)
             for (var y = 0; y < height; y++)
             {
-                for (var x = 0; x < width; x++)
-                {
-                    result[x, y] = new HashSet<Noise>();
-                }
+                map[x, y] = new HashSet<Noise>();
             }
-            return result;
+            return map;
         }
 
-        public void CheckMap(HashSet<Noise>[,] mapResult, HashSet<Noise>[,] mapAnswer)
+        public void CheckMap(Map<HashSet<Noise>> mapResult, Map<HashSet<Noise>> mapAnswer)
         {
-            for (var y = 0; y < mapResult.GetLength(1); y++)
+            for (var y = 0; y < mapResult.Height; y++)
             {
-                for (var x = 0; x < mapResult.GetLength(0); x++)
+                for (var x = 0; x < mapResult.Wigth; x++)
                 {
                     CollectionAssert.AreEqual(mapResult[x, y], mapAnswer[x, y]);
                 }
             }
         }
 
-        public void ChangeMap(HashSet<Noise>[,] map, params Tuple<Point, Noise>[] noises)
+        public void ChangeMap(Map<HashSet<Noise>> map, params Tuple<Point, Noise>[] noises)
         {
             foreach (var tuple in noises)
             {

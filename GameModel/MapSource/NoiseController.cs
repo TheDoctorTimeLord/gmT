@@ -18,7 +18,7 @@ namespace GameThief.GameModel.MapSource
         public void AddNoiseSource(NoiseSource source)
         {
             TemporaryObjectsManager.AddTemporaryObject(source);
-            Dijkstra.DijkstraTraversal(Noises.Cells, source, (noises, noise) =>
+            Dijkstra.DijkstraTraversal(Noises, source, (noises, noise) =>
             {
                 noises.Add(noise);
             });
@@ -26,7 +26,7 @@ namespace GameThief.GameModel.MapSource
 
         public void RemoveSourceNoises(NoiseSource source)
         {
-            Dijkstra.DijkstraTraversal(Noises.Cells, source, (noises, noise) =>
+            Dijkstra.DijkstraTraversal(Noises, source, (noises, noise) =>
             {
                 if (noises.Contains(noise))
                     noises.Remove(noise);

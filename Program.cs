@@ -27,27 +27,10 @@ namespace GameThief
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
-            SetMap(5, 5, new List<Tuple<Point, IDecor>>
-            {
-                Tuple.Create(new Point(3, 0), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 1), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 2), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 3), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 4), (IDecor)new Wall())
-            });
-
             var st = new GameState();
             var player = new Player(new InitializationMobileObject(new Point(2, 2), Direction.Left));
 
-            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
-            {
-                player,
-                MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "Guard", new InitializationMobileObject(new Point(1, 0), Direction.Up))
-            });
-
-            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Guard, 10, 4, new Point(0, 4), "N"));
-            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Guard, 10, 25, new Point(4, 2), "L"));
+            Map2(player);
 
             while (true)
             {
@@ -63,8 +46,65 @@ namespace GameThief
                     ? new List<Point>()
                     : player.VisibleCells.Concat(new List<Point> { player.GetPosition() }).ToList();
                 var noises = player.AudibleNoises.ToDictionary(noise => noise.Source.Position);
-                Console.WriteLine(Colol(vis, noises));
+                Console.WriteLine(Drawing(vis, noises));
             }
+        }
+
+        private static void Map1(Player player)
+        {
+            SetMap(5, 5, new List<Tuple<Point, IDecor>>
+            {
+                Tuple.Create(new Point(3, 0), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 1), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 2), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 3), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 4), (IDecor)new Wall())
+            });
+
+            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
+            {
+                player,
+                MobileObjectsManager.GetCreatureByNameAndInitParams(
+                    "Guard", new InitializationMobileObject(new Point(1, 0), Direction.Up))
+            });
+
+            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Guard, 10, 4, new Point(0, 4), "N"));
+            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Guard, 10, 25, new Point(4, 2), "L"));
+        }
+
+        private static void Map2(Player player)
+        {
+            SetMap(5, 5, new List<Tuple<Point, IDecor>>
+            {
+                Tuple.Create(new Point(3, 2), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 3), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 4), (IDecor)new Wall()),
+                Tuple.Create(new Point(4, 1), (IDecor)new Wall())
+            });
+
+            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
+            {
+                player,
+                MobileObjectsManager.GetCreatureByNameAndInitParams(
+                    "Guard", new InitializationMobileObject(new Point(4, 3), Direction.Up))
+            });
+        }
+
+        private static void Map3(Player player)
+        {
+            SetMap(5, 5, new List<Tuple<Point, IDecor>>
+            {
+                Tuple.Create(new Point(3, 2), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 3), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 4), (IDecor)new Wall()),
+            });
+
+            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
+            {
+                player,
+                MobileObjectsManager.GetCreatureByNameAndInitParams(
+                    "Guard", new InitializationMobileObject(new Point(4, 3), Direction.Up))
+            });
         }
 
         private static Keys Conv(char a)
@@ -84,7 +124,7 @@ namespace GameThief
             }
         }
 
-        static string Colol(List<Point> vis, Dictionary<Point, Noise> noises)
+        static string Drawing(List<Point> vis, Dictionary<Point, Noise> noises)
         {
             var str = new StringBuilder();
 
@@ -104,7 +144,7 @@ namespace GameThief
                         foreach (var ch in MapManager.Map[j, i].ObjectContainer.GetAllDecors())
                         {
                             c = ch is Wall ? "W" : c;
-                            c = ch is Painting ? "g" : c;
+                            c = ch is Painting ? "p" : c;
                         }
 
                         c = MapManager.Map[j, i].Creature is Player ? "P" : c;
