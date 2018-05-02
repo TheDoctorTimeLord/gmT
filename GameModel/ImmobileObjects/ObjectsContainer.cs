@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameThief.GameModel.ImmobileObjects.Decors;
+using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects

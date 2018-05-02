@@ -9,6 +9,7 @@ using GameThief.GameModel;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.ImmobileObjects.Decors;
+using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;
