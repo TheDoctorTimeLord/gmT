@@ -13,6 +13,14 @@ namespace GameThief.GameModel
 {
     public static class PathFinder
     {
+        /// <summary>
+        /// Поиск кротчайшего пути между точками from и to, описанный набором команд движения. Промежуточные взаиможейсвия
+        /// (например, с закрытой дверью) не учитываются в возращаемом списке
+        /// </summary>
+        /// <param name="from">Позиция начала пути</param>
+        /// <param name="to">Позиция конца пути</param>
+        /// <param name="currentDirectionCreature">Направление взгляда персонажа</param>
+        /// <returns></returns>
         public static List<Query> GetPathFromTo(Point from, Point to, Direction currentDirectionCreature)
         {
             var queue = new Queue<LinkedNode>();
@@ -38,15 +46,20 @@ namespace GameThief.GameModel
                     queue.Enqueue(targetNode);
                 }
 
-                targetNode.Position = currentNode.Position;
-                targetNode.Direction = GameState.RotateFromTo(currentNode.Direction, true);
+                targetNode = new LinkedNode(
+                    currentNode.Position,
+                    GameState.RotateFromTo(currentNode.Direction, true),
+                    currentNode);
                 if (!visitiedCell.Contains(targetNode))
                 {
                     visitiedCell.Add(targetNode);
                     queue.Enqueue(targetNode);
                 }
 
-                targetNode.Direction = GameState.RotateFromTo(currentNode.Direction, false);
+                targetNode = new LinkedNode(
+                    currentNode.Position,
+                    GameState.RotateFromTo(currentNode.Direction, false),
+                    currentNode);
                 if (!visitiedCell.Contains(targetNode))
                 {
                     visitiedCell.Add(targetNode);
@@ -66,7 +79,8 @@ namespace GameThief.GameModel
                 .Skip(1)
                 .Select(node =>
                 {
-                    if (startNode.Position.X - node.Position.X == 1 || startNode.Position.Y - node.Position.Y == 1)
+                    if (Math.Abs(startNode.Position.X - node.Position.X) == 1 ||
+                        Math.Abs(startNode.Position.Y - node.Position.Y) == 1)
                     {
                         startNode = node;
                         return Query.Move;
@@ -110,7 +124,7 @@ namespace GameThief.GameModel
             public IEnumerable<LinkedNode> GetPath()
             {
                 var currentNode = this;
-                while (currentNode.PreviousLinkedNode != null)
+                while (currentNode != null)
                 {
                     yield return currentNode;
                     currentNode = currentNode.PreviousLinkedNode;
@@ -127,6 +141,11 @@ namespace GameThief.GameModel
             public override int GetHashCode()
             {
                 return Position.GetHashCode() + Direction.GetHashCode();
+            }
+
+            public override string ToString()
+            {
+                return $"{Position.X} {Position.Y}. Dir = {Direction}";
             }
         }
     }
