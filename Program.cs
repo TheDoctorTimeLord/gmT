@@ -30,7 +30,7 @@ namespace GameThief
             var st = new GameState();
             var player = new Player(new InitializationMobileObject(new Point(2, 2), Direction.Left));
 
-            Map2(player);
+            Map3(player);
 
             while (true)
             {
@@ -99,11 +99,22 @@ namespace GameThief
                 Tuple.Create(new Point(3, 4), (IDecor)new Wall()),
             });
 
+            GameInformationManager.CreateTrackByName(new Dictionary<string, List<Instruction>>
+            {
+                { "track1", new List<Instruction>
+                    {
+                        new Instruction(AIActionType.MoveTo, new Point(2, 0), 0),
+                        new Instruction(AIActionType.MoveTo, new Point(4, 3), 0)
+                    }
+                }
+            });
+
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "Guard", new InitializationMobileObject(new Point(4, 3), Direction.Up))
+                    "Guard", new InitializationMobileObject(
+                        new Point(4, 3), 10, 10, Direction.Up, 1, 4, 4, 3, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
             });
         }
 

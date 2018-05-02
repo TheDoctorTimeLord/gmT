@@ -91,7 +91,7 @@ namespace GameThief.GameModel.MobileObjects
             return GetIntentionOfCreature();
         }
 
-        protected void UpdateWorldData()
+        public void UpdateWorldData()
         {
             VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse).ToList();
             AudibleNoises = MapManager.GetAudibleNoises(Position, MaxHearingDelta, MinHearingVolume);
