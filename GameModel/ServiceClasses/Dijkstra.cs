@@ -5,73 +5,84 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.Managers;
+using GameThief.GameModel.MapSource;
 
 namespace GameThief.GameModel.ServiceClasses
 {
-    //class DijkstraData
-    //{
-    //    public Point Position { get; set; }
-    //    public int Value { get; set; }
-
-    //    public DijkstraData(Point position, int value)
-    //    {
-    //        Position = position;
-    //        Value = value;
-    //    }
-    //}
-
     public static class Dijkstra
     {
-        public static void DijkstraTraversal(Point[] graph, Point start, Action<Point, int> action)
+        public static void DijkstraTraversal(HashSet<Noise>[,] noises, NoiseSource source,
+            Action<HashSet<Noise>, Noise> changer)
         {
-            var notVisited = graph.ToList();
-            //var track = new Dictionary<Point, DijkstraData> {[start] = new DijkstraData(new Point(-1, -1), 0)};
-            var maxSupressions = new Dictionary<Point, int>
-            {
-                [start] = MapManager.Map[start.X, start.Y].ObjectContainer.TotalNoiseSuppression
-            };
-
+            var visited = new HashSet<Point>();
+            var potentialTransition =
+                new Dictionary<Point, Noise>{{source.Position, new Noise(source, source.MaxIntensity)}};
             while (true)
             {
-                var toOpen = new Point(-1, -1);
-                var bestSupr = int.MaxValue;
-                foreach (var e in notVisited)
-                {
-                    if (maxSupressions.ContainsKey(e) && maxSupressions[e] > bestSupr)
-                    {
-                        bestSupr = maxSupressions[e];
-                        toOpen = e;
-                    }
-                }
+                if (potentialTransition.Count == 0)
+                    return;
+                var nextPoint = GetLowestCostPoint(potentialTransition);
+                visited.Add(nextPoint.Item1);
+                changer(noises[nextPoint.Item1.X, nextPoint.Item1.Y], nextPoint.Item2);
 
-                if (toOpen == new Point(-1, -1))
-                    break;
-                //if (toOpen == end) break;
-
-                foreach (var e in toOpen.FindNeighbours().Where(p => MapManager.InBounds(p)))
-                {
-                    var currentPrice = maxSupressions[toOpen]
-                                       - MapManager.Map[toOpen.X, toOpen.Y].ObjectContainer.TotalNoiseSuppression
-                                       + MapManager.Map[e.X, e.Y].ObjectContainer.TotalNoiseSuppression - 1;
-                    //var nextNode = e.OtherNode(toOpen);
-                    if (!maxSupressions.ContainsKey(e) || maxSupressions[e] > currentPrice)
-                    {
-                        maxSupressions[e] = currentPrice;
-                    }
-                }
-
-                notVisited.Remove(toOpen);
-            }
-
-            //var result = new Dictionary<Point, int>();
-            //result = track.Values.ToDictionary(d => d.)
-            //result.Reverse();
-            //return result;
-
-            foreach (var pair in maxSupressions)
-            {
-                action(pair.Key, pair.Value);
+                potentialTransition.Remove(nextPoint.Item1);
+                UpdateNeighboringPoint(nextPoint, potentialTransition, visited, noises);
             }
         }
+
+        private static void UpdateNeighboringPoint(Tuple<Point, Noise> currentNoise,
+            Dictionary<Point, Noise> potentialTransition, HashSet<Point> visited, HashSet<Noise>[,] noises)
+        {
+            foreach (var point in GetPossibleTransition(currentNoise.Item1, noises, visited))
+            {
+                var newIntensity = currentNoise.Item2.Intensity - MapManager.Map[point.X, point.Y]
+                                       .ObjectContainer.TotalNoiseSuppression - 1;
+
+                if (newIntensity <= 0 ||
+                    potentialTransition.ContainsKey(point) &&
+                    potentialTransition[point].Intensity >= newIntensity)
+                    continue;
+
+                potentialTransition[point] = new Noise(currentNoise.Item2.Source, newIntensity);
+            }
+        }
+
+        private static IEnumerable<Point> GetPossibleTransition(Point position, HashSet<Noise>[,] noises, HashSet<Point> visited)
+        {
+            return offsets
+                .Select(offset => position + offset)
+                .Where(point => InBound(noises, point) && !visited.Contains(point));
+        }
+
+        private static bool InBound(HashSet<Noise>[,] noises, Point point)
+        {
+            return point.X >= 0 && point.X < noises.GetLength(0) &&
+                   point.Y >= 0 && point.Y < noises.GetLength(1);
+        }
+
+        private static Tuple<Point, Noise> GetLowestCostPoint(Dictionary<Point, Noise> potentialTransition)
+        {
+            var currentPoint = new Point(-1, -1);
+            var highestIntensity = -1;
+            foreach (var point in potentialTransition)
+            {
+                if (point.Value.Intensity <= highestIntensity) continue;
+                currentPoint = point.Key;
+                highestIntensity = point.Value.Intensity;
+            }
+            return Tuple.Create(currentPoint, potentialTransition[currentPoint]);
+        }
+
+        private static readonly Size[] offsets = new Size[]
+        {
+            new Size(-1, -1), 
+            new Size(-1, 0), 
+            new Size(-1, 1), 
+            new Size(0, 1), 
+            new Size(0, -1), 
+            new Size(1, -1), 
+            new Size(1, 0), 
+            new Size(1, 1)
+        };
     }
 }

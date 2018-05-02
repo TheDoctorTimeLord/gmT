@@ -20,5 +20,17 @@ namespace GameThief.GameModel.MapSource
 
             return -Intensity.CompareTo(((Noise)obj).Intensity);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Noise noise)
+                return noise.Source == Source && noise.Intensity == Intensity;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Source.GetHashCode();
+        }
     }
 }

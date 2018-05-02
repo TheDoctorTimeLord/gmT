@@ -108,6 +108,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameModel\Enums\Query.cs" />
+    <Compile Include="Tests\Dijkstra_tests.cs" />
+    <Compile Include="Tests\NoiseController_tests.cs" />
     <Compile Include="Tests\PathFinder_Tests.cs" />
     <Compile Include="Tests\MapManagerTests.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
