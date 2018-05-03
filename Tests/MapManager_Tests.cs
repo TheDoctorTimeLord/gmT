@@ -51,6 +51,24 @@ namespace GameThief.Tests
             MapManager.RemoveCreatureFromMap(player);
             Assert.IsTrue(MapManager.Map[0, 0].Creature == null);
         }
+
+        [Test]
+        public void TestMapFilling()
+        {
+            var width = 3;
+            var height = 3;
+            SampleMapSetter.SetSampleMap(width, height);
+
+            for (var i = 0; i < width; i++)
+            {
+                for (var j = 0; j < height; j++)
+                {
+                    Assert.True(MapManager.Map[i, j].Creature == null);
+                    Assert.False(MapManager.Map[i, j].ObjectContainer.IsOpaque);
+                    Assert.False(MapManager.Map[i, j].ObjectContainer.IsSolid);
+                }
+            }
+        }
         
         [Test]
         public void TestFieldOfViewWithNoWalls()
