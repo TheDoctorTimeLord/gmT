@@ -56,17 +56,18 @@ namespace GameThief.GameModel.MobileObjects
             if (normalGuardTrack.Count == 0)
                 return;
 
-            switch (normalGuardTrack[currentInstruction].Parameters[0])
+            switch (normalGuardTrack[currentInstruction].GetNextParameter())
             {
                 case "MoveTo":
 
-                    var target = new Point(int.Parse(normalGuardTrack[currentInstruction].Parameters[1]),
-                                           int.Parse());
-                    var instructions = PathFinder.GetPathFromTo(Position, normalGuardTrack[currentInstruction].Position, SightDirection);
+                    var target = new Point(int.Parse(normalGuardTrack[currentInstruction].GetNextParameter()),
+                                           int.Parse(normalGuardTrack[currentInstruction].GetNextParameter()));
+                    var instructions = PathFinder.GetPathFromTo(Position, target, SightDirection);
                     foreach (var instruction in instructions)
                         actionQueue.PushBack(instruction);
                     break;
             }
+            normalGuardTrack[currentInstruction].ResetInstruction();
             currentInstruction = (currentInstruction + 1) % normalGuardTrack.Count;
         }
 

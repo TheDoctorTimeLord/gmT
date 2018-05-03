@@ -24,5 +24,10 @@ namespace GameThief.GameModel.ServiceClasses
                 throw new Exception("Неверное обращение с инструкицей или неверная инициализация");
             return parameters[index++];
         }
+
+        public void ResetInstruction()
+        {
+            index = 0;
+        }
     }
 }
