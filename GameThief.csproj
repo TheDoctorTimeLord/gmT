@@ -115,7 +115,7 @@
     <Compile Include="Tests\PathFinder_Tests.cs" />
     <Compile Include="Tests\MapManager_Tests.cs" />
     <Compile Include="Tests\TemporaryObjectsManager_Tests.cs" />
-    <Compile Include="Tests\TestMapSetter.cs" />
+    <Compile Include="Tests\SampleMapSetter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -26,7 +26,7 @@ namespace GameThief.Tests
         [Test]
         public void TestNoWalls()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
 
             var expectedResult = new List<Point>
             {
@@ -51,7 +51,7 @@ namespace GameThief.Tests
         [Test]
         public void TestSingleWall()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
             MapManager.Map[2, 2].ObjectContainer.AddDecor(new Wall());
 
             var expectedResult = new List<Point>
@@ -76,7 +76,7 @@ namespace GameThief.Tests
         [Test]
         public void TestLongWall()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
             for (var i = 0; i < 5; i++)
                 MapManager.Map[i, 2].ObjectContainer.AddDecor(new Wall());
 
@@ -98,7 +98,7 @@ namespace GameThief.Tests
         [Test]
         public void TestTransparentObjects()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
             for (var i = 0; i < 5; i++)
                 MapManager.Map[i, 2].ObjectContainer.AddDecor(new Table());
 
@@ -125,7 +125,7 @@ namespace GameThief.Tests
         [Test]
         public void TestMapEdgeRight()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
 
             var expectedResult = new List<Point>
             {
@@ -142,7 +142,7 @@ namespace GameThief.Tests
         [Test]
         public void TestMapEdgeLeft()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
 
             var expectedResult = new List<Point>
             {
@@ -159,7 +159,7 @@ namespace GameThief.Tests
         [Test]
         public void TestMapEdgeUp()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
 
             var expectedResult = new List<Point>
             {
@@ -179,7 +179,7 @@ namespace GameThief.Tests
         [Test]
         public void TestCreature()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 new Guard(new InitializationMobileObject(new Point(2, 2), Direction.Up))
