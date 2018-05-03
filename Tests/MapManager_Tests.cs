@@ -22,11 +22,40 @@ namespace GameThief.Tests
             var result = MapManager.GetVisibleCells(position, direction, viewDistance, viewWidth).ToList();
             CollectionAssert.AreEquivalent(expectedResult, result);
         }
+
+        [Test]
+        public void TestAddingCreature()
+        {
+            SampleMapSetter.SetSampleMap(3, 3);
+            var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Up));
+            MapManager.AddCreatureToMap(player);
+            Assert.IsTrue(MapManager.Map[0, 0].Creature is Player);
+        }
+
+        [Test]
+        public void TestMovingCreature()
+        {
+            SampleMapSetter.SetSampleMap(3, 3);
+            var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Up));
+            MapManager.AddCreatureToMap(player);
+            MapManager.MoveCreature(player, new Point(0, 1));
+            Assert.IsTrue(MapManager.Map[0, 1].Creature is Player);
+        }
+
+        [Test]
+        public void TestRemovingCreature()
+        {
+            SampleMapSetter.SetSampleMap(3, 3);
+            var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Up));
+            MapManager.AddCreatureToMap(player);
+            MapManager.RemoveCreatureFromMap(player);
+            Assert.IsTrue(MapManager.Map[0, 0].Creature == null);
+        }
         
         [Test]
-        public void TestNoWalls()
+        public void TestFieldOfViewWithNoWalls()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
 
             var expectedResult = new List<Point>
             {
@@ -49,9 +78,9 @@ namespace GameThief.Tests
         }
 
         [Test]
-        public void TestSingleWall()
+        public void TestFieldOfViewWithSingleWall()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
             MapManager.Map[2, 2].ObjectContainer.AddDecor(new Wall());
 
             var expectedResult = new List<Point>
@@ -74,9 +103,9 @@ namespace GameThief.Tests
         }
 
         [Test]
-        public void TestLongWall()
+        public void TestFieldOfViewWithLongWall()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
             for (var i = 0; i < 5; i++)
                 MapManager.Map[i, 2].ObjectContainer.AddDecor(new Wall());
 
@@ -96,9 +125,9 @@ namespace GameThief.Tests
         }
 
         [Test]
-        public void TestTransparentObjects()
+        public void TestFieldOfViewWithTransparentObjects()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
             for (var i = 0; i < 5; i++)
                 MapManager.Map[i, 2].ObjectContainer.AddDecor(new Table());
 
@@ -123,9 +152,9 @@ namespace GameThief.Tests
         }
 
         [Test]
-        public void TestMapEdgeRight()
+        public void TesFieldOfViewWithtMapEdgeRight()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
 
             var expectedResult = new List<Point>
             {
@@ -140,9 +169,9 @@ namespace GameThief.Tests
         }
 
         [Test]
-        public void TestMapEdgeLeft()
+        public void TestFieldOfViewWithMapEdgeLeft()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
 
             var expectedResult = new List<Point>
             {
@@ -157,9 +186,9 @@ namespace GameThief.Tests
         }
 
         [Test]
-        public void TestMapEdgeUp()
+        public void TestFieldOfViewWithMapEdgeUp()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
 
             var expectedResult = new List<Point>
             {
@@ -177,9 +206,9 @@ namespace GameThief.Tests
         }
 
         [Test]
-        public void TestCreature()
+        public void TestFieldOfViewWithCreature()
         {
-            TestMapSetter.SetSampleMap(5, 5);
+            SampleMapSetter.SetSampleMap(5, 5);
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 new Guard(new InitializationMobileObject(new Point(2, 2), Direction.Up))

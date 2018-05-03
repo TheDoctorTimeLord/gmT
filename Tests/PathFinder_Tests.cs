@@ -48,7 +48,7 @@ namespace GameThief.Tests
         [Test]
         public void ZeroPath()
         {
-            TestMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
 
             var from = new Point(0, 0);
             var to = new Point(0, 0);
@@ -63,7 +63,7 @@ namespace GameThief.Tests
         [Test]
         public void OneStep()
         {
-            TestMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
 
             var from = new Point(0, 0);
             var to = new Point(1, 0);
@@ -78,7 +78,7 @@ namespace GameThief.Tests
         [Test]
         public void RotateAndStep()
         {
-            TestMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
 
             var from = new Point(0, 0);
             var to = new Point(1, 0);
@@ -93,7 +93,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearch()
         {
-            TestMapSetter.SetMapAndFillWithDecors(3, 2, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(3, 2, new List<Tuple<Point, IDecor>>());
 
             var from = new Point(0, 0);
             var to = new Point(2, 1);
@@ -108,7 +108,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearchWithSolidObject()
         {
-            TestMapSetter.SetMapAndFillWithDecors(4, 3, new List<Tuple<Point, IDecor>>
+            SampleMapSetter.SetMapAndFillWithDecors(4, 3, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 2), (IDecor)new Wall()),
                 Tuple.Create(new Point(3, 1), (IDecor)new Wall())
@@ -136,7 +136,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearchWithMobileObject()
         {
-            TestMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>());
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
@@ -165,7 +165,7 @@ namespace GameThief.Tests
         [Test]
         public void NoPath()
         {
-            TestMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
+            SampleMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 1), (IDecor)new Wall()),
@@ -185,7 +185,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearchWithSolidObjectAndClosedDoor()
         {
-            TestMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
+            SampleMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 2), (IDecor)new Wall()),
@@ -209,7 +209,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearchWithSolidObjectAndOpenedDoor()
         {
-            TestMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
+            SampleMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 2), (IDecor)new Wall()),

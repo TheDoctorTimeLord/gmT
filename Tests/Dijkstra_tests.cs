@@ -53,7 +53,7 @@ namespace GameThief.Tests
         {
             var width = 3;
             var height = 3;
-            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse = new NoiseSource(NoiseType.Guard, 1, 2, new Point(1, 1), "");
             Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
@@ -79,7 +79,7 @@ namespace GameThief.Tests
         {
             var width = 3;
             var height = 3;
-            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse = new NoiseSource(NoiseType.Guard, 1, 7, new Point(1, 1), "");
             Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
@@ -105,7 +105,7 @@ namespace GameThief.Tests
         {
             var width = 5;
             var height = 5;
-            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse = new NoiseSource(NoiseType.Guard, 1, 2, new Point(2, 2), "");
             Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
@@ -131,7 +131,7 @@ namespace GameThief.Tests
         {
             var width = 5;
             var height = 5;
-            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse = new NoiseSource(NoiseType.Guard, 1, 2, new Point(2, 2), "");
             Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
@@ -151,7 +151,7 @@ namespace GameThief.Tests
         {
             var width = 2;
             var height = 2;
-            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse1 = new NoiseSource(NoiseType.Guard, 1, 2, new Point(1, 1), "");
             var sourse2 = new NoiseSource(NoiseType.Guard, 1, 2, new Point(0, 0), "");
@@ -183,7 +183,7 @@ namespace GameThief.Tests
         {
             var width = 2;
             var height = 2;
-            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
+            SampleMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse1 = new NoiseSource(NoiseType.Guard, 1, 2, new Point(1, 1), "");
             var sourse2 = new NoiseSource(NoiseType.Guard, 1, 2, new Point(0, 0), "");
@@ -214,7 +214,7 @@ namespace GameThief.Tests
         {
             var width = 3;
             var height = 3;
-            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>
+            SampleMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 1), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall())

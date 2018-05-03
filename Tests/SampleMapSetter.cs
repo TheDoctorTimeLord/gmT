@@ -9,7 +9,7 @@ using GameThief.GameModel.Managers;
 
 namespace GameThief.Tests
 {
-    public static class TestMapSetter
+    public static class SampleMapSetter
     {
         public static void SetSampleMap(int width, int height)
         {
