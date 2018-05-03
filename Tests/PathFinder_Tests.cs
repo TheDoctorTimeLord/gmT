@@ -45,29 +45,10 @@ namespace GameThief.Tests
             Assert.AreEqual(result.Count, answer.Count);
         }
 
-        public void SetMap(int width, int height, List<Tuple<Point, IDecor>> decors)
-        {
-            var content = new List<List<string>>();
-            for (var y = 0; y < height; y++)
-            {
-                for (var x = 0; x < width; x++)
-                {
-                    content.Add(new List<string>{"."});
-                }
-            }
-            MapManager.CreateMap(width, height, content);
-
-            foreach (var tuple in decors)
-            {
-                if (MapManager.InBounds(tuple.Item1))
-                    MapManager.Map[tuple.Item1.X, tuple.Item1.Y].ObjectContainer.AddDecor(tuple.Item2);
-            }
-        }
-
         [Test]
         public void ZeroPath()
         {
-            SetMap(2, 2, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
 
             var from = new Point(0, 0);
             var to = new Point(0, 0);
@@ -82,7 +63,7 @@ namespace GameThief.Tests
         [Test]
         public void OneStep()
         {
-            SetMap(2, 2, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
 
             var from = new Point(0, 0);
             var to = new Point(1, 0);
@@ -97,7 +78,7 @@ namespace GameThief.Tests
         [Test]
         public void RotateAndStep()
         {
-            SetMap(2, 2, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
 
             var from = new Point(0, 0);
             var to = new Point(1, 0);
@@ -112,7 +93,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearch()
         {
-            SetMap(3, 2, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(3, 2, new List<Tuple<Point, IDecor>>());
 
             var from = new Point(0, 0);
             var to = new Point(2, 1);
@@ -127,7 +108,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearchWithSolidObject()
         {
-            SetMap(4, 3, new List<Tuple<Point, IDecor>>
+            TestMapSetter.SetMapAndFillWithDecors(4, 3, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 2), (IDecor)new Wall()),
                 Tuple.Create(new Point(3, 1), (IDecor)new Wall())
@@ -155,7 +136,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearchWithMobileObject()
         {
-            SetMap(3, 3, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>());
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
@@ -184,7 +165,7 @@ namespace GameThief.Tests
         [Test]
         public void NoPath()
         {
-            SetMap(3, 3, new List<Tuple<Point, IDecor>>
+            TestMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 1), (IDecor)new Wall()),
@@ -204,7 +185,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearchWithSolidObjectAndClosedDoor()
         {
-            SetMap(3, 3, new List<Tuple<Point, IDecor>>
+            TestMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 2), (IDecor)new Wall()),
@@ -228,7 +209,7 @@ namespace GameThief.Tests
         [Test]
         public void ShortestPathSearchWithSolidObjectAndOpenedDoor()
         {
-            SetMap(3, 3, new List<Tuple<Point, IDecor>>
+            TestMapSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 2), (IDecor)new Wall()),

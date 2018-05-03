@@ -111,11 +111,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameModel\Enums\Query.cs" />
     <Compile Include="Tests\Dijkstra_tests.cs" />
-    <Compile Include="Tests\NoiseController_tests.cs" />
     <Compile Include="Tests\ObjectsContainer_Tests.cs" />
     <Compile Include="Tests\PathFinder_Tests.cs" />
     <Compile Include="Tests\MapManager_Tests.cs" />
     <Compile Include="Tests\TemporaryObjectsManager_Tests.cs" />
+    <Compile Include="Tests\TestMapSetter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

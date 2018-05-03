@@ -6,15 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.Managers;
-using NUnit.Framework.Internal;
-using NUnit.Framework;
 
 namespace GameThief.Tests
 {
-    [TestFixture]
-    public class NoiseController_tests
+    public static class TestMapSetter
     {
-        public void SetMap(int width, int height, List<Tuple<Point, IDecor>> decors)
+        public static void SetSampleMap(int width, int height)
         {
             var content = new List<List<string>>();
             for (var y = 0; y < height; y++)
@@ -25,6 +22,11 @@ namespace GameThief.Tests
                 }
             }
             MapManager.CreateMap(width, height, content);
+        }
+
+        public static void SetMapAndFillWithDecors(int width, int height, List<Tuple<Point, IDecor>> decors)
+        {
+            SetSampleMap(width, height);
 
             foreach (var tuple in decors)
             {

@@ -48,31 +48,12 @@ namespace GameThief.Tests
             }
         }
 
-        public void SetMap(int width, int height, List<Tuple<Point, IDecor>> decors)
-        {
-            var content = new List<List<string>>();
-            for (var y = 0; y < height; y++)
-            {
-                for (var x = 0; x < width; x++)
-                {
-                    content.Add(new List<string> { "." });
-                }
-            }
-            MapManager.CreateMap(width, height, content);
-
-            foreach (var tuple in decors)
-            {
-                if (MapManager.InBounds(tuple.Item1))
-                    MapManager.Map[tuple.Item1.X, tuple.Item1.Y].ObjectContainer.AddDecor(tuple.Item2);
-            }
-        }
-
         [Test]
         public void TestCreateNoiseSource()
         {
             var width = 3;
             var height = 3;
-            SetMap(width, height, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse = new NoiseSource(NoiseType.Guard, 1, 2, new Point(1, 1), "");
             Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
@@ -98,7 +79,7 @@ namespace GameThief.Tests
         {
             var width = 3;
             var height = 3;
-            SetMap(width, height, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse = new NoiseSource(NoiseType.Guard, 1, 7, new Point(1, 1), "");
             Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
@@ -124,7 +105,7 @@ namespace GameThief.Tests
         {
             var width = 5;
             var height = 5;
-            SetMap(width, height, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse = new NoiseSource(NoiseType.Guard, 1, 2, new Point(2, 2), "");
             Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
@@ -150,7 +131,7 @@ namespace GameThief.Tests
         {
             var width = 5;
             var height = 5;
-            SetMap(width, height, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse = new NoiseSource(NoiseType.Guard, 1, 2, new Point(2, 2), "");
             Dijkstra.DijkstraTraversal(map, sourse, (noises, noise) =>
@@ -170,7 +151,7 @@ namespace GameThief.Tests
         {
             var width = 2;
             var height = 2;
-            SetMap(width, height, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse1 = new NoiseSource(NoiseType.Guard, 1, 2, new Point(1, 1), "");
             var sourse2 = new NoiseSource(NoiseType.Guard, 1, 2, new Point(0, 0), "");
@@ -202,7 +183,7 @@ namespace GameThief.Tests
         {
             var width = 2;
             var height = 2;
-            SetMap(width, height, new List<Tuple<Point, IDecor>>());
+            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>());
             var map = GetMap(width, height);
             var sourse1 = new NoiseSource(NoiseType.Guard, 1, 2, new Point(1, 1), "");
             var sourse2 = new NoiseSource(NoiseType.Guard, 1, 2, new Point(0, 0), "");
@@ -233,7 +214,7 @@ namespace GameThief.Tests
         {
             var width = 3;
             var height = 3;
-            SetMap(width, height, new List<Tuple<Point, IDecor>>
+            TestMapSetter.SetMapAndFillWithDecors(width, height, new List<Tuple<Point, IDecor>>
             {
                 Tuple.Create(new Point(1, 1), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall())
