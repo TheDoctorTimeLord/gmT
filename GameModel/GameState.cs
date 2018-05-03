@@ -87,6 +87,9 @@ namespace GameThief.GameModel
 
         private bool ValidateRequest(Query query, ICreature creature)
         {
+            if (creature.IsHidden() && query != Query.Interaction)
+                return false;
+
             var delta = Size.Empty;
             if (query == Query.Move || query == Query.Interaction)
                 delta = ConvertDirectionToSize[creature.GetDirection()];

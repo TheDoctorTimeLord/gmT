@@ -49,9 +49,12 @@ namespace GameThief.GameModel.MobileObjects
         public int MaxHearingDelta { get; private set; }
         public int ViewDistanse { get; private set; }
         public int ViewWidth { get; private set; }
+        public Inventory Inventory;
 
         public List<Point> VisibleCells;
         public HashSet<Noise> AudibleNoises;
+
+        protected bool Hidden;
 
 
         public void MakeDamage(int damage)
@@ -83,6 +86,16 @@ namespace GameThief.GameModel.MobileObjects
         public void ChangeDirection(Direction direction)
         {
             SightDirection = direction;
+        }
+
+        public bool IsHidden()
+        {
+           return Hidden;
+        }
+
+        public Inventory GetInventory()
+        {
+            return Inventory;
         }
 
         public Query GetIntention()

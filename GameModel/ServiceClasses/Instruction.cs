@@ -10,15 +10,19 @@ namespace GameThief.GameModel.ServiceClasses
 {
     public class Instruction
     {
-        public AIActionType InstructionType;
-        public Point Position;
-        public int Duration;
+        private List<string> parameters;
+        private int index = 0;
 
-        public Instruction(AIActionType type, Point position, int duration)
+        public Instruction(List<string> parameters)
         {
-            InstructionType = type;
-            Position = position;
-            Duration = duration;
+            this.parameters = parameters;
+        }
+
+        public string GetNextParameter()
+        {
+            if (index >= parameters.Count)
+                throw new Exception("Неверное обращение с инструкицей или неверная инициализация");
+            return parameters[index++];
         }
     }
 }
