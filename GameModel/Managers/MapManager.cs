@@ -58,8 +58,8 @@ namespace GameThief.GameModel.Managers
         {
             var direction = GameState.ConvertDirectionToSize[sightDirection];
             var oppositeDirection = GameState.ConvertDirectionToSize[GameState.RotateFromTo(sightDirection, true)];
-            var startPoint = new Point(new Size(position + direction));
-            var pointsToCheck = GetSidePoints(new List<Point> { startPoint }, oppositeDirection).ToList();
+            var startPoint = position + direction;
+            var pointsToCheck = GetSidePoints(new List<Point> { startPoint }, oppositeDirection);
             pointsToCheck.Add(startPoint);
             var currentWidth = 1;
 
@@ -74,12 +74,13 @@ namespace GameThief.GameModel.Managers
                 {
                     if (!InBounds(point))
                         continue;
+
                     //if (LightController[point.X, point.Y])
                     yield return point;
 
                     if (!Map[point.X, point.Y].ObjectContainer.IsOpaque &&
                         Map[point.X, point.Y].Creature == null)
-                        nextPoints.Add(new Point(new Size(point + direction)));
+                        nextPoints.Add(point + direction);
                 }
 
                 viewDistance--;
@@ -92,24 +93,24 @@ namespace GameThief.GameModel.Managers
             }
         }
 
-        private static IEnumerable<Point> GetSidePoints(List<Point> points, Size oppositeDirection)
+        private static List<Point> GetSidePoints(List<Point> points, Size oppositeDirection)
         {
-            var result = new List<Size>();
+            var result = new List<Point>();
 
             if (Math.Abs(oppositeDirection.Width) == 1)
             {
                 var sidePoints = points.OrderBy(p => p.X).ToList();
-                result.Add(new Size(sidePoints[0] - new Size(1, 0)));
-                result.Add(new Size(sidePoints[sidePoints.Count - 1] + new Size(1, 0)));
+                result.Add(sidePoints[0] - new Size(1, 0));
+                result.Add(sidePoints[sidePoints.Count - 1] + new Size(1, 0));
             }
             else
             {
                 var sidePoints = points.OrderBy(p => p.Y).ToList();
-                result.Add(new Size(sidePoints[0] - new Size(0, 1)));
-                result.Add(new Size(sidePoints[sidePoints.Count - 1] + new Size(0, 1)));
+                result.Add(sidePoints[0] - new Size(0, 1));
+                result.Add(sidePoints[sidePoints.Count - 1] + new Size(0, 1));
             }
 
-            return result.Select(sz => new Point(sz));
+            return result;
         }
 
         public static HashSet<Noise> GetAudibleNoises(Point position, int maxHearingDelta, int minHearingVolume)

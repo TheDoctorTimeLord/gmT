@@ -110,8 +110,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameModel\Enums\Query.cs" />
-    <Compile Include="Tests\Deque_tests.cs" />
+    <Compile Include="Tests\ConverterPressedKey_Tests.cs" />
+    <Compile Include="Tests\Deque_Tests.cs" />
     <Compile Include="Tests\Dijkstra_tests.cs" />
+    <Compile Include="Tests\GameState_Tests.cs" />
     <Compile Include="Tests\MobileObjectsManager_Tests.cs" />
     <Compile Include="Tests\ObjectsContainer_Tests.cs" />
     <Compile Include="Tests\PathFinder_Tests.cs" />
