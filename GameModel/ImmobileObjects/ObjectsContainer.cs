@@ -89,7 +89,7 @@ namespace GameThief.GameModel.ImmobileObjects
                 var toRemove = firstItem.InteractWith(creature);
 
                 if (toRemove)
-                    Decors.Remove(firstItem);
+                    RemoveDecor(firstItem);
             }
         }
 
