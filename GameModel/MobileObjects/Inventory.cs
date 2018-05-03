@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameThief.GameModel.ImmobileObjects;
+using GameThief.GameModel.Managers;
 
 namespace GameThief.GameModel.MobileObjects
 {
     public class Inventory
     {
-        public HashSet<IItem> Items { get; private set; } = new HashSet<IItem>();
+        public HashSet<IItem> Items { get; private set; }
         public int MaxSize { get; private set; }
 
         public Inventory(HashSet<IItem> items, int maxSize)
@@ -33,6 +34,12 @@ namespace GameThief.GameModel.MobileObjects
             if (!Items.Contains(item))
                 return;
             Items.Remove(item);
+        }
+
+        public void DropItem(IItem item, ICreature creature)
+        {
+            var currentPosition = creature.GetPosition();
+            MapManager.Map[currentPosition.X, currentPosition.Y].ObjectContainer.AddDecor((IDecor)item);
         }
     }
 }

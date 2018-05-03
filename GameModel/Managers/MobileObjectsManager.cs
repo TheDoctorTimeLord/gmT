@@ -74,5 +74,7 @@ namespace GameThief.GameModel.Managers
                     throw new Exception("Попытка создания несуществующего Creature: " + nameCreature);
             }
         }
+
+        public static bool CreatureContainsInGame(ICreature creature) => MobileObjects.Contains(creature);
     }
 }

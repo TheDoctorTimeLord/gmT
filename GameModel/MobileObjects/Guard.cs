@@ -16,8 +16,10 @@ namespace GameThief.GameModel.MobileObjects
     public class Guard : MobileObject
     {
         private const int Calm = 0;
-        private const int Alert = 1;
-        private const int Angry = 1;
+        private const int Wary = 1;
+        private const int Angry = 2;
+        private const int Alert = 3;
+        private const int SearchTime = 10;
 
         private readonly List<Instruction> normalGuardTrack = new List<Instruction>();
         private int currentInstruction;
@@ -25,6 +27,8 @@ namespace GameThief.GameModel.MobileObjects
         private int levelOfAlertness = 0;
 
         private Dictionary<Point, IDecor> previouslyVisibleCells = new Dictionary<Point, IDecor>();
+
+        private int searchTime = 0;
 
         public Guard(InitializationMobileObject init) : base(init)
         {
@@ -43,9 +47,15 @@ namespace GameThief.GameModel.MobileObjects
         protected override Query GetIntentionOfCreature()
         {
             UpdateLevelOfAlertness();
-            if (actionQueue.Count == 0 && levelOfAlertness == Calm)
+            if (levelOfAlertness == Calm)
             {
-                ExecuteCurrentInstruction();
+                if (actionQueue.Count == 0)
+                    ExecuteCurrentInstruction();
+            }
+            else if (levelOfAlertness == Wary)
+            {
+                if (actionQueue.Count == 0)
+                    levelOfAlertness = Calm;
             }
 
             return actionQueue.Count == 0 ? Query.None : actionQueue.PeekFront();
@@ -73,24 +83,34 @@ namespace GameThief.GameModel.MobileObjects
 
         private void UpdateLevelOfAlertness()
         {
-            //foreach (var possition in VisibleCells)
-            //{
-            //    var currentCell = MapManager.Map[possition.X, possition.Y];
-            //    if (!previouslyVisibleCells.ContainsKey(possition))
-            //    {
-            //        previouslyVisibleCells.Add(possition, currentCell.ObjectContainer.GetTopDecor());
-            //    }
-            //    else
-            //    {
-            //        if (currentCell.Creature is Player)
-            //            levelOfAlertness = Math.Max(levelOfAlertness, Angry);
-            //        else if (currentCell.ObjectContainer.GetTopDecor() != previouslyVisibleCells[possition])
-            //        {
-            //            levelOfAlertness = Math.Max(levelOfAlertness, Alert);
-            //            previouslyVisibleCells[possition] = currentCell.ObjectContainer.GetTopDecor();
-            //        }
-            //    }
-            //}
+            foreach (var point in VisibleCells)
+            {
+                var cell = MapManager.Map[point.X, point.Y];
+
+                if (levelOfAlertness == Angry)
+                {
+                    if (searchTime != 0)
+                        searchTime--;
+                    else
+                        levelOfAlertness = Calm;
+                }
+
+                if (cell.Creature is Player)
+                {
+                    levelOfAlertness = Math.Max(levelOfAlertness, Alert);
+                }
+                else if (levelOfAlertness == Alert)
+                {
+                    levelOfAlertness = Angry;
+                    searchTime = SearchTime;
+                }
+            }
+
+            foreach (var noise in AudibleNoises)
+            {
+                if (noise.Source.Type != NoiseType.Guard)
+                    levelOfAlertness = Math.Max(levelOfAlertness, Wary);
+            }
         }
 
         public override void ActionTaken(Query query)

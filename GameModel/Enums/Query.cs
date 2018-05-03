@@ -6,6 +6,7 @@
         RotateLeft,
         RotateRight,
         Interaction,
+        Drop,
         None
     }
 }
