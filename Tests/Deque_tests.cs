@@ -5,88 +5,49 @@ using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.ServiceClasses;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace GameThief.Tests
 {
     [TestFixture]
-    public class Deque_tests
+    public class Deque_Tests
     {
-        public void CheckResult<T>(Deque<T> result, List<T> answer)
-        {
-            var index = 0;
-            Assert.AreEqual(result.Count, answer.Count);
-            foreach (var res in result)
-            {
-                Assert.AreEqual(res, answer[index++]);
-            }
-        }
-
         [Test]
-        public void EmptyDeque()
+        public void TestPushPopFront()
         {
             var deque = new Deque<int>();
-            var answer = new List<int>();
-            CheckResult(deque, answer);
+            deque.PushFront(1);
+            deque.PushFront(2);
+            deque.PushFront(3);
+            Assert.AreEqual(3, deque.PopFront());
+            Assert.AreEqual(2, deque.PopFront());
+            Assert.AreEqual(1, deque.PopFront());
+            Assert.AreEqual(0, deque.Count);
+
         }
 
         [Test]
-        public void PushBack()
+        public void TestPushPopBack()
         {
             var deque = new Deque<int>();
             deque.PushBack(1);
             deque.PushBack(2);
             deque.PushBack(3);
-            var answer = new List<int> {1, 2, 3};
-            CheckResult(deque, answer);
+            Assert.AreEqual(3, deque.PopBack());
+            Assert.AreEqual(2, deque.PopBack());
+            Assert.AreEqual(1, deque.PopBack());
+            Assert.AreEqual(0, deque.Count);
         }
 
         [Test]
-        public void PushFront()
+        public void TestPeekFrontBack()
         {
             var deque = new Deque<int>();
             deque.PushFront(1);
             deque.PushFront(2);
-            deque.PushFront(3);
-            var answer = new List<int> { 3, 2, 1 };
-            CheckResult(deque, answer);
-        }
-
-        [Test]
-        public void PopBack()
-        {
-            var deque = new Deque<int>();
-            deque.PushFront(1);
-            deque.PushFront(2);
-            deque.PushFront(3);
-            deque.PopBack();
-            deque.PopBack();
-            var answer = new List<int> { 3 };
-            CheckResult(deque, answer);
-        }
-
-        [Test]
-        public void PopFront()
-        {
-            var deque = new Deque<int>();
-            deque.PushFront(1);
-            deque.PushFront(2);
-            deque.PushFront(3);
-            deque.PopFront();
-            deque.PopFront();
-            var answer = new List<int> { 1 };
-            CheckResult(deque, answer);
-        }
-
-        [Test]
-        public void EmptyDequeBeforePushAndPop()
-        {
-            var deque = new Deque<int>();
-            deque.PushFront(1);
-            deque.PopFront();
-            deque.PushFront(2);
-            deque.PopFront();
-            var answer = new List<int>();
-            CheckResult(deque, answer);
+            Assert.AreEqual(2, deque.PeekFront());
+            Assert.AreEqual(1, deque.PeekBack());
+            Assert.AreEqual(2, deque.Count);
         }
     }
 }
