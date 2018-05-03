@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Decors
@@ -13,7 +15,9 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 
         public override bool InteractWith(ICreature creature)
         {
-            throw new NotImplementedException();
+            var position = creature.GetPosition() + GameState.ConvertDirectionToSize[creature.GetDirection()];
+            MapManager.Map[position.X, position.Y].ObjectContainer.AddDecor(new OpenedDoor());
+            return true;
         }
     }
 }

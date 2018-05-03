@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Items
 {
@@ -14,6 +15,11 @@ namespace GameThief.GameModel.ImmobileObjects.Items
         int IItem.GetPrice()
         {
             return price;
+        }
+
+        public override bool InteractWith(ICreature creature)
+        {
+            return creature.GetInventory().AddItem(this);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace GameThief.GameModel.ImmobileObjects.Items
+﻿using GameThief.GameModel.MobileObjects;
+
+namespace GameThief.GameModel.ImmobileObjects.Items
 {
     public class Painting : ImmobileObject, IItem
     {
@@ -8,6 +10,13 @@
         int IItem.GetPrice()
         {
             return price;
+        }
+
+        public override bool InteractWith(ICreature creature)
+        {
+            if (creature is Player)
+                return creature.GetInventory().AddItem(this);
+            return false;
         }
     }
 }
