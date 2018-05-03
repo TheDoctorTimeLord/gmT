@@ -104,8 +104,8 @@ namespace GameThief
             {
                 { "track1", new List<Instruction>
                     {
-                        new Instruction(AIActionType.MoveTo, new Point(2, 0), 0),
-                        new Instruction(AIActionType.MoveTo, new Point(4, 3), 0)
+                        new Instruction(new List<string>{"MoveTo", "2", "0"}),
+                        new Instruction(new List<string>{"MoveTo", "4", "3"})
                     }
                 }
             });
@@ -117,6 +117,8 @@ namespace GameThief
                     "Guard", new InitializationMobileObject(
                         new Point(4, 3), 10, 10, Direction.Up, 1, 4, 4, 3, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
             });
+
+            MapManager.NoiseController.AddNoiseSource(new NoiseSource(NoiseType.Guard, 10, 10, new Point(0, 4), "N"));
         }
 
         private static Keys Conv(char a)

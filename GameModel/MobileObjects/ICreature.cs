@@ -9,6 +9,8 @@ namespace GameThief.GameModel.MobileObjects
         void ChangePosition(Point newPosition);
         Direction GetDirection();
         void ChangeDirection(Direction direction);
+        bool IsHidden();
+        Inventory GetInventory();
 
         Query GetIntention();
         void ActionTaken(Query query);

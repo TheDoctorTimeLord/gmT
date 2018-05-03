@@ -74,6 +74,7 @@
     <Compile Include="GameModel\MapSource\LightController.cs" />
     <Compile Include="GameModel\MapSource\LightSource.cs" />
     <Compile Include="GameModel\MobileObjects\Guard.cs" />
+    <Compile Include="GameModel\MobileObjects\Inventory.cs" />
     <Compile Include="GameModel\MobileObjects\MobileObject.cs" />
     <Compile Include="GameModel\Enums\Direction.cs" />
     <Compile Include="GameModel\ImmobileObjects\IDecor.cs" />
