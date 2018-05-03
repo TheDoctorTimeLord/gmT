@@ -29,9 +29,9 @@ namespace GameThief
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
             var st = new GameState();
-            var player = new Player(new InitializationMobileObject(new Point(2, 2), Direction.Left));
+            var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Left));
 
-            Map3(player);
+            Map4(player);
 
             while (true)
             {
@@ -121,6 +121,36 @@ namespace GameThief
             MapManager.NoiseController.AddNoiseSource(new NoiseSource(NoiseType.Guard, 10, 10, new Point(0, 4), "N"));
         }
 
+        private static void Map4(Player player)
+        {
+            SetMap(5, 5, new List<Tuple<Point, IDecor>>
+            {
+                Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
+                Tuple.Create(new Point(1, 1), (IDecor)new Wall()),
+                Tuple.Create(new Point(0, 1), (IDecor)new Wall()),
+            });
+
+            GameInformationManager.CreateTrackByName(new Dictionary<string, List<Instruction>>
+            {
+                { "track1", new List<Instruction>
+                    {
+                        new Instruction(new List<string>{"MoveTo", "2", "0"}),
+                        new Instruction(new List<string>{"MoveTo", "4", "3"})
+                    }
+                }
+            });
+
+            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
+            {
+                player,
+                MobileObjectsManager.GetCreatureByNameAndInitParams(
+                    "Guard", new InitializationMobileObject(
+                        new Point(4, 3), 10, 10, Direction.Up, 1, 4, 4, 3, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
+            });
+
+            MapManager.NoiseController.AddNoiseSource(new NoiseSource(NoiseType.Cat, 10, 100, new Point(0, 4), "N"));
+        }
+
         private static Keys Conv(char a)
         {
             switch (a)
@@ -148,7 +178,7 @@ namespace GameThief
                 {
                     var c = " ";
 
-                    if (vis.Contains(new Point(j, i)))
+                    if (true/*vis.Contains(new Point(j, i))*/)
                     {
                         c = MapManager.Map[j, i].BackgroundFilename;
 

@@ -30,7 +30,10 @@ namespace GameThief.GameModel.MobileObjects
 
         public override void Interative(ICreature creature)
         {
+            if (creature is Guard)
+            {
+                MobileObjectsManager.DeleteCreature(this);
+            }
         }
-
     }
 }

@@ -13,6 +13,8 @@ namespace GameThief.GameModel
 {
     public class GameState
     {
+        public static Random Random = new Random();
+
         public static Keys KeyPressed;
 
         public static Query GetCurrentQuery() => ConverterPressedKey.Convert(KeyPressed);

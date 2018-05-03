@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameThief.GameModel.ServiceClasses
 {
-    public class Deque<T>
+    public class Deque<T> : IEnumerable<T>
     {
         private Node left = null;
         private Node right = null;
@@ -100,6 +101,21 @@ namespace GameThief.GameModel.ServiceClasses
             public T Value;
             public Node Left;
             public Node Right;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var currentNode = left;
+            while (currentNode != null)
+            {
+                yield return currentNode.Value;
+                currentNode = currentNode.Right;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

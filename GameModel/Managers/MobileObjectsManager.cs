@@ -13,6 +13,7 @@ namespace GameThief.GameModel.Managers
     {
         public static HashSet<ICreature> MobileObjects { get; private set; } = new HashSet<ICreature>();
         private static readonly HashSet<ICreature> addedMobileObjects = new HashSet<ICreature>();
+        private static readonly HashSet<ICreature> deletedMobileObjects = new HashSet<ICreature>();
 
         public static void InitializationMobileOjects(HashSet<ICreature> creatures)
         {
@@ -47,6 +48,11 @@ namespace GameThief.GameModel.Managers
                 MapManager.AddCreatureToMap(addedMobileObject);
             }
             addedMobileObjects.Clear();
+            foreach (var deletedMobileObject in deletedMobileObjects)
+            {
+                MobileObjects.Remove(deletedMobileObject);
+                MapManager.RemoveCreatureFromMap(deletedMobileObject);
+            }
         }
 
         public static void DeleteCreature(ICreature creature)
@@ -54,8 +60,7 @@ namespace GameThief.GameModel.Managers
             if (!MobileObjects.Contains(creature))
                 return;
 
-            MobileObjects.Remove(creature);
-            MapManager.RemoveCreatureFromMap(creature);
+            deletedMobileObjects.Add(creature);
         }
 
         public static ICreature GetCreatureByNameAndInitParams(string nameCreature, InitializationMobileObject init)

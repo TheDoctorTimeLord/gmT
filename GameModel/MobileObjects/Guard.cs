@@ -23,12 +23,13 @@ namespace GameThief.GameModel.MobileObjects
 
         private readonly List<Instruction> normalGuardTrack = new List<Instruction>();
         private int currentInstruction;
-        private readonly Deque<Query> actionQueue = new Deque<Query>();
-        private int levelOfAlertness = 0;
+        private Deque<Query> actionQueue = new Deque<Query>();
+        private int levelOfAlertness;
+        private bool changedLevelOfAlertness;
 
-        private Dictionary<Point, IDecor> previouslyVisibleCells = new Dictionary<Point, IDecor>();
+        private int searchTime;
 
-        private int searchTime = 0;
+        private Point target = Point.Empty;
 
         public Guard(InitializationMobileObject init) : base(init)
         {
@@ -46,19 +47,59 @@ namespace GameThief.GameModel.MobileObjects
 
         protected override Query GetIntentionOfCreature()
         {
+            changedLevelOfAlertness = false;
             UpdateLevelOfAlertness();
             if (levelOfAlertness == Calm)
             {
                 if (actionQueue.Count == 0)
                     ExecuteCurrentInstruction();
             }
-            else if (levelOfAlertness == Wary)
+            else if (levelOfAlertness == Wary && changedLevelOfAlertness)
             {
-                if (actionQueue.Count == 0)
-                    levelOfAlertness = Calm;
+                CheckTheSituation();
+            }
+            else if (levelOfAlertness == Wary && !changedLevelOfAlertness && actionQueue.Count == 0)
+            {
+                levelOfAlertness = Calm;
+            }
+            else if (levelOfAlertness == Angry && searchTime != 0 && actionQueue.Count == 0)
+            {
+                SearchPlayer();
+            }
+            else if (levelOfAlertness == Alert)
+            {
+                СhasePlayer();
             }
 
-            return actionQueue.Count == 0 ? Query.None : actionQueue.PeekFront();
+              return actionQueue.Count == 0 ? Query.None : actionQueue.PeekFront();
+        }
+
+        private void СhasePlayer()
+        {
+            var instructions = PathFinder.GetPathFromTo(Position, target, SightDirection);
+            actionQueue = new Deque<Query>();
+            for (var i = 0; i < instructions.Count - 1; i++)
+            {
+                actionQueue.PushBack(instructions[i]);
+            }
+            actionQueue.PushBack(Query.Interaction);
+        }
+
+        private void SearchPlayer()
+        {
+            for (var i = 0; i < searchTime; i++)
+            {
+                actionQueue.PushBack(GameState.Random.Next(0, 1) == 0 ? Query.RotateLeft : Query.RotateRight);
+            }
+        }
+
+        private void CheckTheSituation()
+        {
+            var instructions = PathFinder.GetPathFromTo(Position, target, SightDirection);
+            for (var i = 0; i < instructions.Count - 1; i++)
+            {
+                actionQueue.PushBack(instructions[i]);
+            }
         }
 
         private void ExecuteCurrentInstruction()
@@ -92,16 +133,23 @@ namespace GameThief.GameModel.MobileObjects
                     if (searchTime != 0)
                         searchTime--;
                     else
-                        levelOfAlertness = Calm;
+                    {
+                        ChangeLevelOfAlertness(Calm);
+                        target = Point.Empty;
+                    }
                 }
 
                 if (cell.Creature is Player)
                 {
-                    levelOfAlertness = Math.Max(levelOfAlertness, Alert);
+                    if (levelOfAlertness <= Alert)
+                    {
+                        ChangeLevelOfAlertness(Alert);
+                        target = point;
+                    }
                 }
-                else if (levelOfAlertness == Alert)
+                else if (levelOfAlertness == Alert && point == target)
                 {
-                    levelOfAlertness = Angry;
+                    ChangeLevelOfAlertness(Angry);
                     searchTime = SearchTime;
                 }
             }
@@ -109,8 +157,20 @@ namespace GameThief.GameModel.MobileObjects
             foreach (var noise in AudibleNoises)
             {
                 if (noise.Source.Type != NoiseType.Guard)
-                    levelOfAlertness = Math.Max(levelOfAlertness, Wary);
+                {
+                    if (levelOfAlertness <= Wary)
+                    {
+                        ChangeLevelOfAlertness(Wary);
+                        target = noise.Source.Position;
+                    }
+                }
             }
+        }
+
+        private void ChangeLevelOfAlertness(int newLevel)
+        {
+            levelOfAlertness = newLevel;
+            changedLevelOfAlertness = true;
         }
 
         public override void ActionTaken(Query query)
@@ -122,6 +182,8 @@ namespace GameThief.GameModel.MobileObjects
         public override void ActionRejected(Query query)
         {
             var target = Position + GameState.ConvertDirectionToSize[SightDirection];
+            if (!MapManager.InBounds(target))
+                return;
             if (MapManager.Map[target.X, target.Y].ObjectContainer.ShowDecor() is ClosedDoor)
                 actionQueue.PushFront(Query.Interaction);
         }

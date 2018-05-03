@@ -103,7 +103,7 @@ namespace GameThief.GameModel
         private static bool CheckMove(Point target)
         {
             return MapManager.InBounds(target) &&
-                   MapManager.Map[target.X, target.Y].Creature == null &&
+                   //MapManager.Map[target.X, target.Y].Creature == null &&
                    (!MapManager.Map[target.X, target.Y].ObjectContainer.IsSolid ||
                     MapManager.Map[target.X, target.Y].ObjectContainer.ShowDecor() is ClosedDoor);
         }
