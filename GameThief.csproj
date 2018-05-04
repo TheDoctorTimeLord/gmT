@@ -117,6 +117,7 @@
     <Compile Include="Tests\ObjectsContainer_Tests.cs" />
     <Compile Include="Tests\PathFinder_Tests.cs" />
     <Compile Include="Tests\MapManager_Tests.cs" />
+    <Compile Include="Tests\Player_test.cs" />
     <Compile Include="Tests\TemporaryObjectsManager_Tests.cs" />
     <Compile Include="Tests\SampleMapSetter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
