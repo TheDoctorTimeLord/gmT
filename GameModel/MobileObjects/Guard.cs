@@ -54,17 +54,21 @@ namespace GameThief.GameModel.MobileObjects
                 if (actionQueue.Count == 0)
                     ExecuteCurrentInstruction();
             }
-            else if (levelOfAlertness == Wary && changedLevelOfAlertness)
+            else if (levelOfAlertness == Wary)
             {
-                CheckTheSituation();
+                if (changedLevelOfAlertness)
+                {
+                    CheckTheSituation();
+                }
+                else if (actionQueue.Count == 0)
+                {
+                    levelOfAlertness = Calm;
+                }
             }
-            else if (levelOfAlertness == Wary && !changedLevelOfAlertness && actionQueue.Count == 0)
+            else if (levelOfAlertness == Angry)
             {
-                levelOfAlertness = Calm;
-            }
-            else if (levelOfAlertness == Angry && searchTime != 0 && actionQueue.Count == 0)
-            {
-                SearchPlayer();
+                if (changedLevelOfAlertness && searchTime != 0 && actionQueue.Count == 0)
+                    SearchPlayer();
             }
             else if (levelOfAlertness == Alert)
             {
@@ -128,7 +132,7 @@ namespace GameThief.GameModel.MobileObjects
             {
                 var cell = MapManager.Map[point.X, point.Y];
 
-                if (levelOfAlertness == Angry)
+                if (levelOfAlertness == Angry && !changedLevelOfAlertness)
                 {
                     if (searchTime != 0)
                         searchTime--;
