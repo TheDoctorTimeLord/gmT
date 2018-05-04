@@ -144,7 +144,7 @@ namespace GameThief
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
                     "Guard", new InitializationMobileObject(
-                        new Point(4, 3), 10, 10, Direction.Up, 1, 4, 4, 3, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
+                        new Point(4, 3), 10, 10, Direction.Up, 1, 4, 2, 4, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
             });
 
             MapManager.NoiseController.AddNoiseSource(new NoiseSource(NoiseType.Cat, 10, 100, new Point(0, 4), "N"));
