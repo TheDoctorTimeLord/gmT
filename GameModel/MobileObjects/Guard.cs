@@ -160,7 +160,7 @@ namespace GameThief.GameModel.MobileObjects
 
             foreach (var noise in AudibleNoises)
             {
-                if (noise.Source.Type != NoiseType.Guard)
+                if (noise.Source.Type != NoiseType.GuardVoice)
                 {
                     if (levelOfAlertness < Wary)
                     {

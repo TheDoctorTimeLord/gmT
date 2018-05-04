@@ -140,7 +140,7 @@ namespace GameThief.Tests
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "Guard", new InitializationMobileObject(new Point(1, 1), Direction.Down)),
+                    "GuardVoice", new InitializationMobileObject(new Point(1, 1), Direction.Down)),
             });
 
         var from = new Point(1, 0);

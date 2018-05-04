@@ -2,7 +2,9 @@
 {
     public enum NoiseType
     {
-        Guard,
+        Steps,
+        GuardVoice,
+        GuardScream,
         Cat
     }
 }
