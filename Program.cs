@@ -127,7 +127,6 @@ namespace GameThief
             {
                 Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
                 Tuple.Create(new Point(1, 1), (IDecor)new Wall()),
-                Tuple.Create(new Point(0, 1), (IDecor)new Wall()),
             });
 
             GameInformationManager.CreateTrackByName(new Dictionary<string, List<Instruction>>

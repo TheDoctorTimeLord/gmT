@@ -158,7 +158,7 @@ namespace GameThief.GameModel.MobileObjects
             {
                 if (noise.Source.Type != NoiseType.Guard)
                 {
-                    if (levelOfAlertness <= Wary)
+                    if (levelOfAlertness < Wary)
                     {
                         ChangeLevelOfAlertness(Wary);
                         target = noise.Source.Position;
