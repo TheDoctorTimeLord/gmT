@@ -60,6 +60,7 @@ namespace GameThief.GameModel.Managers
             if (!MobileObjects.Contains(creature))
                 return;
 
+            MapManager.RemoveCreatureFromMap(creature);
             deletedMobileObjects.Add(creature);
         }
 

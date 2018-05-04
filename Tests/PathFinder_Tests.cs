@@ -149,12 +149,7 @@ namespace GameThief.Tests
 
             var answer = new List<Query>
             {
-                Query.RotateLeft,
                 Query.Move,
-                Query.RotateRight,
-                Query.Move,
-                Query.Move,
-                Query.RotateRight,
                 Query.Move
             };
             var result = PathFinder.GetPathFromTo(from, to, direction);
