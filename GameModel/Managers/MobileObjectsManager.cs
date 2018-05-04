@@ -72,7 +72,7 @@ namespace GameThief.GameModel.Managers
                     return init.IsDefaultInitialization
                         ? new Player(new InitializationMobileObject(init.Position, init.Direction))
                         : new Player(init);
-                case "Guard":
+                case "GuardVoice":
                     return init.IsDefaultInitialization
                         ? new Guard(new InitializationMobileObject(init.Position, init.Direction))
                         : new Guard(init);

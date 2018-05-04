@@ -66,11 +66,11 @@ namespace GameThief
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "Guard", new InitializationMobileObject(new Point(1, 0), Direction.Up))
+                    "GuardVoice", new InitializationMobileObject(new Point(1, 0), Direction.Up))
             });
 
-            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Guard, 10, 4, new Point(0, 4), "N"));
-            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.Guard, 10, 25, new Point(4, 2), "L"));
+            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 10, 4, new Point(0, 4), "N"));
+            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 10, 25, new Point(4, 2), "L"));
         }
 
         private static void Map2(Player player)
@@ -87,7 +87,7 @@ namespace GameThief
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "Guard", new InitializationMobileObject(new Point(4, 3), Direction.Up))
+                    "GuardVoice", new InitializationMobileObject(new Point(4, 3), Direction.Up))
             });
         }
 
@@ -114,11 +114,11 @@ namespace GameThief
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "Guard", new InitializationMobileObject(
+                    "GuardVoice", new InitializationMobileObject(
                         new Point(4, 3), 10, 10, Direction.Up, 1, 4, 4, 3, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
             });
 
-            MapManager.NoiseController.AddNoiseSource(new NoiseSource(NoiseType.Guard, 10, 10, new Point(0, 4), "N"));
+            MapManager.NoiseController.AddNoiseSource(new NoiseSource(NoiseType.GuardVoice, 10, 10, new Point(0, 4), "N"));
         }
 
         private static void Map4(Player player)
@@ -143,7 +143,7 @@ namespace GameThief
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "Guard", new InitializationMobileObject(
+                    "GuardVoice", new InitializationMobileObject(
                         new Point(4, 3), 10, 10, Direction.Up, 1, 4, 2, 4, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
             });
 
