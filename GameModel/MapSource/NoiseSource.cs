@@ -27,7 +27,7 @@ namespace GameThief.GameModel.MapSource
             duration--;
         }
 
-        public bool IsActive() => duration > 0;
+        public bool IsActive() => duration >= 0;
 
         public void ActionAfterDeactivation()
         {

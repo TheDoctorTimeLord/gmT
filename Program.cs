@@ -32,7 +32,7 @@ namespace GameThief
             var st = new GameState();
             var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Left));
 
-            Map4(player);
+            Map1(player);
 
             while (true)
             {
@@ -64,7 +64,7 @@ namespace GameThief
                 Tuple.Create(new Point(2, 3), (IDecor) new Jewel())
             });
             var guard = MobileObjectsManager.GetCreatureByNameAndInitParams(
-                CreatureTypes.Guard, new InitializationMobileObject(new Point(1, 0), Direction.Up));
+                CreatureTypes.Guard, new InitializationMobileObject(new Point(2, 0), Direction.Right));
             guard.Inventory.AddItem(new Key());
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
