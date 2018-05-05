@@ -48,7 +48,7 @@ namespace GameThief
                     ? new List<Point>()
                     : player.VisibleCells.Concat(new List<Point> { player.Position }).ToList();
                 var noises = player.AudibleNoises.ToDictionary(noise => noise.Source.Position);
-                Console.WriteLine(Drawing(vis, noises));
+                Console.WriteLine(Drawing(vis, noises, player.Inventory));
             }
         }
 
@@ -60,14 +60,16 @@ namespace GameThief
                 Tuple.Create(new Point(3, 1), (IDecor)new Wall()),
                 Tuple.Create(new Point(3, 2), (IDecor)new Wall()),
                 Tuple.Create(new Point(3, 3), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 4), (IDecor)new Wall())
+                Tuple.Create(new Point(3, 4), (IDecor)new Wall()),
+                Tuple.Create(new Point(2, 3), (IDecor) new Jewel())
             });
-
+            var guard = MobileObjectsManager.GetCreatureByNameAndInitParams(
+                CreatureTypes.Guard, new InitializationMobileObject(new Point(1, 0), Direction.Up));
+            guard.Inventory.AddItem(new Key());
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 player,
-                MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    CreatureTypes.Guard, new InitializationMobileObject(new Point(1, 0), Direction.Up))
+                guard
             });
 
             MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 10, 4, new Point(0, 4), "N"));
@@ -168,7 +170,7 @@ namespace GameThief
             }
         }
 
-        static string Drawing(List<Point> vis, Dictionary<Point, Noise> noises)
+        static string Drawing(List<Point> vis, Dictionary<Point, Noise> noises, Inventory inventory)
         {
             var str = new StringBuilder();
 
@@ -189,6 +191,7 @@ namespace GameThief
                         {
                             c = ch is Wall ? "W" : c;
                             c = ch is Painting ? "p" : c;
+                            c = ch is Jewel ? "J" : c;
                         }
 
                         c = MapManager.Map[j, i].Creature is Player ? "P" : c;
@@ -205,6 +208,15 @@ namespace GameThief
 
                 str.Append("\n");
             }
+            str.Append("\n");
+            foreach (var item in inventory.Items)
+            {
+                var c = "";
+                c = item is Jewel ? "J" : c;
+                c = item is Key ? "K" : c;
+                str.Append(c);
+            }
+            
 
             return str.ToString();
         }

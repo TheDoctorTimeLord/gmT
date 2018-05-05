@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.Managers;
+using GameThief.GameModel.MapSource;
 using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.MobileObjects.Creature
@@ -62,19 +64,34 @@ namespace GameThief.GameModel.MobileObjects.Creature
         {
             if (actionQueue.Count != 0)
                 actionQueue.PopFront();
+            if (query == Query.Move)
+                MapManager.AddNoiseSourse(new NoiseSource(NoiseType.StepsOfGuard, 1, 4, Position, "S"));
         }
 
         public override void ActionRejected(Query query)
         {
-            var target = Position + GameState.ConvertDirectionToSize[Direction];
-            if (!MapManager.InBounds(target))
-                return;
-            if (MapManager.Map[target.X, target.Y].ObjectContainer.ShowDecor() is ClosedDoor)
-                actionQueue.PushFront(Query.Interaction);
+            switch (query)
+            {
+                case Query.Move:
+                    var target = Position + GameState.ConvertDirectionToSize[Direction];
+                    if (!MapManager.InBounds(target))
+                        return;
+                    if (MapManager.Map[target.X, target.Y].ObjectContainer.ShowDecor() is ClosedDoor)
+                        actionQueue.PushFront(Query.Interaction);
+                    break;
+            }
         }
 
         public override void Interative(ICreature creature)
         {
+            if (creature is Player)
+            {
+                if (Inventory.Items.Count == 0)
+                    return;
+                var item = Inventory.Items.First();
+                Inventory.RemoveItem(item);
+                creature.Inventory.AddItem(item);
+            }
         }
 
         private void UpdateActionQueueWithClam()
