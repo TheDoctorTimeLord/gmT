@@ -9,8 +9,12 @@ using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.MobileObjects
 {
-    public class MobileObject : ICreature
+    public abstract class MobileObject : ICreature
     {
+        //public static MobileObject GetDefault(InitializationMobileObject init)
+        //{
+            //return GenerateRandomMobileObject(init.Position, init.Direction);
+        //}
         public MobileObject(InitializationMobileObject init)
         {
             if (init.IsDefaultInitialization)
@@ -110,24 +114,12 @@ namespace GameThief.GameModel.MobileObjects
             AudibleNoises = MapManager.GetAudibleNoises(Position, MaxHearingDelta, MinHearingVolume);
         }
 
-        protected virtual Query GetIntentionOfCreature()
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract Query GetIntentionOfCreature();
 
-        public virtual void ActionTaken(Query query)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void ActionTaken(Query query);
 
-        public virtual void ActionRejected(Query query)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void ActionRejected(Query query);
 
-        public virtual void Interative(ICreature creature)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void Interative(ICreature creature);
     }
 }

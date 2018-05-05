@@ -4,7 +4,8 @@ using GameThief.GameModel.Enums;
 namespace GameThief.GameModel.MobileObjects
 {
     public interface ICreature
-    {
+    {//сделать свойства
+       // Point Position { get; set; }
         Point GetPosition();
         void ChangePosition(Point newPosition);
         Direction GetDirection();

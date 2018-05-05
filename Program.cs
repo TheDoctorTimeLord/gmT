@@ -177,7 +177,7 @@ namespace GameThief
                 {
                     var c = " ";
 
-                    if (true/*vis.Contains(new Point(j, i))*/)
+                    if (vis.Contains(new Point(j, i)))
                     {
                         c = MapManager.Map[j, i].BackgroundFilename;
 

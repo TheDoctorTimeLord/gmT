@@ -56,6 +56,7 @@ namespace GameThief.GameModel
                     queue.Enqueue(targetNode);
                 }
 
+                //просто 2 раза одно и то же
                 targetNode = new LinkedNode(
                     currentNode.Position,
                     GameState.RotateFromTo(currentNode.Direction, false),
@@ -79,20 +80,18 @@ namespace GameThief.GameModel
                 .Skip(1)
                 .Select(node =>
                 {
+                    startNode = node;
                     if (Math.Abs(startNode.Position.X - node.Position.X) == 1 ||
                         Math.Abs(startNode.Position.Y - node.Position.Y) == 1)
                     {
-                        startNode = node;
                         return Query.Move;
                     }
                     if (((int) startNode.Direction + 1) % 4 == (int) node.Direction)
                     {
-                        startNode = node;
                         return Query.RotateRight;
                     }
                     if (((int) startNode.Direction + 3) % 4 == (int) node.Direction)
                     {
-                        startNode = node;
                         return Query.RotateLeft;
                     }
                     throw new Exception("Неверно построен путь");

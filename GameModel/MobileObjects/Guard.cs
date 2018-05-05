@@ -15,6 +15,7 @@ namespace GameThief.GameModel.MobileObjects
 {
     public class Guard : MobileObject
     {
+        //почему не enum
         private const int Calm = 0;
         private const int Wary = 1;
         private const int Angry = 2;
@@ -49,6 +50,7 @@ namespace GameThief.GameModel.MobileObjects
         {
             changedLevelOfAlertness = false;
             UpdateLevelOfAlertness();
+            //сделать красиво
             if (levelOfAlertness == Calm)
             {
                 if (actionQueue.Count == 0)
