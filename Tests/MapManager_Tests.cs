@@ -78,6 +78,9 @@ namespace GameThief.Tests
 
             var expectedResult = new List<Point>
             {
+                new Point(1, 0),
+                new Point(2, 0),
+                new Point(3, 0),
                 new Point(1, 1),
                 new Point(2, 1),
                 new Point(3, 1),
@@ -104,6 +107,9 @@ namespace GameThief.Tests
 
             var expectedResult = new List<Point>
             {
+                new Point(1, 0),
+                new Point(2, 0),
+                new Point(3, 0),
                 new Point(1, 1),
                 new Point(2, 1),
                 new Point(3, 1),
@@ -130,6 +136,9 @@ namespace GameThief.Tests
 
             var expectedResult = new List<Point>
             {
+                new Point(1, 0),
+                new Point(2, 0),
+                new Point(3, 0),
                 new Point(1, 1),
                 new Point(2, 1),
                 new Point(3, 1),
@@ -152,6 +161,9 @@ namespace GameThief.Tests
 
             var expectedResult = new List<Point>
             {
+                new Point(1, 0),
+                new Point(2, 0),
+                new Point(3, 0),
                 new Point(1, 1),
                 new Point(2, 1),
                 new Point(3, 1),
@@ -177,6 +189,8 @@ namespace GameThief.Tests
 
             var expectedResult = new List<Point>
             {
+                new Point(2, 0),
+                new Point(2, 1),
                 new Point(3, 0),
                 new Point(3, 1),
                 new Point(4, 0),
@@ -194,6 +208,8 @@ namespace GameThief.Tests
 
             var expectedResult = new List<Point>
             {
+                new Point(2, 0),
+                new Point(2, 1),
                 new Point(1, 0),
                 new Point(1, 1),
                 new Point(0, 0),
@@ -218,7 +234,10 @@ namespace GameThief.Tests
                 new Point(4, 0),
                 new Point(1, 1),
                 new Point(2, 1),
-                new Point(3, 1)
+                new Point(3, 1),
+                new Point(1, 2),
+                new Point(2, 2),
+                new Point(3, 2)
             };
 
             TestFieldOfView(new Point(2, 2), Direction.Up, 3, 2, expectedResult);
@@ -235,6 +254,9 @@ namespace GameThief.Tests
 
             var expectedResult = new List<Point>
             {
+                new Point(1, 0),
+                new Point(2, 0),
+                new Point(3, 0),
                 new Point(1, 1),
                 new Point(2, 1),
                 new Point(3, 1),

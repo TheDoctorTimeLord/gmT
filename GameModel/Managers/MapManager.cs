@@ -63,6 +63,13 @@ namespace GameThief.GameModel.Managers
             pointsToCheck.Add(startPoint);
             var currentWidth = 1;
 
+            yield return position;
+            foreach (var point in GetSidePoints(new List<Point> {position}, oppositeDirection)) 
+            {
+                if (InBounds(point))
+                    yield return point;
+            }
+
             while (true)
             {
                 if (viewDistance <= 0 || pointsToCheck.Count == 0)
