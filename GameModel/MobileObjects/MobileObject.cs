@@ -15,7 +15,7 @@ namespace GameThief.GameModel.MobileObjects
         //{
             //return GenerateRandomMobileObject(init.Position, init.Direction);
         //}
-        public MobileObject(InitializationMobileObject init)
+        protected MobileObject(InitializationMobileObject init)
         {
             if (init.IsDefaultInitialization)
                 GenerateRandomMobileObject(init.Position, init.Direction);

@@ -66,7 +66,7 @@ namespace GameThief
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "GuardVoice", new InitializationMobileObject(new Point(1, 0), Direction.Up))
+                    CreatureTypes.Guard, new InitializationMobileObject(new Point(1, 0), Direction.Up))
             });
 
             MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 10, 4, new Point(0, 4), "N"));
@@ -87,7 +87,7 @@ namespace GameThief
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "GuardVoice", new InitializationMobileObject(new Point(4, 3), Direction.Up))
+                    CreatureTypes.Guard, new InitializationMobileObject(new Point(4, 3), Direction.Up))
             });
         }
 
@@ -114,7 +114,7 @@ namespace GameThief
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "GuardVoice", new InitializationMobileObject(
+                    CreatureTypes.Guard, new InitializationMobileObject(
                         new Point(4, 3), 10, 10, Direction.Up, 1, 4, 4, 3, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
             });
 
@@ -143,7 +143,7 @@ namespace GameThief
             {
                 player,
                 MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    "GuardVoice", new InitializationMobileObject(
+                    CreatureTypes.Guard, new InitializationMobileObject(
                         new Point(4, 3), 10, 10, Direction.Up, 1, 4, 2, 4, new List<Tuple<string, string>>{Tuple.Create("path", "track1")}))
             });
 

@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameModel\ConverterPressedKey.cs" />
-    <Compile Include="GameModel\Enums\CellType.cs" />
     <Compile Include="GameModel\Enums\LevelOfAlertness.cs" />
     <Compile Include="GameModel\Enums\DecorType.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\BrokenPieces.cs" />
@@ -62,7 +61,6 @@
     <Compile Include="GameModel\ImmobileObjects\Decors\ClosedCupboard.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\ClosedDoor.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Lock.cs" />
-    <Compile Include="GameModel\ImmobileObjects\Item.cs" />
     <Compile Include="GameModel\ImmobileObjects\Items\Jewel.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\OpenedCupboard.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\OpenedDoor.cs" />
