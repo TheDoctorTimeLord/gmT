@@ -12,7 +12,7 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 {
     public class ClosedDoor : ImmobileObject
     {
-        public ClosedDoor() : base(DecorType.ClosedDoor, 20, 1, true, true) { }
+        public ClosedDoor() : base(DecorType.ClosedDoor, 10, 1, true, true) { }
 
         public override bool InteractWith(ICreature creature)
         {

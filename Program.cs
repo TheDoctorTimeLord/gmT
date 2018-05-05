@@ -60,7 +60,8 @@ namespace GameThief
                 Tuple.Create(new Point(3, 1), (IDecor)new Wall()),
                 Tuple.Create(new Point(3, 2), (IDecor)new Wall()),
                 Tuple.Create(new Point(3, 3), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 4), (IDecor)new Wall()),
+                Tuple.Create(new Point(3, 4), (IDecor)new ClosedDoor()),
+                Tuple.Create(new Point(3, 4), (IDecor)new Lock()),
                 Tuple.Create(new Point(2, 3), (IDecor) new Jewel())
             });
             var guard = MobileObjectsManager.GetCreatureByNameAndInitParams(
@@ -73,7 +74,7 @@ namespace GameThief
             });
 
             MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 10, 4, new Point(0, 4), "N"));
-            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 10, 25, new Point(4, 2), "L"));
+            MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 100, 250, new Point(2, 2), "L"));
         }
 
         private static void Map2(Player player)
@@ -192,6 +193,9 @@ namespace GameThief
                             c = ch is Wall ? "W" : c;
                             c = ch is Painting ? "p" : c;
                             c = ch is Jewel ? "J" : c;
+                            c = ch is ClosedDoor ? "D" : c;
+                            c = ch is OpenedDoor ? "d" : c;
+                            c = ch is Lock ? "o" : c;
                         }
 
                         c = MapManager.Map[j, i].Creature is Player ? "P" : c;
