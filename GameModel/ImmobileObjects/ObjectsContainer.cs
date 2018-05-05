@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.MobileObjects;
@@ -17,66 +18,33 @@ namespace GameThief.GameModel.ImmobileObjects
 
         public void AddDecor(IDecor decor)
         {
-            IsSolid = IsSolid || decor.IsSolid();
-            IsOpaque = IsOpaque || decor.IsOpaque();
-            TotalNoiseSuppression += decor.GetNoiseSuppression();
+            IsSolid = IsSolid || decor.IsSolid;
+            IsOpaque = IsOpaque || decor.IsOpaque;
+            TotalNoiseSuppression += decor.NoiseSuppression;
             Decors.Add(decor);
         }
 
-        public static IDecor ParseDecor(string decorName)
-        {
-            switch (decorName)
-            {
-                case "broken_pieces":
-                    return new BrokenPieces();
-                case "button":
-                    return new Button();
-                case "carpet":
-                    return new Carpet();
-                case "chair":
-                    return new Chair();
-                case "closed_cupboard":
-                    return new ClosedCupboard();
-                case "closed_door":
-                    return new ClosedDoor();
-                case "jewel":
-                    return new Jewel();
-                case "lock":
-                    return new Lock();
-                case "opened_cupboard":
-                    return new OpenedCupboard();
-                case "opened_door":
-                    return new OpenedDoor();
-                case "painting":
-                    return new Painting();
-                case "treasure":
-                    return new Treasure();
-                case "vase":
-                    return new Vase();
-                case "wall":
-                    return new Wall();
-                default:
-                    throw new Exception("Попытка создания несуществующего элемента декора: " + decorName);
-            }
-        }
+        public static IDecor ParseDecor(string decorName) => DecorParser.ContainsKey(decorName)
+            ? DecorParser[decorName]()
+            : throw new Exception("Попытка создания несуществующего элемента декора \"" + decorName + "\"");
 
         public void RemoveDecor(IDecor decor)
         {
             Decors.Remove(decor);
-            TotalNoiseSuppression -= decor.GetNoiseSuppression();
+            TotalNoiseSuppression -= decor.NoiseSuppression;
 
-            if (decor.IsSolid())
+            if (decor.IsSolid)
             {
                 IsSolid = false;
                 foreach (var dec in Decors)
-                    IsSolid = IsSolid || dec.IsSolid();
+                    IsSolid = IsSolid || dec.IsSolid;
             }
 
-            if (!decor.IsOpaque())
+            if (decor.IsOpaque)
             {
-                IsOpaque = true;
+                IsOpaque = false;
                 foreach (var dec in Decors)
-                    IsOpaque = IsOpaque || dec.IsOpaque();
+                    IsOpaque = IsOpaque || dec.IsOpaque;
             }
         }
 
@@ -102,5 +70,24 @@ namespace GameThief.GameModel.ImmobileObjects
         {
             return Decors.ToArray().Reverse();
         }
+
+        private static readonly Dictionary<string, Func<IDecor>> DecorParser = new Dictionary<string, Func<IDecor>>
+        {
+            {"broken_pieces", () => new BrokenPieces()},
+            {"button", () => new Button()},
+            {"carpet", () => new Carpet()},
+            {"chair", () => new Chair()},
+            {"closed_cupboard", () => new ClosedCupboard()},
+            {"closed_door", () => new ClosedDoor()},
+            {"lock", () => new Lock()},
+            {"opened_cupboard", () => new OpenedCupboard()},
+            {"opened_door", () => new OpenedDoor()},
+            {"wall", () => new Wall()},
+            {"key", () => new Key()},
+            {"painting", () => new Painting()},
+            {"treasure", () => new Treasure()},
+            {"vase", () => new Vase()},
+            {"jewel", () => new Jewel()}
+        };
     }
 }

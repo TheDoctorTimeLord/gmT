@@ -1,5 +1,6 @@
 ﻿using GameThief.GameModel.Enums;
 using GameThief.GameModel.MobileObjects;
+using NUnit.Framework;
 
 namespace GameThief.GameModel.ImmobileObjects.Items
 {
