@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameModel\ConverterPressedKey.cs" />
+    <Compile Include="GameModel\Enums\CreatureTypes.cs" />
     <Compile Include="GameModel\Enums\CellType.cs" />
     <Compile Include="GameModel\Enums\LevelOfAlertness.cs" />
     <Compile Include="GameModel\Enums\DecorType.cs" />
