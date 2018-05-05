@@ -8,6 +8,6 @@ namespace GameThief.GameModel.ImmobileObjects
 {
     public interface IItem
     {
-        int GetPrice();
+        int Price { get; }
     }
 }

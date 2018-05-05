@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameModel\ConverterPressedKey.cs" />
+    <Compile Include="GameModel\Enums\DecorType.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\BrokenPieces.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Button.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Carpet.cs" />

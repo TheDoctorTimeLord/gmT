@@ -1,23 +1,24 @@
 ﻿using System;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects
 {
-    public class ImmobileObject : IDecor
+    public abstract class ImmobileObject : IDecor
     {
-        private readonly bool isSolid;
-        private readonly bool isOpaque;
-        private readonly int noiseSuppression;
-        private readonly int priority;
-        private readonly string imageName;
+        public DecorType Type { get; }
+        public int Priority { get; }
+        public int NoiseSuppression { get; }
+        public bool IsSolid { get; }
+        public bool IsOpaque { get; }
 
-        public ImmobileObject(bool isSolid, bool isOpaque, int noiseSuppression, int priority, string imageName)
+        protected ImmobileObject(DecorType type, int priority, int noiseSuppression, bool isSolid, bool isOpaque)
         {
-            this.isSolid = isSolid;
-            this.isOpaque = isOpaque;
-            this.noiseSuppression = noiseSuppression;
-            this.priority = priority;
-            this.imageName = imageName;
+            Type = type;
+            Priority = priority;
+            NoiseSuppression = noiseSuppression;
+            IsSolid = isSolid;
+            IsOpaque = isOpaque;
         }
 
         public virtual bool InteractWith(ICreature creature)
@@ -30,32 +31,7 @@ namespace GameThief.GameModel.ImmobileObjects
             if (!(obj is ImmobileObject))
                 throw new ArgumentException();
 
-            return -priority.CompareTo(((ImmobileObject)obj).GetPriority());
-        }
-
-        public string GetImageName()
-        {
-            return imageName;
-        }
-
-        public int GetNoiseSuppression()
-        {
-            return noiseSuppression;
-        }
-
-        public int GetPriority()
-        {
-            return priority;
-        }
-
-        public bool IsSolid()
-        {
-            return isSolid;
-        }
-
-        public bool IsOpaque()
-        {
-            return isOpaque;
+            return -Priority.CompareTo(((ImmobileObject)obj).Priority);
         }
     }
 }

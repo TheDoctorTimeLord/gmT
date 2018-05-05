@@ -1,16 +1,19 @@
-﻿using GameThief.GameModel.MobileObjects;
+﻿using GameThief.GameModel.Enums;
+using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Items
 {
     public class Vase : ImmobileObject, IItem
     {
-        public Vase() : base(false, false, 0, 30, "vase.png") { }
-        private int price;
+        public int Price { get; }
 
-        int IItem.GetPrice()
+        public Vase(int price, DecorType type, int priority, int noiseSuppression, bool isSolid, bool isOpaque) 
+            : base(type, priority, noiseSuppression, isSolid, isOpaque)
         {
-            return price;
+            Price = price;
         }
+
+        public Vase(int price) : this(price, DecorType.Vase, 30, 0, false, false) { }
 
         public override bool InteractWith(ICreature creature)
         {

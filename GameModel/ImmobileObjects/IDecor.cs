@@ -1,15 +1,16 @@
 ﻿using System;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects
 {
     public interface IDecor : IComparable
     {
-        string GetImageName();
-        int GetPriority();
-        int GetNoiseSuppression();
-        bool IsSolid();
-        bool IsOpaque();
+        DecorType Type { get; }
+        int Priority { get; }
+        int NoiseSuppression { get; }
+        bool IsSolid { get; }
+        bool IsOpaque { get; }
         bool InteractWith(ICreature creature);
     }
 }

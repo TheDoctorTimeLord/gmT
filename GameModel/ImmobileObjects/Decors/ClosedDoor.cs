@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
 
@@ -11,7 +12,7 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 {
     public class ClosedDoor : ImmobileObject
     {
-        public ClosedDoor() : base(true, true, 20, 1, "closed_door.png") { }
+        public ClosedDoor() : base(DecorType.ClosedDoor, 20, 1, true, true) { }
 
         public override bool InteractWith(ICreature creature)
         {

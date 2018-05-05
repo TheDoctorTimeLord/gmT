@@ -1,15 +1,15 @@
-﻿using GameThief.GameModel.MobileObjects;
+﻿using GameThief.GameModel.Enums;
+using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Items
 {
     public class Jewel : ImmobileObject, IItem
     {
-        public Jewel() : base(false, false, 0, 30, "jewel.png") { }
-        private int price;
+        public int Price { get; }
 
-        public int GetPrice()
+        public Jewel(int price) : base(DecorType.Jewel, 30, 0, false, false)
         {
-            return price;
+            Price = price;
         }
 
         public override bool InteractWith(ICreature creature)
