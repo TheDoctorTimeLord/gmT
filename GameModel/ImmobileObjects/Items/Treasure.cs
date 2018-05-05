@@ -3,14 +3,9 @@ using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Items
 {
-    public class Treasure : ImmobileObject, IItem
+    public class Treasure : Item
     {
-        public int Price { get; }
-
-        public Treasure(int price) : base(DecorType.Treasure, 30, 0, false, false)
-        {
-            Price = price;
-        }
+        public Treasure() : base(350, DecorType.Treasure) { }
 
         public override bool InteractWith(ICreature creature)
         {

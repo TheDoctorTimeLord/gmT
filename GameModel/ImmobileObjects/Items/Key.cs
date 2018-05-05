@@ -8,14 +8,9 @@ using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ImmobileObjects.Items
 {
-    public class Key : ImmobileObject, IItem
+    public class Key : Item
     {
-        public int Price { get; }
-
-        public Key(int price) : base(DecorType.Key, 30, 0, false, false)
-        {
-            Price = price;
-        }
+        public Key() : base(0, DecorType.Key) { }
 
         public override bool InteractWith(ICreature creature)
         {
