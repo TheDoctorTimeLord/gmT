@@ -141,7 +141,7 @@ namespace GameThief.GameModel.Managers
                     continue;
                 }
 
-                if (noise.Intensity - previous.Intensity < maxHearingDelta)
+                if (previous.Intensity - noise.Intensity >= maxHearingDelta)
                     break;
 
                 result.Add(noise);

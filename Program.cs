@@ -44,10 +44,10 @@ namespace GameThief
 
                 st.UpdateState();
 
-                var vis = player.VisibleCells == null
-                    ? new List<Point>()
-                    : player.VisibleCells.Concat(new List<Point> { player.Position }).ToList();
-                var noises = player.AudibleNoises.ToDictionary(noise => noise.Source.Position);
+                var vis = MapManager.GetVisibleCells(player.Position, player.Direction, player.ViewDistanse,
+                    player.ViewWidth).ToList();
+                var noises = MapManager.GetAudibleNoises(player.Position, player.MaxHearingDelta, player.MinHearingVolume)
+                    .ToDictionary(noise => noise.Source.Position);
                 Console.WriteLine(Drawing(vis, noises, player.Inventory));
             }
         }
@@ -64,7 +64,7 @@ namespace GameThief
                 Tuple.Create(new Point(2, 3), (IDecor) new Jewel())
             });
             var guard = MobileObjectsManager.GetCreatureByNameAndInitParams(
-                CreatureTypes.Guard, new InitializationMobileObject(new Point(2, 0), Direction.Right));
+                CreatureTypes.Guard, new InitializationMobileObject(new Point(2, 0), 10, 10, Direction.Right, 1, 5, 2, 0, new Inventory(10), new List<Tuple<string, string>>()));
             guard.Inventory.AddItem(new Key());
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {

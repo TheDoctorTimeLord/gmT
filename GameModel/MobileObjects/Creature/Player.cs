@@ -1,5 +1,6 @@
 ﻿using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
+using GameThief.GameModel.MapSource;
 using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.MobileObjects.Creature
@@ -17,7 +18,8 @@ namespace GameThief.GameModel.MobileObjects.Creature
 
         public override void ActionTaken(Query query)
         {
-            UpdateWorldData();
+            if (query == Query.Move)
+                MapManager.AddNoiseSourse(new NoiseSource(NoiseType.StepsOfThief, 1, 2, Position, "S"));
         }
 
         public override void ActionRejected(Query query)
