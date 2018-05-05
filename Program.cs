@@ -13,6 +13,7 @@ using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;
+using GameThief.GameModel.MobileObjects.Creature;
 using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief

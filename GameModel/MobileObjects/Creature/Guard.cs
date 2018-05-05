@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
-using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.Managers;
-using GameThief.GameModel.MapSource;
 using GameThief.GameModel.ServiceClasses;
 
-namespace GameThief.GameModel.MobileObjects
+namespace GameThief.GameModel.MobileObjects.Creature
 {
     public class Guard : MobileObject
     {

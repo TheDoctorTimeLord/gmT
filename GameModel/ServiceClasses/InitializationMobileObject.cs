@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
+using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ServiceClasses
 {
@@ -18,7 +19,7 @@ namespace GameThief.GameModel.ServiceClasses
         }
 
         public InitializationMobileObject(Point position, int maxHealth, int health, Direction direction,
-            int minHearingVolume, int maxHearingDelta, int viewWidth, int viewDistanse, List<Tuple<string, string>> parameters)
+            int minHearingVolume, int maxHearingDelta, int viewWidth, int viewDistanse, Inventory inventory, List<Tuple<string, string>> parameters)
         {
             IsDefaultInitialization = false;
             Position = position;
@@ -30,6 +31,7 @@ namespace GameThief.GameModel.ServiceClasses
             ViewWidth = viewWidth;
             ViewDistanse = viewDistanse;
             Parameters = parameters;
+            Inventory = inventory;
         }
 
         public bool IsDefaultInitialization;
@@ -42,6 +44,7 @@ namespace GameThief.GameModel.ServiceClasses
         public int MaxHearingDelta;
         public int ViewDistanse;
         public int ViewWidth;
+        public Inventory Inventory;
 
         public List<Tuple<string, string>> Parameters = new List<Tuple<string, string>>();
     }

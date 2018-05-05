@@ -15,6 +15,12 @@ namespace GameThief.GameModel.MobileObjects
         public HashSet<IItem> Items { get; private set; }
         public int MaxSize { get; private set; }
 
+        public Inventory(int maxSize)
+        {
+            MaxSize = maxSize;
+            Items = new HashSet<IItem>();
+        }
+
         public Inventory(HashSet<IItem> items, int maxSize)
         {
             MaxSize = maxSize;

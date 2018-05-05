@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.MobileObjects;
+using GameThief.GameModel.MobileObjects.Creature;
 using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.Managers

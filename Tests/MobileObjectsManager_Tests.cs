@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
+using GameThief.GameModel.MobileObjects.Creature;
 using GameThief.GameModel.ServiceClasses;
 using NUnit.Framework;
 using NUnit.Framework.Internal;

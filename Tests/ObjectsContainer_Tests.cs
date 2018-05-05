@@ -10,6 +10,7 @@ using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
+using GameThief.GameModel.MobileObjects.Creature;
 using GameThief.GameModel.ServiceClasses;
 using NUnit.Framework;
 using NUnit.Framework.Internal;

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using GameThief.GameModel.Enums;
+﻿using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.ServiceClasses;
 
-namespace GameThief.GameModel.MobileObjects
+namespace GameThief.GameModel.MobileObjects.Creature
 {
     public class Player : MobileObject
     {

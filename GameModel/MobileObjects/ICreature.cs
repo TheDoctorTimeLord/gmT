@@ -8,7 +8,7 @@ namespace GameThief.GameModel.MobileObjects
         Point Position { get; set; }
         Direction Direction { get; set; }
         bool IsHidden();
-        Inventory GetInventory();
+        Inventory Inventory { get; }
 
         Query GetIntention();
         void ActionTaken(Query query);

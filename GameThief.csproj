@@ -75,7 +75,7 @@
     <Compile Include="GameModel\Managers\GameInformationManager.cs" />
     <Compile Include="GameModel\MapSource\LightController.cs" />
     <Compile Include="GameModel\MapSource\LightSource.cs" />
-    <Compile Include="GameModel\MobileObjects\Guard.cs" />
+    <Compile Include="GameModel\MobileObjects\Creature\Guard.cs" />
     <Compile Include="GameModel\MobileObjects\Inventory.cs" />
     <Compile Include="GameModel\MobileObjects\MobileObject.cs" />
     <Compile Include="GameModel\Enums\Direction.cs" />
@@ -107,7 +107,7 @@
     <Compile Include="GameModel\GameState.cs" />
     <Compile Include="GameModel\MobileObjects\ICreature.cs" />
     <Compile Include="GameModel\ITemporaryObject.cs" />
-    <Compile Include="GameModel\MobileObjects\Player.cs" />
+    <Compile Include="GameModel\MobileObjects\Creature\Player.cs" />
     <Compile Include="GameModel\Managers\TemporaryObjectsManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

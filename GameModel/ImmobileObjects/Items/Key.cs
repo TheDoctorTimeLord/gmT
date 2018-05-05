@@ -19,7 +19,7 @@ namespace GameThief.GameModel.ImmobileObjects.Items
 
         public override bool InteractWith(ICreature creature)
         {
-            return creature.GetInventory().AddItem(this);
+            return creature.Inventory.AddItem(this);
         }
     }
 }

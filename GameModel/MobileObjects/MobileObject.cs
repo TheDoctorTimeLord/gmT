@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using GameThief.GameModel.Enums;
+using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
 using GameThief.GameModel.ServiceClasses;
@@ -13,7 +14,7 @@ namespace GameThief.GameModel.MobileObjects
     {
         //public static MobileObject GetDefault(InitializationMobileObject init)
         //{
-            //return GenerateRandomMobileObject(init.Position, init.Direction);
+        //    return GenerateRandomMobileObject(init.Position, init.Direction);
         //}
         protected MobileObject(InitializationMobileObject init)
         {
@@ -29,6 +30,7 @@ namespace GameThief.GameModel.MobileObjects
                 MaxHearingDelta = init.MaxHearingDelta;
                 ViewDistanse = init.ViewDistanse;
                 ViewWidth = init.ViewWidth;
+                Inventory = init.Inventory;
             }
         }
 
@@ -43,6 +45,8 @@ namespace GameThief.GameModel.MobileObjects
             MinHearingVolume = 1;
             ViewDistanse = 5;
             ViewWidth = 3;
+
+            Inventory = new Inventory(new HashSet<IItem>(), 10);
         }
         
         public int MaxHealth { get; private set; }
@@ -51,7 +55,7 @@ namespace GameThief.GameModel.MobileObjects
         public int MaxHearingDelta { get; private set; }
         public int ViewDistanse { get; private set; }
         public int ViewWidth { get; private set; }
-        public Inventory Inventory;
+        public Inventory Inventory { get; private set; }
 
         public List<Point> VisibleCells;
         public HashSet<Noise> AudibleNoises;
@@ -80,11 +84,6 @@ namespace GameThief.GameModel.MobileObjects
         public bool IsHidden()
         {
            return Hidden;
-        }
-
-        public Inventory GetInventory()
-        {
-            return Inventory;
         }
 
         public Query GetIntention()
