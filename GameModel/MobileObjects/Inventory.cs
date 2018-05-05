@@ -38,7 +38,7 @@ namespace GameThief.GameModel.MobileObjects
 
         public void DropItem(IItem item, ICreature creature)
         {
-            var currentPosition = creature.GetPosition();
+            var currentPosition = creature.Position;
             MapManager.Map[currentPosition.X, currentPosition.Y].ObjectContainer.AddDecor((IDecor)item);
         }
     }

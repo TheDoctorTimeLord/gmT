@@ -63,7 +63,7 @@ namespace GameThief.GameModel
                 case Query.None:
                     break;
                 case Query.Interaction:
-                    var target = creature.GetPosition() + ConvertDirectionToSize[creature.GetDirection()];
+                    var target = creature.Position + ConvertDirectionToSize[creature.Direction];
                     if (MapManager.Map[target.X, target.Y].Creature != null)
                         MapManager.Map[target.X, target.Y].Creature.Interative(creature);
                     else
@@ -71,16 +71,16 @@ namespace GameThief.GameModel
                     break;
 
                 case Query.Move:
-                    target = creature.GetPosition() + ConvertDirectionToSize[creature.GetDirection()];
+                    target = creature.Position + ConvertDirectionToSize[creature.Direction];
                     MapManager.MoveCreature(creature, target);
                     break;
 
                 case Query.RotateLeft:
-                    creature.ChangeDirection(RotateFromTo(creature.GetDirection(), true));
+                    creature.Direction = RotateFromTo(creature.Direction, true);
                     break;
 
                 case Query.RotateRight:
-                    creature.ChangeDirection(RotateFromTo(creature.GetDirection(), false));
+                    creature.Direction = RotateFromTo(creature.Direction, false);
                     break;
                 default:
                     throw new Exception("Не обработанное намерение: " + query.ToString() + ". " + creature);
@@ -94,9 +94,9 @@ namespace GameThief.GameModel
 
             var delta = Size.Empty;
             if (query == Query.Move || query == Query.Interaction)
-                delta = ConvertDirectionToSize[creature.GetDirection()];
+                delta = ConvertDirectionToSize[creature.Direction];
 
-            var target = creature.GetPosition() + delta;
+            var target = creature.Position + delta;
             if (!MapManager.InBounds(target))
                 return false;
 

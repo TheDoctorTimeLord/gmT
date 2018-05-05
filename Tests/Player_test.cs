@@ -76,7 +76,7 @@ namespace GameThief.Tests
             }
 
             Assert.True(MapManager.Map[2, 2].Creature is Player);
-            Assert.AreEqual(MapManager.Map[2, 2].Creature.GetDirection(), Direction.Up);
+            Assert.AreEqual(MapManager.Map[2, 2].Creature.Direction, Direction.Up);
         }
     }
 }

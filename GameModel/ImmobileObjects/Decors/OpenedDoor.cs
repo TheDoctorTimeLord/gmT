@@ -14,7 +14,7 @@ namespace GameThief.GameModel.ImmobileObjects.Decors
 
         public override bool InteractWith(ICreature creature)
         {
-            var position = creature.GetPosition() + GameState.ConvertDirectionToSize[creature.GetDirection()];
+            var position = creature.Position + GameState.ConvertDirectionToSize[creature.Direction];
             MapManager.Map[position.X, position.Y].ObjectContainer.AddDecor(new ClosedDoor());
             return true;
         }

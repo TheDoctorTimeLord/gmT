@@ -15,17 +15,12 @@ namespace GameThief.GameModel.MobileObjects
 {
     public class Guard : MobileObject
     {
-        //почему не enum
-        private const int Calm = 0;
-        private const int Wary = 1;
-        private const int Angry = 2;
-        private const int Alert = 3;
         private const int SearchTime = 10;
 
         private readonly List<Instruction> normalGuardTrack = new List<Instruction>();
         private int currentInstruction;
         private Deque<Query> actionQueue = new Deque<Query>();
-        private int levelOfAlertness;
+        private LevelOfAlertness levelOfAlertness;
         private bool changedLevelOfAlertness;
 
         private int searchTime;
@@ -48,41 +43,78 @@ namespace GameThief.GameModel.MobileObjects
 
         protected override Query GetIntentionOfCreature()
         {
-            changedLevelOfAlertness = false;
             UpdateLevelOfAlertness();
-            //сделать красиво
-            if (levelOfAlertness == Calm)
+
+            switch (levelOfAlertness)
             {
-                if (actionQueue.Count == 0)
-                    ExecuteCurrentInstruction();
-            }
-            else if (levelOfAlertness == Wary)
-            {
-                if (changedLevelOfAlertness)
-                {
-                    CheckTheSituation();
-                }
-                else if (actionQueue.Count == 0)
-                {
-                    levelOfAlertness = Calm;
-                }
-            }
-            else if (levelOfAlertness == Angry)
-            {
-                if (changedLevelOfAlertness && searchTime != 0 && actionQueue.Count == 0)
-                    SearchPlayer();
-            }
-            else if (levelOfAlertness == Alert)
-            {
-                СhasePlayer();
+                case LevelOfAlertness.Calm:
+                    UpdateActionQueueWithClam();
+                    break;
+                case LevelOfAlertness.Wary:
+                    UpdateActionQueueWithWary();
+                    break;
+                case LevelOfAlertness.Angry:
+                    UpdateActionQueueWithAngry();
+                    break;
+                case LevelOfAlertness.Alert:
+                    UpdateActionQueueWithAlert();
+                    break;
             }
 
-              return actionQueue.Count == 0 ? Query.None : actionQueue.PeekFront();
+            return actionQueue.Count == 0 ? Query.None : actionQueue.PeekFront();
+        }
+
+        public override void ActionTaken(Query query)
+        {
+            if (actionQueue.Count != 0)
+                actionQueue.PopFront();
+        }
+
+        public override void ActionRejected(Query query)
+        {
+            var target = Position + GameState.ConvertDirectionToSize[Direction];
+            if (!MapManager.InBounds(target))
+                return;
+            if (MapManager.Map[target.X, target.Y].ObjectContainer.ShowDecor() is ClosedDoor)
+                actionQueue.PushFront(Query.Interaction);
+        }
+
+        public override void Interative(ICreature creature)
+        {
+        }
+
+        private void UpdateActionQueueWithClam()
+        {
+            if (actionQueue.Count == 0)
+                ExecuteCurrentInstruction();
+        }
+
+        private void UpdateActionQueueWithWary()
+        {
+            if (changedLevelOfAlertness)
+            {
+                CheckTheSituation();
+            }
+            else if (actionQueue.Count == 0)
+            {
+                levelOfAlertness = LevelOfAlertness.Calm;
+            }
+        }
+
+        private void UpdateActionQueueWithAngry()
+        {
+            if (changedLevelOfAlertness && searchTime != 0 && actionQueue.Count == 0)
+                SearchPlayer();
+        }
+
+        private void UpdateActionQueueWithAlert()
+        {
+            СhasePlayer();
         }
 
         private void СhasePlayer()
         {
-            var instructions = PathFinder.GetPathFromTo(Position, target, SightDirection);
+            var instructions = PathFinder.GetPathFromTo(Position, target, Direction);
             actionQueue = new Deque<Query>();
             for (var i = 0; i < instructions.Count - 1; i++)
             {
@@ -101,7 +133,7 @@ namespace GameThief.GameModel.MobileObjects
 
         private void CheckTheSituation()
         {
-            var instructions = PathFinder.GetPathFromTo(Position, target, SightDirection);
+            var instructions = PathFinder.GetPathFromTo(Position, target, Direction);
             for (var i = 0; i < instructions.Count - 1; i++)
             {
                 actionQueue.PushBack(instructions[i]);
@@ -116,10 +148,9 @@ namespace GameThief.GameModel.MobileObjects
             switch (normalGuardTrack[currentInstruction].GetNextParameter())
             {
                 case "MoveTo":
-
                     var target = new Point(int.Parse(normalGuardTrack[currentInstruction].GetNextParameter()),
                                            int.Parse(normalGuardTrack[currentInstruction].GetNextParameter()));
-                    var instructions = PathFinder.GetPathFromTo(Position, target, SightDirection);
+                    var instructions = PathFinder.GetPathFromTo(Position, target, Direction);
                     foreach (var instruction in instructions)
                         actionQueue.PushBack(instruction);
                     break;
@@ -130,72 +161,55 @@ namespace GameThief.GameModel.MobileObjects
 
         private void UpdateLevelOfAlertness()
         {
+            changedLevelOfAlertness = false;
             foreach (var point in VisibleCells)
             {
                 var cell = MapManager.Map[point.X, point.Y];
 
-                if (levelOfAlertness == Angry && !changedLevelOfAlertness)
+                if (levelOfAlertness == LevelOfAlertness.Angry && !changedLevelOfAlertness)
                 {
                     if (searchTime != 0)
                         searchTime--;
                     else
-                    {
-                        ChangeLevelOfAlertness(Calm);
-                        target = Point.Empty;
-                    }
+                        ChangeLevelOfAlertness(LevelOfAlertness.Calm, Point.Empty);
                 }
 
                 if (cell.Creature is Player)
                 {
-                    if (levelOfAlertness <= Alert)
-                    {
-                        ChangeLevelOfAlertness(Alert);
-                        target = point;
-                    }
+                    if (levelOfAlertness > LevelOfAlertness.Alert)
+                        continue;
+                    ChangeLevelOfAlertness(LevelOfAlertness.Alert, point);
                 }
-                else if (levelOfAlertness == Alert && point == target)
+                else if (levelOfAlertness == LevelOfAlertness.Alert && point == target)
                 {
-                    ChangeLevelOfAlertness(Angry);
+                    ChangeLevelOfAlertness(LevelOfAlertness.Angry, target);
                     searchTime = SearchTime;
                 }
             }
 
             foreach (var noise in AudibleNoises)
             {
-                if (noise.Source.Type != NoiseType.GuardVoice)
+                if (!FamiliarNoises.Contains(noise.Source.Type))
                 {
-                    if (levelOfAlertness < Wary)
+                    if (levelOfAlertness < LevelOfAlertness.Wary)
                     {
-                        ChangeLevelOfAlertness(Wary);
-                        target = noise.Source.Position;
+                        ChangeLevelOfAlertness(LevelOfAlertness.Wary, noise.Source.Position);
                     }
                 }
             }
         }
 
-        private void ChangeLevelOfAlertness(int newLevel)
+        private void ChangeLevelOfAlertness(LevelOfAlertness newLevel, Point point)
         {
             levelOfAlertness = newLevel;
             changedLevelOfAlertness = true;
+            target = point;
         }
 
-        public override void ActionTaken(Query query)
+        private readonly HashSet<NoiseType> FamiliarNoises = new HashSet<NoiseType>
         {
-            if (actionQueue.Count != 0)
-                actionQueue.PopFront();
-        }
-
-        public override void ActionRejected(Query query)
-        {
-            var target = Position + GameState.ConvertDirectionToSize[SightDirection];
-            if (!MapManager.InBounds(target))
-                return;
-            if (MapManager.Map[target.X, target.Y].ObjectContainer.ShowDecor() is ClosedDoor)
-                actionQueue.PushFront(Query.Interaction);
-        }
-
-        public override void Interative(ICreature creature)
-        {
-        }
+            NoiseType.StepsOfGuard,
+            NoiseType.GuardVoice
+        };
     }
 }
