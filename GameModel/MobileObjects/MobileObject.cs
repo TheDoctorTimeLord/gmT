@@ -24,7 +24,7 @@ namespace GameThief.GameModel.MobileObjects
                 Position = init.Position;
                 Health = init.Health;
                 MaxHealth = init.MaxHealth;
-                SightDirection = init.Direction;
+                Direction = init.Direction;
                 MinHearingVolume = init.MinHearingVolume;
                 MaxHearingDelta = init.MaxHearingDelta;
                 ViewDistanse = init.ViewDistanse;
@@ -35,7 +35,7 @@ namespace GameThief.GameModel.MobileObjects
         private void GenerateRandomMobileObject(Point position, Direction direction) //TODO ГЕНЕРАТОР В РАЗРАБОТКЕ
         {
             Position = position;
-            SightDirection = direction;
+            Direction = direction;
 
             MaxHealth = 10;
             Health = 10;
@@ -44,11 +44,9 @@ namespace GameThief.GameModel.MobileObjects
             ViewDistanse = 5;
             ViewWidth = 3;
         }
-
-        protected Point Position;
+        
         public int MaxHealth { get; private set; }
         public int Health { get; private set; }
-        public Direction SightDirection;
         public int MinHearingVolume { get; private set; }
         public int MaxHearingDelta { get; private set; }
         public int ViewDistanse { get; private set; }
@@ -75,22 +73,9 @@ namespace GameThief.GameModel.MobileObjects
                 Health = MaxHealth;
         }
 
-        public Point GetPosition() => Position;
+        public Point Position { get; set; }
 
-        public void ChangePosition(Point newPosition)
-        {
-            Position = newPosition;
-        }
-
-        public Direction GetDirection()
-        {
-            return SightDirection;
-        }
-
-        public void ChangeDirection(Direction direction)
-        {
-            SightDirection = direction;
-        }
+        public Direction Direction { get; set; }
 
         public bool IsHidden()
         {
@@ -110,7 +95,7 @@ namespace GameThief.GameModel.MobileObjects
 
         public void UpdateWorldData()
         {
-            VisibleCells = MapManager.GetVisibleCells(Position, SightDirection, ViewWidth, ViewDistanse).ToList();
+            VisibleCells = MapManager.GetVisibleCells(Position, Direction, ViewWidth, ViewDistanse).ToList();
             AudibleNoises = MapManager.GetAudibleNoises(Position, MaxHearingDelta, MinHearingVolume);
         }
 

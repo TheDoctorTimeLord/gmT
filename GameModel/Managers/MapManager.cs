@@ -30,21 +30,21 @@ namespace GameThief.GameModel.Managers
                 Map[newPosition.X, newPosition.Y].ObjectContainer.IsSolid)
                 throw new ArgumentException();
 
-            var oldPosition = creature.GetPosition();
-            creature.ChangePosition(newPosition);
+            var oldPosition = creature.Position;
+            creature.Position = newPosition;
             Map[oldPosition.X, oldPosition.Y].Creature = null;
             Map[newPosition.X, newPosition.Y].Creature = creature;
         }
 
         public static void AddCreatureToMap(ICreature creature)
         {
-            var creaturePosition = creature.GetPosition();
+            var creaturePosition = creature.Position;
             Map[creaturePosition.X, creaturePosition.Y].Creature = creature;
         }
 
         public static void RemoveCreatureFromMap(ICreature creature)
         {
-            var creaturePosition = creature.GetPosition();
+            var creaturePosition = creature.Position;
             Map[creaturePosition.X, creaturePosition.Y].Creature = null;
         }
 

@@ -46,28 +46,23 @@ namespace GameThief.GameModel
                     queue.Enqueue(targetNode);
                 }
 
-                targetNode = new LinkedNode(
-                    currentNode.Position,
-                    GameState.RotateFromTo(currentNode.Direction, true),
-                    currentNode);
-                if (!visitiedCell.Contains(targetNode))
-                {
-                    visitiedCell.Add(targetNode);
-                    queue.Enqueue(targetNode);
-                }
-
-                //просто 2 раза одно и то же
-                targetNode = new LinkedNode(
-                    currentNode.Position,
-                    GameState.RotateFromTo(currentNode.Direction, false),
-                    currentNode);
-                if (!visitiedCell.Contains(targetNode))
-                {
-                    visitiedCell.Add(targetNode);
-                    queue.Enqueue(targetNode);
-                }
+                AddTurnEdge(currentNode, visitiedCell, queue, true);
+                AddTurnEdge(currentNode, visitiedCell, queue, false);
             }
             return new List<Query>();
+        }
+
+        private static void AddTurnEdge(LinkedNode currentNode, HashSet<LinkedNode> visitiedCell,
+            Queue<LinkedNode> queue, bool isLeftRotate)
+        {
+            var targetNode = new LinkedNode(
+                currentNode.Position,
+                GameState.RotateFromTo(currentNode.Direction, isLeftRotate),
+                currentNode);
+            if (visitiedCell.Contains(targetNode))
+                return;
+            visitiedCell.Add(targetNode);
+            queue.Enqueue(targetNode);
         }
 
         private static List<Query> GetSetQuery(List<LinkedNode> path)
@@ -80,23 +75,29 @@ namespace GameThief.GameModel
                 .Skip(1)
                 .Select(node =>
                 {
+                    var query = ConvertActionToQuery(startNode, node);
                     startNode = node;
-                    if (Math.Abs(startNode.Position.X - node.Position.X) == 1 ||
-                        Math.Abs(startNode.Position.Y - node.Position.Y) == 1)
-                    {
-                        return Query.Move;
-                    }
-                    if (((int) startNode.Direction + 1) % 4 == (int) node.Direction)
-                    {
-                        return Query.RotateRight;
-                    }
-                    if (((int) startNode.Direction + 3) % 4 == (int) node.Direction)
-                    {
-                        return Query.RotateLeft;
-                    }
-                    throw new Exception("Неверно построен путь");
+                    return query;
                 })
                 .ToList();
+        }
+
+        private static Query ConvertActionToQuery(LinkedNode startNode, LinkedNode currentNode)
+        {
+            if (Math.Abs(startNode.Position.X - currentNode.Position.X) +
+                Math.Abs(startNode.Position.Y - currentNode.Position.Y) == 1)
+            {
+                return Query.Move;
+            }
+            if (GameState.RotateFromTo(startNode.Direction, false) == currentNode.Direction)
+            {
+                return Query.RotateRight;
+            }
+            if (GameState.RotateFromTo(startNode.Direction, true) == currentNode.Direction)
+            {
+                return Query.RotateLeft;
+            }
+            throw new Exception("Неверно соединены узлы пути");
         }
 
         private static bool CheckMove(Point target)
@@ -109,15 +110,15 @@ namespace GameThief.GameModel
 
         private class LinkedNode
         {
-            public Direction Direction;
+            public readonly Direction Direction;
             public Point Position;
-            public LinkedNode PreviousLinkedNode;
+            private readonly LinkedNode previousLinkedNode;
 
             public LinkedNode(Point position, Direction direction, LinkedNode previousLinkedNode)
             {
                 Position = position;
                 Direction = direction;
-                PreviousLinkedNode = previousLinkedNode;
+                this.previousLinkedNode = previousLinkedNode;
             }
 
             public IEnumerable<LinkedNode> GetPath()
@@ -126,7 +127,7 @@ namespace GameThief.GameModel
                 while (currentNode != null)
                 {
                     yield return currentNode;
-                    currentNode = currentNode.PreviousLinkedNode;
+                    currentNode = currentNode.previousLinkedNode;
                 }
             }
 
