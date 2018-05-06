@@ -17,6 +17,7 @@
         Key,
         Painting,
         Treasure,
-        Vase
+        Vase,
+        BurglaryToolkit
     }
 }
