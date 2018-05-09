@@ -5,6 +5,7 @@ namespace GameThief.GameModel.MobileObjects
 {
     public interface ICreature
     {
+        CreatureTypes Type { get; set; }
         Point Position { get; set; }
         Direction Direction { get; set; }
         bool IsHidden();

@@ -11,6 +11,8 @@ namespace GameThief.GameModel.MobileObjects.Creature
 {
     public class Guard : MobileObject
     {
+        public override CreatureTypes Type { get; set; } = CreatureTypes.Guard;
+
         private const int SearchTime = 10;
 
         private readonly List<Instruction> normalGuardTrack = new List<Instruction>();

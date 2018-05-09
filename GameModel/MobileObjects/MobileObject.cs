@@ -49,6 +49,7 @@ namespace GameThief.GameModel.MobileObjects
             Inventory = new Inventory(new HashSet<IItem>(), 10);
         }
         
+        public virtual CreatureTypes Type { get; set; }
         public int MaxHealth { get; private set; }
         public int Health { get; private set; }
         public int MinHearingVolume { get; private set; }

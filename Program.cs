@@ -15,6 +15,7 @@ using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;
 using GameThief.GameModel.MobileObjects.Creature;
 using GameThief.GameModel.ServiceClasses;
+using GameThief.GUI;
 
 namespace GameThief
 {
@@ -29,27 +30,28 @@ namespace GameThief
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
-            var st = new GameState();
+            //var st = new GameState();
             var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Left));
 
             Map1(player);
+            Application.Run(new GameWindow());
 
-            while (true)
-            {
-                var a = Console.ReadKey();
-                GameState.KeyPressed = Conv(a.KeyChar);
-                Console.WriteLine("");
+            //while (true)
+            //{
+            //    var a = Console.ReadKey();
+            //    GameState.KeyPressed = Conv(a.KeyChar);
+            //    Console.WriteLine("");
 
-                Console.Clear();
+            //    Console.Clear();
 
-                st.UpdateState();
+            //    st.UpdateState();
 
-                var vis = MapManager.GetVisibleCells(player.Position, player.Direction, player.ViewDistanse,
-                    player.ViewWidth).ToList();
-                var noises = MapManager.GetAudibleNoises(player.Position, player.MaxHearingDelta, player.MinHearingVolume)
-                    .ToDictionary(noise => noise.Source.Position);
-                Console.WriteLine(Drawing(vis, noises, player.Inventory));
-            }
+            //    var vis = MapManager.GetVisibleCells(player.Position, player.Direction, player.ViewDistanse,
+            //        player.ViewWidth).ToList();
+            //    var noises = MapManager.GetAudibleNoises(player.Position, player.MaxHearingDelta, player.MinHearingVolume)
+            //        .ToDictionary(noise => noise.Source.Position);
+            //    Console.WriteLine(Drawing(vis, noises, player.Inventory));
+            //}
         }
 
         private static void Map1(Player player)

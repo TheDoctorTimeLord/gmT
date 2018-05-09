@@ -7,6 +7,8 @@ namespace GameThief.GameModel.MobileObjects.Creature
 {
     public class Player : MobileObject
     {
+        public override CreatureTypes Type { get; set; } = CreatureTypes.Player;
+
         public Player(InitializationMobileObject init) : base(init)
         {
         }
