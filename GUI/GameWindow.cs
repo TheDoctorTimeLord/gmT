@@ -30,9 +30,8 @@ namespace GameThief.GUI
             if (imagesDirectory == null)
                 imagesDirectory = new DirectoryInfo("Images");
             foreach (var e in imagesDirectory.GetFiles("*.png"))
-                bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
-            var timer = new Timer();
-            timer.Interval = timerInterval;
+                bitmaps[e.Name] = (Bitmap) Image.FromFile(e.FullName);
+            var timer = new Timer {Interval = timerInterval};
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -52,9 +51,9 @@ namespace GameThief.GUI
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.FillRectangle(
-                Brushes.Black , 0, 0, ElementSize * MapManager.Map.Wigth,
+                Brushes.Black, 0, 0, ElementSize * MapManager.Map.Wigth,
                 ElementSize * MapManager.Map.Height);
-            
+
             for (var i = 0; i < MapManager.Map.Wigth; i++)
             for (var j = 0; j < MapManager.Map.Height; j++)
             {
@@ -83,11 +82,12 @@ namespace GameThief.GUI
             GameState.KeyPressed = Keys.None;
         }
 
-        private readonly Dictionary<Tuple<CreatureTypes, Direction>, string> CreatureFilenames = new Dictionary<Tuple<CreatureTypes, Direction>, string>
-        {
-            {Tuple.Create(CreatureTypes.Guard, Direction.Down), "guard.png"},
-            {Tuple.Create(CreatureTypes.Player, Direction.Down), "player.png"}
-        };
+        private readonly Dictionary<Tuple<CreatureTypes, Direction>, string> CreatureFilenames =
+            new Dictionary<Tuple<CreatureTypes, Direction>, string>
+            {
+                {Tuple.Create(CreatureTypes.Guard, Direction.Down), "guard.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Down), "player.png"}
+            };
 
         private readonly Dictionary<CellType, string> BackgroundFilenames = new Dictionary<CellType, string>
         {
