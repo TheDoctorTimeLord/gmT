@@ -40,7 +40,7 @@ namespace GameThief.GUI
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Text = "Digger";
+            Text = "Burglar Game ver. 0.1";
             DoubleBuffered = true;
         }
 
@@ -60,10 +60,27 @@ namespace GameThief.GUI
         {
             e.Graphics.TranslateTransform(0, ElementSize);
             e.Graphics.FillRectangle(
-                Brushes.Black, 0, 0, ElementSize * MapManager.Map.Wigth,
+                Brushes.BlueViolet, 0, 0, ElementSize * MapManager.Map.Wigth,
                 ElementSize * MapManager.Map.Height);
+            
+            for (var i = 0; i < MapManager.Map.Wigth; i++)
+            for (var j = 0; j < MapManager.Map.Height; j++)
+            {
+                e.Graphics.DrawImage(bitmaps[BackgroundFilenames[MapManager.Map[i, j].Type]],
+                    new Point(i * ElementSize, j * ElementSize));
+
+                foreach (var decor in MapManager.Map[i, j].ObjectContainer.GetAllDecors())
+                {
+                    e.Graphics.DrawImage(bitmaps[DecorFilenames[decor.Type]],
+                        new Point(i * ElementSize, j * ElementSize));
+                }
+
+            }
+
             foreach (var a in MobileObjectsManager.MobileObjects)
-                e.Graphics.DrawImage(bitmaps[CreatureFilenames[a.Type]], a.Position);
+                e.Graphics.DrawImage(bitmaps[CreatureFilenames[a.Type]],
+                    new Point(a.Position.X * ElementSize, a.Position.Y * ElementSize));
+
             e.Graphics.ResetTransform();
             //e.Graphics.DrawString(Game.Scores.ToString(), new Font("Arial", 16), Brushes.Green, 0, 0);
         }
@@ -85,6 +102,32 @@ namespace GameThief.GUI
         {
             {CreatureTypes.Guard, "guard.png"},
             {CreatureTypes.Player, "player.png"}
+        };
+
+        private readonly Dictionary<CellType, string> BackgroundFilenames = new Dictionary<CellType, string>
+        {
+            {CellType.Wood, "wood.png"}
+        };
+
+        private readonly Dictionary<DecorType, string> DecorFilenames = new Dictionary<DecorType, string>
+        {
+            {DecorType.BrokenPieces, "broken_pieces.png"},
+            {DecorType.Button, "button.png"},
+            {DecorType.Carpet, "carpet.png"},
+            {DecorType.Chair, "chair.png"},
+            {DecorType.ClosedDoor, "closed_door.png"},
+            {DecorType.ClosedCupboard, "closed_cupboard.png"},
+            {DecorType.Lock, "lock.png"},
+            {DecorType.OpenedCuboard, "opened_cupboard.png"},
+            {DecorType.OpenedDoor, "opened_door.png"},
+            {DecorType.Table, "table.png"},
+            {DecorType.Wall, "wall.png"},
+            {DecorType.BurglaryToolkit, "burglary_toolkit.png"},
+            {DecorType.Jewel, "jewel.png"},
+            {DecorType.Key, "key.png"},
+            {DecorType.Painting, "painting.png"},
+            {DecorType.Treasure, "treasure.png"},
+            {DecorType.Vase, "vase.png"}
         };
     }
 }

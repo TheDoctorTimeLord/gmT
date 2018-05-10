@@ -56,15 +56,50 @@ namespace GameThief
 
         private static void Map1(Player player)
         {
-            SetMap(5, 5, new List<Tuple<Point, IDecor>>
+            SetMap(15, 15, new List<Tuple<Point, IDecor>>
             {
-                Tuple.Create(new Point(3, 0), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 1), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 2), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 3), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 4), (IDecor)new ClosedDoor()),
-                Tuple.Create(new Point(3, 4), (IDecor)new Lock()),
-                Tuple.Create(new Point(2, 3), (IDecor) new Jewel())
+                Tuple.Create(new Point(3, 0), (IDecor) new Wall()),
+                Tuple.Create(new Point(3, 1), (IDecor) new Wall()),
+                Tuple.Create(new Point(3, 2), (IDecor) new Wall()),
+                Tuple.Create(new Point(3, 3), (IDecor) new Wall()),
+                Tuple.Create(new Point(3, 4), (IDecor) new ClosedDoor()),
+                //Tuple.Create(new Point(3, 4), (IDecor)new Lock()),
+                Tuple.Create(new Point(2, 3), (IDecor) new Jewel()),
+                Tuple.Create(new Point(7, 4), (IDecor) new Wall()),
+                Tuple.Create(new Point(8, 4), (IDecor) new Wall()),
+                Tuple.Create(new Point(9, 4), (IDecor) new Wall()),
+                Tuple.Create(new Point(7, 5), (IDecor) new Wall()),
+                Tuple.Create(new Point(8, 5), (IDecor) new Wall()),
+                Tuple.Create(new Point(9, 5), (IDecor) new Wall()),
+                Tuple.Create(new Point(7, 6), (IDecor) new Wall()),
+                Tuple.Create(new Point(8, 6), (IDecor) new Wall()),
+                Tuple.Create(new Point(9, 6), (IDecor) new Wall()),
+                Tuple.Create(new Point(7, 7), (IDecor) new Wall()),
+                Tuple.Create(new Point(8, 7), (IDecor) new Wall()),
+                Tuple.Create(new Point(9, 7), (IDecor) new Wall()),
+                Tuple.Create(new Point(7, 8), (IDecor) new Wall()),
+                Tuple.Create(new Point(8, 8), (IDecor) new Wall()),
+                Tuple.Create(new Point(9, 8), (IDecor) new Wall()),
+                Tuple.Create(new Point(5, 9), (IDecor) new Wall()),
+                Tuple.Create(new Point(6, 9), (IDecor) new Wall()),
+                Tuple.Create(new Point(7, 9), (IDecor) new Wall()),
+                Tuple.Create(new Point(8, 9), (IDecor) new Wall()),
+                Tuple.Create(new Point(9, 9), (IDecor) new Wall()),
+                Tuple.Create(new Point(10, 9), (IDecor) new Wall()),
+                Tuple.Create(new Point(11, 9), (IDecor) new Wall()),
+                Tuple.Create(new Point(5, 10), (IDecor) new Wall()),
+                Tuple.Create(new Point(6, 10), (IDecor) new Wall()),
+                Tuple.Create(new Point(7, 10), (IDecor) new Wall()),
+                Tuple.Create(new Point(8, 10), (IDecor) new Wall()),
+                Tuple.Create(new Point(9, 10), (IDecor) new Wall()),
+                Tuple.Create(new Point(10, 10), (IDecor) new Wall()),
+                Tuple.Create(new Point(11, 10), (IDecor) new Wall()),
+                Tuple.Create(new Point(5, 11), (IDecor) new Wall()),
+                Tuple.Create(new Point(6, 11), (IDecor) new Wall()),
+                Tuple.Create(new Point(7, 11), (IDecor) new Wall()),
+                Tuple.Create(new Point(9, 11), (IDecor) new Wall()),
+                Tuple.Create(new Point(10, 11), (IDecor) new Wall()),
+                Tuple.Create(new Point(11, 11), (IDecor) new Wall())
             });
             var guard = MobileObjectsManager.GetCreatureByNameAndInitParams(
                 CreatureTypes.Guard, new InitializationMobileObject(new Point(2, 0), 10, 10, Direction.Right, 1, 5, 2, 0, new Inventory(10), new List<Tuple<string, string>>()));
@@ -185,7 +220,7 @@ namespace GameThief
 
                     if (vis.Contains(new Point(j, i)))
                     {
-                        c = MapManager.Map[j, i].BackgroundFilename;
+                        c = MapManager.Map[j, i].Type.ToString();
 
                         //var point = new Point(j, i);
                         //c = noises.ContainsKey(point) ? noises[point].Source.Message : c;
