@@ -23,7 +23,7 @@ namespace GameThief.Tests
         [Test]
         public void TestPlayerCreate()
         {
-            SampleMapSetter.SetSampleMap(3, 3);
+            GameSetter.SetSampleMap(3, 3);
             var player = new Player(new InitializationMobileObject(
                 new Point(1, 1), Direction.Down));
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {player});
@@ -33,7 +33,7 @@ namespace GameThief.Tests
         [Test]
         public void TestMovePlayer()
         {
-            SampleMapSetter.SetSampleMap(3, 3);
+            GameSetter.SetSampleMap(3, 3);
             var player = new Player(new InitializationMobileObject(
                 new Point(1, 1), Direction.Down));
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {player});
@@ -56,7 +56,7 @@ namespace GameThief.Tests
         [Test]
         public void TestMovePlayerMore()
         {
-            SampleMapSetter.SetSampleMap(3, 3);
+            GameSetter.SetSampleMap(3, 3);
             var player = new Player(new InitializationMobileObject(
                 new Point(1, 1), Direction.Down));
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> { player });

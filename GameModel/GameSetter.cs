@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.Managers;
 
-namespace GameThief.Tests
+namespace GameThief.GameModel
 {
-    public static class SampleMapSetter
+    public static class GameSetter
     {
         public static void SetSampleMap(int width, int height)
         {

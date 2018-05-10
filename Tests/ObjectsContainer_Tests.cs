@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameThief.GameModel;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.ImmobileObjects.Decors;
@@ -75,7 +76,7 @@ namespace GameThief.Tests
         //[Test]
         //public void TestInteractWithRemoval()
         //{
-        //    SampleMapSetter.SetSampleMap(3, 3);
+        //    GameSetter.SetSampleMap(3, 3);
         //    var container = MapManager.Map[1, 1].ObjectContainer;
         //    container.AddDecor(new Table());
         //    container.AddDecor(new Vase());
@@ -90,7 +91,7 @@ namespace GameThief.Tests
         [Test]
         public void TestInteractWithNoRemoval()
         {
-            SampleMapSetter.SetSampleMap(3, 3);
+            GameSetter.SetSampleMap(3, 3);
             var container = MapManager.Map[1, 1].ObjectContainer;
             container.AddDecor(new Table());
             Assert.True(container.ShowDecor() is Table);

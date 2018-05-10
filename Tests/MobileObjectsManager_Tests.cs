@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameThief.GameModel;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
@@ -20,7 +21,7 @@ namespace GameThief.Tests
         [Test]
         public void TestInitialization()
         {
-            SampleMapSetter.SetSampleMap(2, 2);
+            GameSetter.SetSampleMap(2, 2);
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
                 new Player(new InitializationMobileObject(new Point(0, 0), Direction.Down))
@@ -31,7 +32,7 @@ namespace GameThief.Tests
         [Test]
         public void TestCreatingCreature()
         {
-            SampleMapSetter.SetSampleMap(2, 2);
+            GameSetter.SetSampleMap(2, 2);
             MobileObjectsManager.CreateCreature(
                 new Player(new InitializationMobileObject(new Point(0, 0), Direction.Down)));
             MobileObjectsManager.UpdateAnimates();
@@ -41,7 +42,7 @@ namespace GameThief.Tests
         [Test]
         public void TestRemovingCreature()
         {
-            SampleMapSetter.SetSampleMap(2, 2);
+            GameSetter.SetSampleMap(2, 2);
             var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Down));
             MobileObjectsManager.CreateCreature(player);
             MobileObjectsManager.UpdateAnimates();
