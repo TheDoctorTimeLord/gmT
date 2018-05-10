@@ -70,7 +70,7 @@ namespace GameThief
                 Tuple.Create(new Point(10, 9), (IDecor) new Wall()),
                 Tuple.Create(new Point(11, 9), (IDecor) new Wall()),
                 Tuple.Create(new Point(5, 10), (IDecor) new Wall()),
-                Tuple.Create(new Point(6, 10), (IDecor) new Wall()),
+                Tuple.Create(new Point(6, 10), (IDecor) new OpenedDoor()),
                 Tuple.Create(new Point(7, 10), (IDecor) new Wall()),
                 Tuple.Create(new Point(8, 10), (IDecor) new Wall()),
                 Tuple.Create(new Point(9, 10), (IDecor) new Wall()),
@@ -83,14 +83,14 @@ namespace GameThief
                 Tuple.Create(new Point(10, 11), (IDecor) new Wall()),
                 Tuple.Create(new Point(11, 11), (IDecor) new Wall())
             });
-            var guard = MobileObjectsManager.GetCreatureByNameAndInitParams(
-                CreatureTypes.Guard, new InitializationMobileObject(new Point(2, 0), 10, 10, Direction.Right, 1, 5, 2, 0, new Inventory(10), new List<Tuple<string, string>>()));
-            guard.Inventory.AddItem(new Key());
-            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
-            {
-                player,
-                guard
-            });
+            //var guard = MobileObjectsManager.GetCreatureByNameAndInitParams(
+            //    CreatureTypes.Guard, new InitializationMobileObject(new Point(2, 0), 10, 10, Direction.Right, 1, 5, 2, 0, new Inventory(10), new List<Tuple<string, string>>()));
+            //guard.Inventory.AddItem(new Key());
+            //MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
+            //{
+            //    player,
+            //    guard
+            //});
 
             //MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 10, 4, new Point(0, 4), "N"));
             //MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 100, 250, new Point(2, 2), "L"));
