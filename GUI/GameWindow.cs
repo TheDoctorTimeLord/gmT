@@ -17,7 +17,7 @@ namespace GameThief.GUI
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         private readonly GameState gameState;
         private readonly Keys pressedKeys;
-        //private int tickCount;
+        private const int timerInterval = 300;
         private const int ElementSize = 32;
 
         public GameWindow(DirectoryInfo imagesDirectory = null)
@@ -25,14 +25,14 @@ namespace GameThief.GUI
             gameState = new GameState();
             ClientSize = new Size(
                 ElementSize * MapManager.Map.Wigth,
-                ElementSize * MapManager.Map.Height + ElementSize);
+                ElementSize * MapManager.Map.Height);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             if (imagesDirectory == null)
                 imagesDirectory = new DirectoryInfo("Images");
             foreach (var e in imagesDirectory.GetFiles("*.png"))
                 bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
             var timer = new Timer();
-            timer.Interval = 120;
+            timer.Interval = timerInterval;
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -49,16 +49,10 @@ namespace GameThief.GUI
             GameState.KeyPressed = e.KeyCode;
         }
 
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
-            GameState.KeyPressed = Keys.None;
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.TranslateTransform(0, ElementSize);
             e.Graphics.FillRectangle(
-                Brushes.BlueViolet, 0, 0, ElementSize * MapManager.Map.Wigth,
+                Brushes.Black , 0, 0, ElementSize * MapManager.Map.Wigth,
                 ElementSize * MapManager.Map.Height);
             
             for (var i = 0; i < MapManager.Map.Wigth; i++)
@@ -72,27 +66,27 @@ namespace GameThief.GUI
                     e.Graphics.DrawImage(bitmaps[DecorFilenames[decor.Type]],
                         new Point(i * ElementSize, j * ElementSize));
                 }
-
             }
 
             foreach (var a in MobileObjectsManager.MobileObjects)
-                e.Graphics.DrawImage(bitmaps[CreatureFilenames[a.Type]],
+                e.Graphics.DrawImage(bitmaps[CreatureFilenames[Tuple.Create(a.Type, a.Direction)]],
                     new Point(a.Position.X * ElementSize, a.Position.Y * ElementSize));
 
             e.Graphics.ResetTransform();
-            //e.Graphics.DrawString(Game.Scores.ToString(), new Font("Arial", 16), Brushes.Green, 0, 0);
         }
 
         private void TimerTick(object sender, EventArgs args)
         {
             gameState.UpdateState();
             Invalidate();
+
+            GameState.KeyPressed = Keys.None;
         }
 
-        private readonly Dictionary<CreatureTypes, string> CreatureFilenames = new Dictionary<CreatureTypes, string>
+        private readonly Dictionary<Tuple<CreatureTypes, Direction>, string> CreatureFilenames = new Dictionary<Tuple<CreatureTypes, Direction>, string>
         {
-            {CreatureTypes.Guard, "guard.png"},
-            {CreatureTypes.Player, "player.png"}
+            {Tuple.Create(CreatureTypes.Guard, Direction.Down), "guard.png"},
+            {Tuple.Create(CreatureTypes.Player, Direction.Down), "player.png"}
         };
 
         private readonly Dictionary<CellType, string> BackgroundFilenames = new Dictionary<CellType, string>
