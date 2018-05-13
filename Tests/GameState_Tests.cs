@@ -19,7 +19,7 @@ namespace GameThief.Tests
             GameSetter.SetSampleMap(5, 5);
             var gameState = new GameState();
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {gameState.Player});
-            MapManager.Map[0, 1].ObjectContainer.AddDecor(new Jewel());
+            MapManager.Map[1, 2].ObjectContainer.AddDecor(new Jewel());
 
             Assert.True(gameState.Player.Inventory.Items.Count == 0);
 
@@ -42,7 +42,7 @@ namespace GameThief.Tests
             GameState.KeyPressed = Keys.W;
             gameState.UpdateState();
 
-            Assert.True(MapManager.Map[1, 0].Creature is Player);
+            Assert.True(MapManager.Map[2, 1].Creature is Player);
         }
 
         [Test]
@@ -56,8 +56,10 @@ namespace GameThief.Tests
             gameState.UpdateState();
             GameState.KeyPressed = Keys.W;
             gameState.UpdateState();
+            GameState.KeyPressed = Keys.W;
+            gameState.UpdateState();
 
-            Assert.True(MapManager.Map[0, 0].Creature is Player);
+            Assert.True(MapManager.Map[1, 0].Creature is Player);
         }
     }
 }

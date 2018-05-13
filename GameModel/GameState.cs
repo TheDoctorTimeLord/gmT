@@ -25,7 +25,7 @@ namespace GameThief.GameModel
             {Direction.Right, new Size(1, 0)}
         };
 
-        public readonly Player Player = new Player(new MobileObjectInitialization(new Point(0, 0), Direction.Right));
+        public readonly Player Player = new Player(new MobileObjectInitialization(new Point(1, 1), Direction.Right));
 
         //public GameState(string gameConfigurationFilename)
         //{

@@ -76,8 +76,8 @@ namespace GameThief.GUI
             if (imagesDirectory == null)
                 imagesDirectory = new DirectoryInfo("Images");
             foreach (var e in imagesDirectory.GetFiles("*.png"))
-                bitmaps[e.Name] = (Bitmap) Image.FromFile(e.FullName);
-            var timer = new Timer {Interval = TimerInterval};
+                bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
+            var timer = new Timer { Interval = TimerInterval };
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -106,7 +106,7 @@ namespace GameThief.GUI
                 e.Graphics.DrawImage(bitmaps[CreatureFilenames[Tuple.Create(a.Type, a.Direction)]],
                     new Point((a.Position.X + 1) * ElementSize, a.Position.Y * ElementSize));
 
-            CoverInvisible(e);
+            //CoverInvisible(e);
 
             foreach (var noise in gameState.Player.AudibleNoises)
                 e.Graphics.DrawImage(bitmaps["sound.png"],
@@ -123,29 +123,29 @@ namespace GameThief.GUI
         private void CoverInvisible(PaintEventArgs e)
         {
             for (var i = 0; i < MapManager.Map.Wigth; i++)
-            for (var j = 0; j < MapManager.Map.Height; j++)
-                if (!gameState.Player.VisibleCells.Contains(new Point(i, j)))
-                    e.Graphics.DrawImage(bitmaps["darkness.png"],
-                        new Point((i + 1) * ElementSize, j * ElementSize));
+                for (var j = 0; j < MapManager.Map.Height; j++)
+                    if (!gameState.Player.VisibleCells.Contains(new Point(i, j)))
+                        e.Graphics.DrawImage(bitmaps["darkness.png"],
+                            new Point((i + 1) * ElementSize, j * ElementSize));
         }
 
         private void DrawMap(PaintEventArgs e)
         {
             for (var i = 0; i < MapManager.Map.Wigth; i++)
-            for (var j = 0; j < MapManager.Map.Height; j++)
-            {
-                e.Graphics.DrawImage(bitmaps[BackgroundFilenames[MapManager.Map[i, j].Type]],
-                    new Point((i + 1) * ElementSize, j * ElementSize));
-
-                foreach (var decor in MapManager.Map[i, j].ObjectContainer.GetAllDecors())
+                for (var j = 0; j < MapManager.Map.Height; j++)
                 {
-                    if (decor is Item && !gameState.Player.VisibleCells.Contains(new Point(i, j)))
-                        continue;
-
-                    e.Graphics.DrawImage(bitmaps[DecorFilenames[decor.Type]],
+                    e.Graphics.DrawImage(bitmaps[BackgroundFilenames[MapManager.Map[i, j].Type]],
                         new Point((i + 1) * ElementSize, j * ElementSize));
+
+                    foreach (var decor in MapManager.Map[i, j].ObjectContainer.GetAllDecors())
+                    {
+                        //if (decor is Item && !gameState.Player.VisibleCells.Contains(new Point(i, j)))
+                        //    continue;
+
+                        e.Graphics.DrawImage(bitmaps[DecorFilenames[decor.Type]],
+                        new Point((i + 1) * ElementSize, j * ElementSize));
+                    }
                 }
-            }
         }
 
         private void TimerTick(object sender, EventArgs args)
