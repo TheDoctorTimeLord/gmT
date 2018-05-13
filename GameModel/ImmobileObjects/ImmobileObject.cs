@@ -6,12 +6,6 @@ namespace GameThief.GameModel.ImmobileObjects
 {
     public abstract class ImmobileObject : IDecor
     {
-        public DecorType Type { get; }
-        public int Priority { get; }
-        public int NoiseSuppression { get; }
-        public bool IsSolid { get; }
-        public bool IsOpaque { get; }
-
         protected ImmobileObject(DecorType type, int priority, int noiseSuppression, bool isSolid, bool isOpaque)
         {
             Type = type;
@@ -20,6 +14,12 @@ namespace GameThief.GameModel.ImmobileObjects
             IsSolid = isSolid;
             IsOpaque = isOpaque;
         }
+
+        public DecorType Type { get; }
+        public int Priority { get; }
+        public int NoiseSuppression { get; }
+        public bool IsSolid { get; }
+        public bool IsOpaque { get; }
 
         public virtual bool InteractWith(ICreature creature)
         {
@@ -31,7 +31,7 @@ namespace GameThief.GameModel.ImmobileObjects
             if (!(obj is ImmobileObject))
                 throw new ArgumentException();
 
-            return -Priority.CompareTo(((ImmobileObject)obj).Priority);
+            return -Priority.CompareTo(((ImmobileObject) obj).Priority);
         }
     }
 }

@@ -6,7 +6,9 @@ namespace GameThief.GameModel.ImmobileObjects.Items
 {
     public class Vase : Item
     {
-        public Vase() : base(10, DecorType.Vase) { }
+        public Vase() : base(10, DecorType.Vase)
+        {
+        }
 
         public override bool InteractWith(ICreature creature)
         {

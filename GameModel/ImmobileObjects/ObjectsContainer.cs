@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.MobileObjects;
@@ -10,11 +9,29 @@ namespace GameThief.GameModel.ImmobileObjects
 {
     public class ObjectsContainer
     {
+        private static readonly Dictionary<string, Func<IDecor>> DecorParser = new Dictionary<string, Func<IDecor>>
+        {
+            {"broken_pieces", () => new BrokenPieces()},
+            {"button", () => new Button()},
+            {"carpet", () => new Carpet()},
+            {"chair", () => new Chair()},
+            {"closed_cupboard", () => new ClosedCupboard()},
+            {"closed_door", () => new ClosedDoor()},
+            {"lock", () => new Lock()},
+            {"opened_cupboard", () => new OpenedCupboard()},
+            {"opened_door", () => new OpenedDoor()},
+            {"wall", () => new Wall()},
+            {"key", () => new Key()},
+            {"painting", () => new PaintingFlowers()},
+            {"treasure", () => new Treasure()},
+            {"vase", () => new Vase()},
+            {"jewel", () => new Jewel()}
+        };
+
+        private readonly SortedSet<IDecor> Decors = new SortedSet<IDecor>();
         public bool IsSolid { get; set; }
         public bool IsOpaque { get; set; }
         public int TotalNoiseSuppression { get; set; }
-
-        private readonly SortedSet<IDecor> Decors = new SortedSet<IDecor>();
 
         public void AddDecor(IDecor decor)
         {
@@ -24,9 +41,12 @@ namespace GameThief.GameModel.ImmobileObjects
             Decors.Add(decor);
         }
 
-        public static IDecor ParseDecor(string decorName) => DecorParser.ContainsKey(decorName)
-            ? DecorParser[decorName]()
-            : throw new Exception("Попытка создания несуществующего элемента декора \"" + decorName + "\"");
+        public static IDecor ParseDecor(string decorName)
+        {
+            return DecorParser.ContainsKey(decorName)
+                ? DecorParser[decorName]()
+                : throw new Exception("Попытка создания несуществующего элемента декора \"" + decorName + "\"");
+        }
 
         public void RemoveDecor(IDecor decor)
         {
@@ -70,24 +90,5 @@ namespace GameThief.GameModel.ImmobileObjects
         {
             return Decors.ToArray().Reverse();
         }
-
-        private static readonly Dictionary<string, Func<IDecor>> DecorParser = new Dictionary<string, Func<IDecor>>
-        {
-            {"broken_pieces", () => new BrokenPieces()},
-            {"button", () => new Button()},
-            {"carpet", () => new Carpet()},
-            {"chair", () => new Chair()},
-            {"closed_cupboard", () => new ClosedCupboard()},
-            {"closed_door", () => new ClosedDoor()},
-            {"lock", () => new Lock()},
-            {"opened_cupboard", () => new OpenedCupboard()},
-            {"opened_door", () => new OpenedDoor()},
-            {"wall", () => new Wall()},
-            {"key", () => new Key()},
-            {"painting", () => new PaintingFlowers()},
-            {"treasure", () => new Treasure()},
-            {"vase", () => new Vase()},
-            {"jewel", () => new Jewel()}
-        };
     }
 }

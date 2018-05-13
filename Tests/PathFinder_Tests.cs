@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
@@ -25,7 +22,6 @@ namespace GameThief.Tests
             if (answer.Count != 0)
             {
                 foreach (var query in result)
-                {
                     switch (query)
                     {
                         case Query.Move:
@@ -38,20 +34,24 @@ namespace GameThief.Tests
                             walkerDirection = GameState.RotateFromTo(walkerDirection, false);
                             break;
                     }
-                }
                 Assert.AreEqual(to, walker);
             }
-            
+
             Assert.AreEqual(result.Count, answer.Count);
         }
 
         [Test]
-        public void ZeroPath()
+        public void NoPath()
         {
-            GameSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
+            GameSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
+            {
+                Tuple.Create(new Point(1, 0), (IDecor) new Wall()),
+                Tuple.Create(new Point(1, 1), (IDecor) new Wall()),
+                Tuple.Create(new Point(1, 2), (IDecor) new Wall())
+            });
 
             var from = new Point(0, 0);
-            var to = new Point(0, 0);
+            var to = new Point(2, 0);
             var direction = Direction.Down;
 
             var answer = new List<Query>();
@@ -84,7 +84,7 @@ namespace GameThief.Tests
             var to = new Point(1, 0);
             var direction = Direction.Down;
 
-            var answer = new List<Query> { Query.RotateLeft, Query.Move };
+            var answer = new List<Query> {Query.RotateLeft, Query.Move};
             var result = PathFinder.GetPathFromTo(from, to, direction);
 
             CheckPath(from, to, direction, answer, result);
@@ -99,7 +99,31 @@ namespace GameThief.Tests
             var to = new Point(2, 1);
             var direction = Direction.Down;
 
-            var answer = new List<Query> { Query.Move, Query.RotateRight, Query.Move, Query.Move };
+            var answer = new List<Query> {Query.Move, Query.RotateRight, Query.Move, Query.Move};
+            var result = PathFinder.GetPathFromTo(from, to, direction);
+
+            CheckPath(from, to, direction, answer, result);
+        }
+
+        [Test]
+        public void ShortestPathSearchWithMobileObject()
+        {
+            GameSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>());
+            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
+            {
+                MobileObjectsManager.GetCreatureByNameAndInitParams(
+                    CreatureTypes.Guard, new InitializationMobileObject(new Point(1, 1), Direction.Down))
+            });
+
+            var from = new Point(1, 0);
+            var to = new Point(1, 2);
+            var direction = Direction.Down;
+
+            var answer = new List<Query>
+            {
+                Query.Move,
+                Query.Move
+            };
             var result = PathFinder.GetPathFromTo(from, to, direction);
 
             CheckPath(from, to, direction, answer, result);
@@ -110,8 +134,8 @@ namespace GameThief.Tests
         {
             GameSetter.SetMapAndFillWithDecors(4, 3, new List<Tuple<Point, IDecor>>
             {
-                Tuple.Create(new Point(1, 2), (IDecor)new Wall()),
-                Tuple.Create(new Point(3, 1), (IDecor)new Wall())
+                Tuple.Create(new Point(1, 2), (IDecor) new Wall()),
+                Tuple.Create(new Point(3, 1), (IDecor) new Wall())
             });
 
             var from = new Point(0, 1);
@@ -134,57 +158,13 @@ namespace GameThief.Tests
         }
 
         [Test]
-        public void ShortestPathSearchWithMobileObject()
-        {
-            GameSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>());
-            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
-            {
-                MobileObjectsManager.GetCreatureByNameAndInitParams(
-                    CreatureTypes.Guard, new InitializationMobileObject(new Point(1, 1), Direction.Down)),
-            });
-
-        var from = new Point(1, 0);
-            var to = new Point(1, 2);
-            var direction = Direction.Down;
-
-            var answer = new List<Query>
-            {
-                Query.Move,
-                Query.Move
-            };
-            var result = PathFinder.GetPathFromTo(from, to, direction);
-
-            CheckPath(from, to, direction, answer, result);
-        }
-
-        [Test]
-        public void NoPath()
-        {
-            GameSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
-            {
-                Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
-                Tuple.Create(new Point(1, 1), (IDecor)new Wall()),
-                Tuple.Create(new Point(1, 2), (IDecor)new Wall())
-            });
-
-            var from = new Point(0, 0);
-            var to = new Point(2, 0);
-            var direction = Direction.Down;
-
-            var answer = new List<Query>();
-            var result = PathFinder.GetPathFromTo(from, to, direction);
-
-            CheckPath(from, to, direction, answer, result);
-        }
-
-        [Test]
         public void ShortestPathSearchWithSolidObjectAndClosedDoor()
         {
             GameSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
             {
-                Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
-                Tuple.Create(new Point(1, 2), (IDecor)new Wall()),
-                Tuple.Create(new Point(1, 1), (IDecor)new ClosedDoor())
+                Tuple.Create(new Point(1, 0), (IDecor) new Wall()),
+                Tuple.Create(new Point(1, 2), (IDecor) new Wall()),
+                Tuple.Create(new Point(1, 1), (IDecor) new ClosedDoor())
             });
 
             var from = new Point(0, 1);
@@ -206,9 +186,9 @@ namespace GameThief.Tests
         {
             GameSetter.SetMapAndFillWithDecors(3, 3, new List<Tuple<Point, IDecor>>
             {
-                Tuple.Create(new Point(1, 0), (IDecor)new Wall()),
-                Tuple.Create(new Point(1, 2), (IDecor)new Wall()),
-                Tuple.Create(new Point(1, 1), (IDecor)new OpenedDoor())
+                Tuple.Create(new Point(1, 0), (IDecor) new Wall()),
+                Tuple.Create(new Point(1, 2), (IDecor) new Wall()),
+                Tuple.Create(new Point(1, 1), (IDecor) new OpenedDoor())
             });
 
             var from = new Point(0, 1);
@@ -220,6 +200,21 @@ namespace GameThief.Tests
                 Query.Move,
                 Query.Move
             };
+            var result = PathFinder.GetPathFromTo(from, to, direction);
+
+            CheckPath(from, to, direction, answer, result);
+        }
+
+        [Test]
+        public void ZeroPath()
+        {
+            GameSetter.SetMapAndFillWithDecors(2, 2, new List<Tuple<Point, IDecor>>());
+
+            var from = new Point(0, 0);
+            var to = new Point(0, 0);
+            var direction = Direction.Down;
+
+            var answer = new List<Query>();
             var result = PathFinder.GetPathFromTo(from, to, direction);
 
             CheckPath(from, to, direction, answer, result);

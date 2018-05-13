@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.MobileObjects;
 using GameThief.GameModel.MobileObjects.Creature;
@@ -13,9 +9,9 @@ namespace GameThief.GameModel.Managers
 {
     public static class MobileObjectsManager
     {
-        public static HashSet<ICreature> MobileObjects { get; private set; } = new HashSet<ICreature>();
         private static readonly HashSet<ICreature> addedMobileObjects = new HashSet<ICreature>();
         private static readonly HashSet<ICreature> deletedMobileObjects = new HashSet<ICreature>();
+        public static HashSet<ICreature> MobileObjects { get; private set; } = new HashSet<ICreature>();
 
         public static void InitializationMobileOjects(HashSet<ICreature> creatures)
         {
@@ -49,6 +45,7 @@ namespace GameThief.GameModel.Managers
                 MobileObjects.Add(addedMobileObject);
                 MapManager.AddCreatureToMap(addedMobileObject);
             }
+
             addedMobileObjects.Clear();
             foreach (var deletedMobileObject in deletedMobileObjects)
             {
@@ -83,6 +80,9 @@ namespace GameThief.GameModel.Managers
             }
         }
 
-        public static bool CreatureContainsInGame(ICreature creature) => MobileObjects.Contains(creature);
+        public static bool CreatureContainsInGame(ICreature creature)
+        {
+            return MobileObjects.Contains(creature);
+        }
     }
 }

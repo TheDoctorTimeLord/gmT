@@ -1,18 +1,30 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameThief.GameModel.ServiceClasses
 {
     public class Deque<T> : IEnumerable<T>
     {
-        private Node left = null;
-        private Node right = null;
+        private Node left;
+        private Node right;
 
-        public int Count { get; private set; } = 0;
+        public int Count { get; private set; }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var currentNode = left;
+            while (currentNode != null)
+            {
+                yield return currentNode.Value;
+                currentNode = currentNode.Right;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
         public void PushFront(T value)
         {
@@ -28,6 +40,7 @@ namespace GameThief.GameModel.ServiceClasses
                 left.Left = newLeftNode;
                 left = newLeftNode;
             }
+
             Count++;
         }
 
@@ -35,16 +48,17 @@ namespace GameThief.GameModel.ServiceClasses
         {
             if (right == null)
             {
-                var newNode = new Node { Left = null, Right = null, Value = value };
+                var newNode = new Node {Left = null, Right = null, Value = value};
                 left = newNode;
                 right = newNode;
             }
             else
             {
-                var newRightNode = new Node { Left = right, Right = null, Value = value };
+                var newRightNode = new Node {Left = right, Right = null, Value = value};
                 right.Right = newRightNode;
                 right = newRightNode;
             }
+
             Count++;
         }
 
@@ -73,7 +87,7 @@ namespace GameThief.GameModel.ServiceClasses
                 right = null;
             else
                 left.Left = null;
-            
+
             Count--;
 
             return result;
@@ -98,24 +112,9 @@ namespace GameThief.GameModel.ServiceClasses
 
         private class Node
         {
-            public T Value;
             public Node Left;
             public Node Right;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            var currentNode = left;
-            while (currentNode != null)
-            {
-                yield return currentNode.Value;
-                currentNode = currentNode.Right;
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            public T Value;
         }
     }
 }

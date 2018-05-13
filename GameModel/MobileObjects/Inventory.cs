@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.Managers;
 
@@ -12,9 +7,6 @@ namespace GameThief.GameModel.MobileObjects
 {
     public class Inventory
     {
-        public HashSet<IItem> Items { get; private set; }
-        public int MaxSize { get; private set; }
-
         public Inventory(int maxSize)
         {
             MaxSize = maxSize;
@@ -26,6 +18,9 @@ namespace GameThief.GameModel.MobileObjects
             MaxSize = maxSize;
             Items = new HashSet<IItem>(items.Take(maxSize));
         }
+
+        public HashSet<IItem> Items { get; }
+        public int MaxSize { get; }
 
         public bool AddItem(IItem item)
         {
@@ -45,7 +40,7 @@ namespace GameThief.GameModel.MobileObjects
         public void DropItem(IItem item, ICreature creature)
         {
             var currentPosition = creature.Position;
-            MapManager.Map[currentPosition.X, currentPosition.Y].ObjectContainer.AddDecor((IDecor)item);
+            MapManager.Map[currentPosition.X, currentPosition.Y].ObjectContainer.AddDecor((IDecor) item);
         }
     }
 }

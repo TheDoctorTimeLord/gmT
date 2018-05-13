@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
-using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;
 using GameThief.GameModel.MobileObjects.Creature;
 using GameThief.GameModel.ServiceClasses;
@@ -14,13 +12,19 @@ namespace GameThief.GameModel
 {
     public class GameState
     {
-        public readonly Player Player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Right));
-
         public static Random Random = new Random();
 
         public static Keys KeyPressed;
 
-        public static Query GetCurrentQuery() => ConverterPressedKey.Convert(KeyPressed);
+        public static readonly Dictionary<Direction, Size> ConvertDirectionToSize = new Dictionary<Direction, Size>
+        {
+            {Direction.Up, new Size(0, -1)},
+            {Direction.Left, new Size(-1, 0)},
+            {Direction.Down, new Size(0, 1)},
+            {Direction.Right, new Size(1, 0)}
+        };
+
+        public readonly Player Player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Right));
 
         //public GameState(string gameConfigurationFilename)
         //{
@@ -43,6 +47,11 @@ namespace GameThief.GameModel
             });
         }
 
+        public static Query GetCurrentQuery()
+        {
+            return ConverterPressedKey.Convert(KeyPressed);
+        }
+
         public void UpdateState()
         {
             foreach (var creature in MobileObjectsManager.MobileObjects)
@@ -54,7 +63,9 @@ namespace GameThief.GameModel
                     creature.ActionTaken(query);
                 }
                 else
+                {
                     creature.ActionRejected(query);
+                }
             }
 
             TemporaryObjectsManager.UpdateTemporaryObjects();
@@ -88,7 +99,7 @@ namespace GameThief.GameModel
                     creature.Direction = RotateFromTo(creature.Direction, false);
                     break;
                 default:
-                    throw new Exception("Не обработанное намерение: " + query.ToString() + ". " + creature);
+                    throw new Exception("Не обработанное намерение: " + query + ". " + creature);
             }
         }
 
@@ -118,17 +129,9 @@ namespace GameThief.GameModel
             }
         }
 
-        public static readonly Dictionary<Direction, Size> ConvertDirectionToSize = new Dictionary<Direction, Size>
-        {
-            { Direction.Up, new Size(0, -1) },
-            { Direction.Left, new Size(-1, 0) },
-            { Direction.Down, new Size(0, 1) },
-            { Direction.Right, new Size(1, 0) }
-        };
-
         public static Direction RotateFromTo(Direction from, bool isLeftRotate)
         {
-            var direction = (int)from;
+            var direction = (int) from;
             if (isLeftRotate)
                 direction = (direction + 3) % 4;
             else

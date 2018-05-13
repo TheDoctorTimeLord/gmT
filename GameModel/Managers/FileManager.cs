@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel.Managers
 {
-    static class FileManager
+    internal static class FileManager
     {
         private const string MapStateFilename = "map-state.txt";
         private const string MobileObjectsStateFilename = "mobile-objects-state.txt";
@@ -46,18 +42,23 @@ namespace GameThief.GameModel.Managers
                         result.WasSuccessful = false;
                         return result;
                     }
+
                     result.Width = size[0];
                     result.Height = size[1];
                 }
+
                 var parameters = line.Split(' ').ToList();
                 result.MapInfo.Add(parameters);
             }
+
             if (result.MapInfo.Count != result.Width * result.Height)
                 result.WasSuccessful = false;
             return result;
         }
 
-        private static string GetPathToSource(string nameSource) =>
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Saves", nameSource);
+        private static string GetPathToSource(string nameSource)
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Saves", nameSource);
+        }
     }
 }

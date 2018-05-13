@@ -6,7 +6,9 @@ namespace GameThief.GameModel.ImmobileObjects.Items
 {
     public class Jewel : Item
     {
-        public Jewel() : base(100, DecorType.Jewel) { }
+        public Jewel() : base(100, DecorType.Jewel)
+        {
+        }
 
         public override bool InteractWith(ICreature creature)
         {

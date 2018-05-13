@@ -6,7 +6,9 @@ namespace GameThief.GameModel.ImmobileObjects.Items
 {
     public class Treasure : Item
     {
-        public Treasure() : base(350, DecorType.Treasure) { }
+        public Treasure() : base(350, DecorType.Treasure)
+        {
+        }
 
         public override bool InteractWith(ICreature creature)
         {

@@ -6,7 +6,9 @@ namespace GameThief.GameModel.ImmobileObjects.Items
 {
     public class PaintingFlowers : Item
     {
-        public PaintingFlowers() : base(100, DecorType.PaintingFlowers) { }
+        public PaintingFlowers() : base(100, DecorType.PaintingFlowers)
+        {
+        }
 
         public override bool InteractWith(ICreature creature)
         {

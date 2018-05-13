@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using GameThief.GameModel.Enums;
 
@@ -12,8 +8,10 @@ namespace GameThief.GameModel
     {
         private static Dictionary<Keys, Query> convertKeyToQuery = new Dictionary<Keys, Query>();
 
-        public static Query Convert(Keys keyPressed) =>
-            !convertKeyToQuery.ContainsKey(keyPressed) ? Query.None : convertKeyToQuery[keyPressed];
+        public static Query Convert(Keys keyPressed)
+        {
+            return !convertKeyToQuery.ContainsKey(keyPressed) ? Query.None : convertKeyToQuery[keyPressed];
+        }
 
         public static void CreateConverter(Dictionary<Keys, Query> converter)
         {

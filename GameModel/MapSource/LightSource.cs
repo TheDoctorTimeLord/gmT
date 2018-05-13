@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 
@@ -11,16 +8,16 @@ namespace GameThief.GameModel.MapSource
 {
     public class LightSource
     {
-        public int LightDistance { get; set; }
-        public int LightWidth { get; set; }
-        public Point Position { get; set; }
-
         public LightSource(int lightDistance, int lightWidth, Point position)
         {
             LightDistance = lightDistance;
             LightWidth = lightWidth;
             Position = position;
         }
+
+        public int LightDistance { get; set; }
+        public int LightWidth { get; set; }
+        public Point Position { get; set; }
 
         public IEnumerable<Point> GetScope()
         {
@@ -39,7 +36,8 @@ namespace GameThief.GameModel.MapSource
 
             var singleStripe = Enumerable
                 .Range(0, LightDistance)
-                .Select(num => new Size(Position + new Size(currentDirection.Width * num, currentDirection.Height * num)))
+                .Select(num =>
+                    new Size(Position + new Size(currentDirection.Width * num, currentDirection.Height * num)))
                 .Select(sz => new Point(sz));
 
             return Enumerable

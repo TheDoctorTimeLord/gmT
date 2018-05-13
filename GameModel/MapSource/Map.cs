@@ -3,8 +3,6 @@
     public class Map<T>
     {
         public T[,] Cells;
-        public int Wigth { get; set; }
-        public int Height { get; set; }
 
         public Map(int width, int height)
         {
@@ -13,10 +11,13 @@
             Height = height;
         }
 
+        public int Wigth { get; set; }
+        public int Height { get; set; }
+
         public T this[int i, int j]
         {
-            get { return Cells[i, j]; }
-            set { Cells[i, j] = value; }
+            get => Cells[i, j];
+            set => Cells[i, j] = value;
         }
     }
 }

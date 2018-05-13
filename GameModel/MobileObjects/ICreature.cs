@@ -8,8 +8,8 @@ namespace GameThief.GameModel.MobileObjects
         CreatureTypes Type { get; set; }
         Point Position { get; set; }
         Direction Direction { get; set; }
-        bool IsHidden();
         Inventory Inventory { get; }
+        bool IsHidden();
 
         Query GetIntention();
         void ActionTaken(Query query);

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameThief.GameModel;
 using GameThief.GameModel.Enums;
@@ -15,10 +12,56 @@ namespace GameThief.GUI
 {
     public class GameWindow : Form
     {
-        private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
-        private readonly GameState gameState;
         private const int TimerInterval = 300;
         private const int ElementSize = 42;
+
+        private readonly Dictionary<CellType, string> BackgroundFilenames = new Dictionary<CellType, string>
+        {
+            {CellType.Wood, "wood.png"}
+        };
+
+        private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
+
+        private readonly Dictionary<Tuple<CreatureTypes, Direction>, string> CreatureFilenames =
+            new Dictionary<Tuple<CreatureTypes, Direction>, string>
+            {
+                {Tuple.Create(CreatureTypes.Guard, Direction.Up), "guard_back.png"},
+                {Tuple.Create(CreatureTypes.Guard, Direction.Down), "guard_front.png"},
+                {Tuple.Create(CreatureTypes.Guard, Direction.Left), "guard_left.png"},
+                {Tuple.Create(CreatureTypes.Guard, Direction.Right), "guard_rigth.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Up), "player_back.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Down), "player_front.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Left), "player_left.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Right), "player_rigth.png"}
+            };
+
+        private readonly Dictionary<DecorType, string> DecorFilenames = new Dictionary<DecorType, string>
+        {
+            //{DecorType.BrokenPieces, "broken_pieces.png"},
+            //{DecorType.Button, "button.png"},
+            //{DecorType.Carpet, "carpet.png"},
+            {DecorType.Chair, "chair.png"},
+            {DecorType.ClosedDoor, "closed_door.png"},
+            //{DecorType.ClosedCupboard, "closed_cupboard.png"},
+            //{DecorType.Lock, "lock.png"},
+            //{DecorType.OpenedCuboard, "opened_cupboard.png"},
+            {DecorType.OpenedDoor, "opened_door.png"},
+            {DecorType.Table, "table.png"},
+            {DecorType.Wall, "wall.png"},
+            //{DecorType.BurglaryToolkit, "burglary_toolkit.png"},
+            {DecorType.Jewel, "jewel.png"},
+            //{DecorType.Key, "key.png"},
+            {DecorType.PaintingFlowers, "painting_flowers.png"},
+            {DecorType.PaintingHouse, "painting_house.png"},
+            {DecorType.Treasure, "treasure.png"},
+            {DecorType.Vase, "vase.png"},
+            {DecorType.Mirror, "mirror.png"},
+            {DecorType.Barrel, "barrel.png"},
+            {DecorType.Plant, "plant.png"},
+            {DecorType.Window, "window.png"}
+        };
+
+        private readonly GameState gameState;
 
         public GameWindow(DirectoryInfo imagesDirectory = null)
         {
@@ -31,8 +74,8 @@ namespace GameThief.GUI
             if (imagesDirectory == null)
                 imagesDirectory = new DirectoryInfo("Images");
             foreach (var e in imagesDirectory.GetFiles("*.png"))
-                bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
-            var timer = new Timer { Interval = TimerInterval };
+                bitmaps[e.Name] = (Bitmap) Image.FromFile(e.FullName);
+            var timer = new Timer {Interval = TimerInterval};
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -64,10 +107,8 @@ namespace GameThief.GUI
             CoverInvisible(e);
 
             foreach (var noise in gameState.Player.AudibleNoises)
-            {
                 e.Graphics.DrawImage(bitmaps["sound.png"],
                     new Point((noise.Source.Position.X + 1) * ElementSize, noise.Source.Position.Y * ElementSize));
-            }
 
             var k = 0;
             foreach (var item in gameState.Player.Inventory.Items)
@@ -81,11 +122,9 @@ namespace GameThief.GUI
         {
             for (var i = 0; i < MapManager.Map.Wigth; i++)
             for (var j = 0; j < MapManager.Map.Height; j++)
-            {
                 if (!gameState.Player.VisibleCells.Contains(new Point(i, j)))
                     e.Graphics.DrawImage(bitmaps["darkness.png"],
                         new Point((i + 1) * ElementSize, j * ElementSize));
-            }
         }
 
         private void DrawMap(PaintEventArgs e)
@@ -114,49 +153,5 @@ namespace GameThief.GUI
 
             GameState.KeyPressed = Keys.None;
         }
-
-        private readonly Dictionary<Tuple<CreatureTypes, Direction>, string> CreatureFilenames =
-            new Dictionary<Tuple<CreatureTypes, Direction>, string>
-            {
-                {Tuple.Create(CreatureTypes.Guard, Direction.Up), "guard_back.png"},
-                {Tuple.Create(CreatureTypes.Guard, Direction.Down), "guard_front.png"},
-                {Tuple.Create(CreatureTypes.Guard, Direction.Left), "guard_left.png"},
-                {Tuple.Create(CreatureTypes.Guard, Direction.Right), "guard_rigth.png"},
-                {Tuple.Create(CreatureTypes.Player, Direction.Up), "player_back.png"},
-                {Tuple.Create(CreatureTypes.Player, Direction.Down), "player_front.png"},
-                {Tuple.Create(CreatureTypes.Player, Direction.Left), "player_left.png"},
-                {Tuple.Create(CreatureTypes.Player, Direction.Right), "player_rigth.png"}
-            };
-
-        private readonly Dictionary<CellType, string> BackgroundFilenames = new Dictionary<CellType, string>
-        {
-            {CellType.Wood, "wood.png"}
-        };
-
-        private readonly Dictionary<DecorType, string> DecorFilenames = new Dictionary<DecorType, string>
-        {
-            //{DecorType.BrokenPieces, "broken_pieces.png"},
-            //{DecorType.Button, "button.png"},
-            //{DecorType.Carpet, "carpet.png"},
-            {DecorType.Chair, "chair.png"},
-            {DecorType.ClosedDoor, "closed_door.png"},
-            //{DecorType.ClosedCupboard, "closed_cupboard.png"},
-            //{DecorType.Lock, "lock.png"},
-            //{DecorType.OpenedCuboard, "opened_cupboard.png"},
-            {DecorType.OpenedDoor, "opened_door.png"},
-            {DecorType.Table, "table.png"},
-            {DecorType.Wall, "wall.png"},
-            //{DecorType.BurglaryToolkit, "burglary_toolkit.png"},
-            {DecorType.Jewel, "jewel.png"},
-            //{DecorType.Key, "key.png"},
-            {DecorType.PaintingFlowers, "painting_flowers.png"},
-            {DecorType.PaintingHouse, "painting_house.png"},
-            {DecorType.Treasure, "treasure.png"},
-            {DecorType.Vase, "vase.png"},
-            {DecorType.Mirror, "mirror.png"},
-            {DecorType.Barrel, "barrel.png"},
-            {DecorType.Plant, "plant.png"},
-            {DecorType.Window, "window.png"}
-        };
     }
 }

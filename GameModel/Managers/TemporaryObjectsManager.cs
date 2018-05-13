@@ -4,8 +4,8 @@ namespace GameThief.GameModel.Managers
 {
     public static class TemporaryObjectsManager
     {
-        private static HashSet<ITemporaryObject> temporaryObjects = new HashSet<ITemporaryObject>();
-        private static List<ITemporaryObject> temporaryObjectsToRemove = new List<ITemporaryObject>();
+        private static readonly HashSet<ITemporaryObject> temporaryObjects = new HashSet<ITemporaryObject>();
+        private static readonly List<ITemporaryObject> temporaryObjectsToRemove = new List<ITemporaryObject>();
 
         public static void UpdateTemporaryObjects()
         {
@@ -17,10 +17,8 @@ namespace GameThief.GameModel.Managers
                 obj.ActionAfterDeactivation();
                 temporaryObjectsToRemove.Add(obj);
             }
-            foreach (var obj in temporaryObjectsToRemove)
-            {
-                temporaryObjects.Remove(obj);
-            }
+
+            foreach (var obj in temporaryObjectsToRemove) temporaryObjects.Remove(obj);
             temporaryObjectsToRemove.Clear();
         }
 

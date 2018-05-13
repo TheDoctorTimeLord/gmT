@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.MobileObjects;
 
@@ -11,6 +8,21 @@ namespace GameThief.GameModel.ServiceClasses
 {
     public class InitializationMobileObject
     {
+        public Direction Direction;
+        public int Health;
+        public Inventory Inventory;
+
+        public bool IsDefaultInitialization;
+        public int MaxHealth;
+        public int MaxHearingDelta;
+        public int MinHearingVolume;
+
+        public List<Tuple<string, string>> Parameters = new List<Tuple<string, string>>();
+
+        public Point Position;
+        public int ViewDistanse;
+        public int ViewWidth;
+
         public InitializationMobileObject(Point position, Direction direction)
         {
             IsDefaultInitialization = true;
@@ -19,7 +31,8 @@ namespace GameThief.GameModel.ServiceClasses
         }
 
         public InitializationMobileObject(Point position, int maxHealth, int health, Direction direction,
-            int minHearingVolume, int maxHearingDelta, int viewWidth, int viewDistanse, Inventory inventory, List<Tuple<string, string>> parameters)
+            int minHearingVolume, int maxHearingDelta, int viewWidth, int viewDistanse, Inventory inventory,
+            List<Tuple<string, string>> parameters)
         {
             IsDefaultInitialization = false;
             Position = position;
@@ -33,19 +46,5 @@ namespace GameThief.GameModel.ServiceClasses
             Parameters = parameters;
             Inventory = inventory;
         }
-
-        public bool IsDefaultInitialization;
-
-        public Point Position;
-        public int MaxHealth;
-        public int Health;
-        public Direction Direction;
-        public int MinHearingVolume;
-        public int MaxHearingDelta;
-        public int ViewDistanse;
-        public int ViewWidth;
-        public Inventory Inventory;
-
-        public List<Tuple<string, string>> Parameters = new List<Tuple<string, string>>();
     }
 }

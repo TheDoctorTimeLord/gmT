@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GameThief.GameModel.MapSource
 {
@@ -16,30 +12,19 @@ namespace GameThief.GameModel.MapSource
 
             for (var i = 0; i < width; i++)
             for (var j = 0; j < height; j++)
-            {
                 lightCoverage[i, j] = new HashSet<LightSource>();
-            }
         }
+
+        public bool this[int i, int j] => lightCoverage[i, j].Count > 0;
 
         public void AddLightSource(LightSource source)
         {
-            foreach (var point in source.GetScope())
-            {
-                lightCoverage[point.X, point.Y].Add(source);
-            }
+            foreach (var point in source.GetScope()) lightCoverage[point.X, point.Y].Add(source);
         }
 
         public void RemoveLightSource(LightSource source)
         {
-            foreach (var point in source.GetScope())
-            {
-                lightCoverage[point.X, point.Y].Remove(source);
-            }
-        }
-
-        public bool this[int i, int j]
-        {
-            get { return lightCoverage[i, j].Count > 0; }
+            foreach (var point in source.GetScope()) lightCoverage[point.X, point.Y].Remove(source);
         }
     }
 }

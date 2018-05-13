@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
 
@@ -11,12 +9,24 @@ namespace GameThief.GameModel.ServiceClasses
 {
     public static class Dijkstra
     {
+        private static readonly Size[] offsets =
+        {
+            new Size(-1, -1),
+            new Size(-1, 0),
+            new Size(-1, 1),
+            new Size(0, 1),
+            new Size(0, -1),
+            new Size(1, -1),
+            new Size(1, 0),
+            new Size(1, 1)
+        };
+
         public static void DijkstraTraversal(Map<HashSet<Noise>> noises, NoiseSource source,
             Action<HashSet<Noise>, Noise> changer)
         {
             var visited = new HashSet<Point>();
             var potentialTransition =
-                new Dictionary<Point, Noise>{{source.Position, new Noise(source, source.MaxIntensity)}};
+                new Dictionary<Point, Noise> {{source.Position, new Noise(source, source.MaxIntensity)}};
             while (true)
             {
                 if (potentialTransition.Count == 0)
@@ -47,7 +57,8 @@ namespace GameThief.GameModel.ServiceClasses
             }
         }
 
-        private static IEnumerable<Point> GetPossibleTransition(Point position, Map<HashSet<Noise>> noises, HashSet<Point> visited)
+        private static IEnumerable<Point> GetPossibleTransition(Point position, Map<HashSet<Noise>> noises,
+            HashSet<Point> visited)
         {
             return offsets
                 .Select(offset => position + offset)
@@ -70,19 +81,8 @@ namespace GameThief.GameModel.ServiceClasses
                 currentPoint = point.Key;
                 highestIntensity = point.Value.Intensity;
             }
+
             return Tuple.Create(currentPoint, potentialTransition[currentPoint]);
         }
-
-        private static readonly Size[] offsets = new Size[]
-        {
-            new Size(-1, -1), 
-            new Size(-1, 0), 
-            new Size(-1, 1), 
-            new Size(0, 1), 
-            new Size(0, -1), 
-            new Size(1, -1), 
-            new Size(1, 0), 
-            new Size(1, 1)
-        };
     }
 }

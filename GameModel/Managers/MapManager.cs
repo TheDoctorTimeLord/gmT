@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
@@ -48,27 +47,40 @@ namespace GameThief.GameModel.Managers
             Map[creaturePosition.X, creaturePosition.Y].Creature = null;
         }
 
-        public static void AddNoiseSourse(NoiseSource source) => NoiseController.AddNoiseSource(source);
-        public static void AddLightSource(LightSource source) => LightController.AddLightSource(source);
+        public static void AddNoiseSourse(NoiseSource source)
+        {
+            NoiseController.AddNoiseSource(source);
+        }
 
-        public static void RemoveNoiseSource(NoiseSource source) => NoiseController.RemoveSourceNoises(source);
-        public static void RemoveLightSource(LightSource source) => LightController.RemoveLightSource(source);
+        public static void AddLightSource(LightSource source)
+        {
+            LightController.AddLightSource(source);
+        }
 
-        public static IEnumerable<Point> GetVisibleCells(Point position, Direction sightDirection, int viewDistance, int viewWidth)
+        public static void RemoveNoiseSource(NoiseSource source)
+        {
+            NoiseController.RemoveSourceNoises(source);
+        }
+
+        public static void RemoveLightSource(LightSource source)
+        {
+            LightController.RemoveLightSource(source);
+        }
+
+        public static IEnumerable<Point> GetVisibleCells(Point position, Direction sightDirection, int viewDistance,
+            int viewWidth)
         {
             var direction = GameState.ConvertDirectionToSize[sightDirection];
             var oppositeDirection = GameState.ConvertDirectionToSize[GameState.RotateFromTo(sightDirection, true)];
             var startPoint = position + direction;
-            var pointsToCheck = GetSidePoints(new List<Point> { startPoint }, oppositeDirection);
+            var pointsToCheck = GetSidePoints(new List<Point> {startPoint}, oppositeDirection);
             pointsToCheck.Add(startPoint);
             var currentWidth = 1;
 
             yield return position;
-            foreach (var point in GetSidePoints(new List<Point> {position}, oppositeDirection)) 
-            {
+            foreach (var point in GetSidePoints(new List<Point> {position}, oppositeDirection))
                 if (InBounds(point))
                     yield return point;
-            }
 
             while (true)
             {

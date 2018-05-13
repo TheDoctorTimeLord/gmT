@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using GameThief.GameModel;
-using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
-using GameThief.GameModel.MapSource;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace GameThief.Tests
 {
@@ -45,7 +37,7 @@ namespace GameThief.Tests
     internal class SampleTemporaryObject : ITemporaryObject
     {
         private int lifeCount;
-        private HashSet<SampleTemporaryObject> storage;
+        private readonly HashSet<SampleTemporaryObject> storage;
 
         public SampleTemporaryObject(int lifeCount, HashSet<SampleTemporaryObject> storage)
         {

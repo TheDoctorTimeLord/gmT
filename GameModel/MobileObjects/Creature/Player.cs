@@ -7,11 +7,11 @@ namespace GameThief.GameModel.MobileObjects.Creature
 {
     public class Player : MobileObject
     {
-        public override CreatureTypes Type { get; set; } = CreatureTypes.Player;
-
         public Player(InitializationMobileObject init) : base(init)
         {
         }
+
+        public override CreatureTypes Type { get; set; } = CreatureTypes.Player;
 
         protected override Query GetIntentionOfCreature()
         {
@@ -30,10 +30,7 @@ namespace GameThief.GameModel.MobileObjects.Creature
 
         public override void Interative(ICreature creature)
         {
-            if (creature is Guard)
-            {
-                MobileObjectsManager.DeleteCreature(this);
-            }
+            if (creature is Guard) MobileObjectsManager.DeleteCreature(this);
         }
     }
 }

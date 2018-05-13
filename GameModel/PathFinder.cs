@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.Managers;
-using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel
 {
     public static class PathFinder
     {
         /// <summary>
-        /// Поиск кротчайшего пути между точками from и to, описанный набором команд движения. Промежуточные взаиможейсвия
-        /// (например, с закрытой дверью) не учитываются в возращаемом списке
+        ///     Поиск кротчайшего пути между точками from и to, описанный набором команд движения. Промежуточные взаиможейсвия
+        ///     (например, с закрытой дверью) не учитываются в возращаемом списке
         /// </summary>
         /// <param name="from">Позиция начала пути</param>
         /// <param name="to">Позиция конца пути</param>
@@ -49,6 +46,7 @@ namespace GameThief.GameModel
                 AddTurnEdge(currentNode, visitiedCell, queue, true);
                 AddTurnEdge(currentNode, visitiedCell, queue, false);
             }
+
             return new List<Query>();
         }
 
@@ -86,17 +84,9 @@ namespace GameThief.GameModel
         {
             if (Math.Abs(startNode.Position.X - currentNode.Position.X) +
                 Math.Abs(startNode.Position.Y - currentNode.Position.Y) == 1)
-            {
                 return Query.Move;
-            }
-            if (GameState.RotateFromTo(startNode.Direction, false) == currentNode.Direction)
-            {
-                return Query.RotateRight;
-            }
-            if (GameState.RotateFromTo(startNode.Direction, true) == currentNode.Direction)
-            {
-                return Query.RotateLeft;
-            }
+            if (GameState.RotateFromTo(startNode.Direction, false) == currentNode.Direction) return Query.RotateRight;
+            if (GameState.RotateFromTo(startNode.Direction, true) == currentNode.Direction) return Query.RotateLeft;
             throw new Exception("Неверно соединены узлы пути");
         }
 
@@ -111,8 +101,8 @@ namespace GameThief.GameModel
         private class LinkedNode
         {
             public readonly Direction Direction;
-            public Point Position;
             private readonly LinkedNode previousLinkedNode;
+            public Point Position;
 
             public LinkedNode(Point position, Direction direction, LinkedNode previousLinkedNode)
             {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using GameThief.GameModel.Enums;
@@ -12,6 +11,12 @@ namespace GameThief.GameModel.MobileObjects
 {
     public abstract class MobileObject : ICreature
     {
+        public HashSet<Noise> AudibleNoises;
+
+        protected bool Hidden;
+
+        public List<Point> VisibleCells;
+
         //public static MobileObject GetDefault(InitializationMobileObject init)
         //{
         //    return GenerateRandomMobileObject(init.Position, init.Direction);
@@ -19,7 +24,9 @@ namespace GameThief.GameModel.MobileObjects
         protected MobileObject(InitializationMobileObject init)
         {
             if (init.IsDefaultInitialization)
+            {
                 GenerateRandomMobileObject(init.Position, init.Direction);
+            }
             else
             {
                 Position = init.Position;
@@ -33,6 +40,37 @@ namespace GameThief.GameModel.MobileObjects
                 Inventory = init.Inventory;
             }
         }
+
+        public int MaxHealth { get; private set; }
+        public int Health { get; private set; }
+        public int MinHearingVolume { get; private set; }
+        public int MaxHearingDelta { get; private set; }
+        public int ViewDistanse { get; private set; }
+        public int ViewWidth { get; private set; }
+
+        public virtual CreatureTypes Type { get; set; }
+        public Inventory Inventory { get; private set; }
+
+        public Point Position { get; set; }
+
+        public Direction Direction { get; set; }
+
+        public bool IsHidden()
+        {
+            return Hidden;
+        }
+
+        public Query GetIntention()
+        {
+            UpdateWorldData();
+            return GetIntentionOfCreature();
+        }
+
+        public abstract void ActionTaken(Query query);
+
+        public abstract void ActionRejected(Query query);
+
+        public abstract void Interative(ICreature creature);
 
         private void GenerateRandomMobileObject(Point position, Direction direction) //TODO ГЕНЕРАТОР В РАЗРАБОТКЕ
         {
@@ -48,20 +86,6 @@ namespace GameThief.GameModel.MobileObjects
 
             Inventory = new Inventory(new HashSet<IItem>(), 10);
         }
-        
-        public virtual CreatureTypes Type { get; set; }
-        public int MaxHealth { get; private set; }
-        public int Health { get; private set; }
-        public int MinHearingVolume { get; private set; }
-        public int MaxHearingDelta { get; private set; }
-        public int ViewDistanse { get; private set; }
-        public int ViewWidth { get; private set; }
-        public Inventory Inventory { get; private set; }
-
-        public List<Point> VisibleCells;
-        public HashSet<Noise> AudibleNoises;
-
-        protected bool Hidden;
 
 
         public void MakeDamage(int damage)
@@ -78,21 +102,6 @@ namespace GameThief.GameModel.MobileObjects
                 Health = MaxHealth;
         }
 
-        public Point Position { get; set; }
-
-        public Direction Direction { get; set; }
-
-        public bool IsHidden()
-        {
-           return Hidden;
-        }
-
-        public Query GetIntention()
-        {
-            UpdateWorldData();
-            return GetIntentionOfCreature();
-        }
-
         public void UpdateWorldData()
         {
             VisibleCells = MapManager.GetVisibleCells(Position, Direction, ViewWidth, ViewDistanse).ToList();
@@ -100,11 +109,5 @@ namespace GameThief.GameModel.MobileObjects
         }
 
         protected abstract Query GetIntentionOfCreature();
-
-        public abstract void ActionTaken(Query query);
-
-        public abstract void ActionRejected(Query query);
-
-        public abstract void Interative(ICreature creature);
     }
 }

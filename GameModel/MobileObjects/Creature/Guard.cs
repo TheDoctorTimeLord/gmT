@@ -11,15 +11,19 @@ namespace GameThief.GameModel.MobileObjects.Creature
 {
     public class Guard : MobileObject
     {
-        public override CreatureTypes Type { get; set; } = CreatureTypes.Guard;
-
         private const int SearchTime = 10;
 
+        private readonly HashSet<NoiseType> FamiliarNoises = new HashSet<NoiseType>
+        {
+            NoiseType.StepsOfGuard,
+            NoiseType.GuardVoice
+        };
+
         private readonly List<Instruction> normalGuardTrack = new List<Instruction>();
-        private int currentInstruction;
         private Deque<Query> actionQueue = new Deque<Query>();
-        private LevelOfAlertness levelOfAlertness;
         private bool changedLevelOfAlertness;
+        private int currentInstruction;
+        private LevelOfAlertness levelOfAlertness;
 
         private int searchTime;
 
@@ -28,7 +32,6 @@ namespace GameThief.GameModel.MobileObjects.Creature
         public Guard(InitializationMobileObject init) : base(init)
         {
             foreach (var pameter in init.Parameters)
-            {
                 switch (pameter.Item1)
                 {
                     case "path":
@@ -36,8 +39,9 @@ namespace GameThief.GameModel.MobileObjects.Creature
                         normalGuardTrack = track;
                         break;
                 }
-            }
         }
+
+        public override CreatureTypes Type { get; set; } = CreatureTypes.Guard;
 
         protected override Query GetIntentionOfCreature()
         {
@@ -105,13 +109,8 @@ namespace GameThief.GameModel.MobileObjects.Creature
         private void UpdateActionQueueWithWary()
         {
             if (changedLevelOfAlertness)
-            {
                 CheckTheSituation();
-            }
-            else if (actionQueue.Count == 0)
-            {
-                levelOfAlertness = LevelOfAlertness.Calm;
-            }
+            else if (actionQueue.Count == 0) levelOfAlertness = LevelOfAlertness.Calm;
         }
 
         private void UpdateActionQueueWithAngry()
@@ -129,28 +128,20 @@ namespace GameThief.GameModel.MobileObjects.Creature
         {
             var instructions = PathFinder.GetPathFromTo(Position, target, Direction);
             actionQueue = new Deque<Query>();
-            for (var i = 0; i < instructions.Count - 1; i++)
-            {
-                actionQueue.PushBack(instructions[i]);
-            }
+            for (var i = 0; i < instructions.Count - 1; i++) actionQueue.PushBack(instructions[i]);
             actionQueue.PushBack(Query.Interaction);
         }
 
         private void SearchPlayer()
         {
             for (var i = 0; i < searchTime; i++)
-            {
                 actionQueue.PushBack(GameState.Random.Next(0, 1) == 0 ? Query.RotateLeft : Query.RotateRight);
-            }
         }
 
         private void CheckTheSituation()
         {
             var instructions = PathFinder.GetPathFromTo(Position, target, Direction);
-            for (var i = 0; i < instructions.Count - 1; i++)
-            {
-                actionQueue.PushBack(instructions[i]);
-            }
+            for (var i = 0; i < instructions.Count - 1; i++) actionQueue.PushBack(instructions[i]);
         }
 
         private void ExecuteCurrentInstruction()
@@ -162,12 +153,13 @@ namespace GameThief.GameModel.MobileObjects.Creature
             {
                 case "MoveTo":
                     var target = new Point(int.Parse(normalGuardTrack[currentInstruction].GetNextParameter()),
-                                           int.Parse(normalGuardTrack[currentInstruction].GetNextParameter()));
+                        int.Parse(normalGuardTrack[currentInstruction].GetNextParameter()));
                     var instructions = PathFinder.GetPathFromTo(Position, target, Direction);
                     foreach (var instruction in instructions)
                         actionQueue.PushBack(instruction);
                     break;
             }
+
             normalGuardTrack[currentInstruction].ResetInstruction();
             currentInstruction = (currentInstruction + 1) % normalGuardTrack.Count;
         }
@@ -180,12 +172,10 @@ namespace GameThief.GameModel.MobileObjects.Creature
                 var cell = MapManager.Map[point.X, point.Y];
 
                 if (levelOfAlertness == LevelOfAlertness.Angry && !changedLevelOfAlertness)
-                {
                     if (searchTime != 0)
                         searchTime--;
                     else
                         ChangeLevelOfAlertness(LevelOfAlertness.Calm, Point.Empty);
-                }
 
                 if (cell.Creature is Player)
                 {
@@ -201,15 +191,9 @@ namespace GameThief.GameModel.MobileObjects.Creature
             }
 
             foreach (var noise in AudibleNoises)
-            {
                 if (!FamiliarNoises.Contains(noise.Source.Type))
-                {
                     if (levelOfAlertness < LevelOfAlertness.Wary)
-                    {
                         ChangeLevelOfAlertness(LevelOfAlertness.Wary, noise.Source.Position);
-                    }
-                }
-            }
         }
 
         private void ChangeLevelOfAlertness(LevelOfAlertness newLevel, Point point)
@@ -218,11 +202,5 @@ namespace GameThief.GameModel.MobileObjects.Creature
             changedLevelOfAlertness = true;
             target = point;
         }
-
-        private readonly HashSet<NoiseType> FamiliarNoises = new HashSet<NoiseType>
-        {
-            NoiseType.StepsOfGuard,
-            NoiseType.GuardVoice
-        };
     }
 }

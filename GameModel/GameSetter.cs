@@ -6,7 +6,6 @@ using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.Managers;
-using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;
 using GameThief.GameModel.MobileObjects.Creature;
 using GameThief.GameModel.ServiceClasses;
@@ -19,12 +18,8 @@ namespace GameThief.GameModel
         {
             var content = new List<List<string>>();
             for (var y = 0; y < height; y++)
-            {
-                for (var x = 0; x < width; x++)
-                {
-                    content.Add(new List<string> { "wood" });
-                }
-            }
+            for (var x = 0; x < width; x++)
+                content.Add(new List<string> {"wood"});
             MapManager.CreateMap(width, height, content);
         }
 
@@ -33,10 +28,8 @@ namespace GameThief.GameModel
             SetSampleMap(width, height);
 
             foreach (var tuple in decors)
-            {
                 if (MapManager.InBounds(tuple.Item1))
                     MapManager.Map[tuple.Item1.X, tuple.Item1.Y].ObjectContainer.AddDecor(tuple.Item2);
-            }
         }
 
         public static void CreateLevel(Player player)
