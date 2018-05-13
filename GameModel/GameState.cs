@@ -36,7 +36,7 @@ namespace GameThief.GameModel
 
         public GameState()
         {
-            GameSetter.CreateLevel(Player);
+            //GameSetter.CreateLevel(Player);
 
             PressedKeyConverter.CreateConverter(new Dictionary<Keys, Query>
             {

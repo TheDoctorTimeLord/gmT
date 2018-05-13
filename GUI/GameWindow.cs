@@ -66,6 +66,7 @@ namespace GameThief.GUI
         public GameWindow(DirectoryInfo imagesDirectory = null)
         {
             gameState = new GameState();
+            GameSetter.CreateLevel(gameState);
             gameState.UpdateState();
             ClientSize = new Size(
                 ElementSize * (MapManager.Map.Wigth + 1),

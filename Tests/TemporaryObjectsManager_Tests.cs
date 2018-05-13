@@ -36,8 +36,8 @@ namespace GameThief.Tests
 
     internal class SampleTemporaryObject : ITemporaryObject
     {
-        private int lifeCount;
         private readonly HashSet<SampleTemporaryObject> storage;
+        private int lifeCount;
 
         public SampleTemporaryObject(int lifeCount, HashSet<SampleTemporaryObject> storage)
         {

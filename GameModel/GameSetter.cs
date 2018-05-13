@@ -32,7 +32,7 @@ namespace GameThief.GameModel
                     MapManager.Map[tuple.Item1.X, tuple.Item1.Y].ObjectContainer.AddDecor(tuple.Item2);
         }
 
-        public static void CreateLevel(Player player)
+        public static void CreateLevel(GameState gameState)
         {
             SetMapAndFillWithDecors(24, 14, new List<Tuple<Point, IDecor>>
             {
@@ -65,7 +65,7 @@ namespace GameThief.GameModel
                 Tuple.Create(new Point(7, 9), (IDecor) new Table()),
                 Tuple.Create(new Point(8, 9), (IDecor) new Wall()),
                 Tuple.Create(new Point(9, 9), (IDecor) new Wall()),
-                Tuple.Create(new Point(10, 9), (IDecor) new Wall()),
+                //Tuple.Create(new Point(10, 9), (IDecor) new Wall()),
                 Tuple.Create(new Point(11, 9), (IDecor) new Wall()),
                 Tuple.Create(new Point(5, 10), (IDecor) new Wall()),
                 Tuple.Create(new Point(6, 10), (IDecor) new OpenedDoor()),
@@ -91,7 +91,7 @@ namespace GameThief.GameModel
                 new MobileObjectInitialization(new Point(2, 0), 10, 10, Direction.Right, 1, 5, 2, 0, new Inventory(10),
                     new List<Tuple<string, string>>()));
             //guard.Inventory.AddItem(new Key());
-            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {player, guard});
+            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {gameState.Player, guard});
             //MapManager.AddNoiseSourse(new NoiseSource(NoiseType.GuardVoice, 150, 1000,
             //    new Point(10, 10), ""));
         }
