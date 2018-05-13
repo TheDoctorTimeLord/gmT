@@ -7,10 +7,8 @@ using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
-using GameThief.GameModel.MobileObjects.Creature;
-using GameThief.GameModel.ServiceClasses;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.ServiceClasses
 {
     public static class GameSetter
     {

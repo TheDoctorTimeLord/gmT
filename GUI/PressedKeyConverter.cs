@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using GameThief.GameModel.Enums;
 
-namespace GameThief.GameModel
+namespace GameThief.GUI
 {
     public static class PressedKeyConverter
     {

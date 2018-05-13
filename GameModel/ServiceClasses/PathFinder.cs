@@ -6,7 +6,7 @@ using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects.Decors;
 using GameThief.GameModel.Managers;
 
-namespace GameThief.GameModel
+namespace GameThief.GameModel.ServiceClasses
 {
     public static class PathFinder
     {

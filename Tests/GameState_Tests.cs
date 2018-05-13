@@ -5,6 +5,7 @@ using GameThief.GameModel.ImmobileObjects.Items;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MobileObjects;
 using GameThief.GameModel.MobileObjects.Creature;
+using GameThief.GameModel.ServiceClasses;
 using NUnit.Framework;
 
 namespace GameThief.Tests

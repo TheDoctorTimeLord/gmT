@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using GameThief.GameModel;
 using GameThief.GameModel.Enums;
+using GameThief.GUI;
 using NUnit.Framework;
 
 namespace GameThief.Tests

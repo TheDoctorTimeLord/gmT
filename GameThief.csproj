@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameModel\PressedKeyConverter.cs" />
+    <Compile Include="GUI\PressedKeyConverter.cs" />
     <Compile Include="GameModel\Enums\CreatureTypes.cs" />
     <Compile Include="GameModel\Enums\CellType.cs" />
     <Compile Include="GameModel\Enums\LevelOfAlertness.cs" />
@@ -92,7 +92,7 @@
     <Compile Include="GameModel\Managers\MobileObjectsManager.cs" />
     <Compile Include="GameModel\Managers\FileManager.cs" />
     <Compile Include="GameModel\MapSource\Cell.cs" />
-    <Compile Include="GameModel\PathFinder.cs" />
+    <Compile Include="GameModel\ServiceClasses\PathFinder.cs" />
     <Compile Include="GameModel\ServiceClasses\Deque.cs" />
     <Compile Include="GameModel\ServiceClasses\Dijkstra.cs" />
     <Compile Include="GameModel\ServiceClasses\MobileObjectInitialization.cs" />
@@ -128,7 +128,7 @@
     <Compile Include="Tests\MapManager_Tests.cs" />
     <Compile Include="Tests\Player_Tests.cs" />
     <Compile Include="Tests\TemporaryObjectsManager_Tests.cs" />
-    <Compile Include="GameModel\GameSetter.cs" />
+    <Compile Include="GameModel\ServiceClasses\GameSetter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -7,6 +7,7 @@ using GameThief.GameModel;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.Managers;
+using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GUI
 {
