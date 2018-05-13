@@ -18,7 +18,7 @@ namespace GameThief.Tests
         {
             GameSetter.SetSampleMap(2, 2);
             MobileObjectsManager.CreateCreature(
-                new Player(new InitializationMobileObject(new Point(0, 0), Direction.Down)));
+                new Player(new MobileObjectInitialization(new Point(0, 0), Direction.Down)));
             MobileObjectsManager.UpdateAnimates();
             Assert.True(MapManager.Map[0, 0].Creature is Player);
         }
@@ -29,7 +29,7 @@ namespace GameThief.Tests
             GameSetter.SetSampleMap(2, 2);
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
-                new Player(new InitializationMobileObject(new Point(0, 0), Direction.Down))
+                new Player(new MobileObjectInitialization(new Point(0, 0), Direction.Down))
             });
             Assert.True(MapManager.Map[0, 0].Creature is Player);
         }
@@ -38,7 +38,7 @@ namespace GameThief.Tests
         public void TestRemovingCreature()
         {
             GameSetter.SetSampleMap(2, 2);
-            var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Down));
+            var player = new Player(new MobileObjectInitialization(new Point(0, 0), Direction.Down));
             MobileObjectsManager.CreateCreature(player);
             MobileObjectsManager.UpdateAnimates();
             Assert.True(MapManager.Map[0, 0].Creature is Player);

@@ -4,7 +4,7 @@ using GameThief.GameModel.Enums;
 
 namespace GameThief.GameModel
 {
-    public static class ConverterPressedKey
+    public static class PressedKeyConverter
     {
         private static Dictionary<Keys, Query> convertKeyToQuery = new Dictionary<Keys, Query>();
 

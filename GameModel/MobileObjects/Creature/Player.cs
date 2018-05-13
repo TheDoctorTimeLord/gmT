@@ -7,9 +7,7 @@ namespace GameThief.GameModel.MobileObjects.Creature
 {
     public class Player : MobileObject
     {
-        public Player(InitializationMobileObject init) : base(init)
-        {
-        }
+        public Player(MobileObjectInitialization init) : base(init) { }
 
         public override CreatureTypes Type { get; set; } = CreatureTypes.Player;
 
@@ -24,11 +22,9 @@ namespace GameThief.GameModel.MobileObjects.Creature
                 MapManager.AddNoiseSourse(new NoiseSource(NoiseType.StepsOfThief, 1, 2, Position, "S"));
         }
 
-        public override void ActionRejected(Query query)
-        {
-        }
+        public override void ActionRejected(Query query) { }
 
-        public override void Interative(ICreature creature)
+        public override void InteractWith(ICreature creature)
         {
             if (creature is Guard) MobileObjectsManager.DeleteCreature(this);
         }

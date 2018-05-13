@@ -17,11 +17,11 @@ namespace GameThief.GameModel.MobileObjects
 
         public List<Point> VisibleCells;
 
-        //public static MobileObject GetDefault(InitializationMobileObject init)
+        //public static MobileObject GetDefault(MobileObjectInitialization init)
         //{
         //    return GenerateRandomMobileObject(init.Position, init.Direction);
         //}
-        protected MobileObject(InitializationMobileObject init)
+        protected MobileObject(MobileObjectInitialization init)
         {
             if (init.IsDefaultInitialization)
             {
@@ -70,7 +70,7 @@ namespace GameThief.GameModel.MobileObjects
 
         public abstract void ActionRejected(Query query);
 
-        public abstract void Interative(ICreature creature);
+        public abstract void InteractWith(ICreature creature);
 
         private void GenerateRandomMobileObject(Point position, Direction direction) //TODO ГЕНЕРАТОР В РАЗРАБОТКЕ
         {

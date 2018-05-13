@@ -24,7 +24,7 @@ namespace GameThief.GameModel
             {Direction.Right, new Size(1, 0)}
         };
 
-        public readonly Player Player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Right));
+        public readonly Player Player = new Player(new MobileObjectInitialization(new Point(0, 0), Direction.Right));
 
         //public GameState(string gameConfigurationFilename)
         //{
@@ -38,7 +38,7 @@ namespace GameThief.GameModel
         {
             GameSetter.CreateLevel(Player);
 
-            ConverterPressedKey.CreateConverter(new Dictionary<Keys, Query>
+            PressedKeyConverter.CreateConverter(new Dictionary<Keys, Query>
             {
                 {Keys.D, Query.RotateRight},
                 {Keys.W, Query.Move},
@@ -49,7 +49,7 @@ namespace GameThief.GameModel
 
         public static Query GetCurrentQuery()
         {
-            return ConverterPressedKey.Convert(KeyPressed);
+            return PressedKeyConverter.Convert(KeyPressed);
         }
 
         public void UpdateState()
@@ -81,7 +81,7 @@ namespace GameThief.GameModel
                 case Query.Interaction:
                     var target = creature.Position + ConvertDirectionToSize[creature.Direction];
                     if (MapManager.Map[target.X, target.Y].Creature != null)
-                        MapManager.Map[target.X, target.Y].Creature.Interative(creature);
+                        MapManager.Map[target.X, target.Y].Creature.InteractWith(creature);
                     else
                         MapManager.Map[target.X, target.Y].ObjectContainer.Interact(creature);
                     break;

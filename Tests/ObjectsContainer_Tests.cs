@@ -31,7 +31,7 @@ namespace GameThief.Tests
         //    container.AddDecor(new Table());
         //    container.AddDecor(new Vase());
         //    Assert.True(container.ShowDecor() is Vase);
-        //    var player = new Player(new InitializationMobileObject(new Point(0, 1), Direction.Right));
+        //    var player = new Player(new MobileObjectInitialization(new Point(0, 1), Direction.Right));
         //    MobileObjectsManager.CreateCreature(player);
         //    MobileObjectsManager.UpdateAnimates();
         //    container.Interact(MapManager.Map[0,1].Creature);
@@ -45,7 +45,7 @@ namespace GameThief.Tests
             var container = MapManager.Map[1, 1].ObjectContainer;
             container.AddDecor(new Table());
             Assert.True(container.ShowDecor() is Table);
-            var player = new Player(new InitializationMobileObject(new Point(0, 1), Direction.Right));
+            var player = new Player(new MobileObjectInitialization(new Point(0, 1), Direction.Right));
             MapManager.AddCreatureToMap(player);
             container.Interact(player);
             Assert.True(container.ShowDecor() is Table);

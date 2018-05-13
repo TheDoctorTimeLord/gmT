@@ -6,7 +6,7 @@ using GameThief.GameModel.MobileObjects;
 
 namespace GameThief.GameModel.ServiceClasses
 {
-    public class InitializationMobileObject
+    public class MobileObjectInitialization
     {
         public Direction Direction;
         public int Health;
@@ -23,14 +23,14 @@ namespace GameThief.GameModel.ServiceClasses
         public int ViewDistanse;
         public int ViewWidth;
 
-        public InitializationMobileObject(Point position, Direction direction)
+        public MobileObjectInitialization(Point position, Direction direction)
         {
             IsDefaultInitialization = true;
             Position = position;
             Direction = direction;
         }
 
-        public InitializationMobileObject(Point position, int maxHealth, int health, Direction direction,
+        public MobileObjectInitialization(Point position, int maxHealth, int health, Direction direction,
             int minHearingVolume, int maxHearingDelta, int viewWidth, int viewDistanse, Inventory inventory,
             List<Tuple<string, string>> parameters)
         {

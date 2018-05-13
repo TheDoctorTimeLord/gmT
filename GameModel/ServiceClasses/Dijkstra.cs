@@ -9,18 +9,6 @@ namespace GameThief.GameModel.ServiceClasses
 {
     public static class Dijkstra
     {
-        private static readonly Size[] offsets =
-        {
-            new Size(-1, -1),
-            new Size(-1, 0),
-            new Size(-1, 1),
-            new Size(0, 1),
-            new Size(0, -1),
-            new Size(1, -1),
-            new Size(1, 0),
-            new Size(1, 1)
-        };
-
         public static void DijkstraTraversal(Map<HashSet<Noise>> noises, NoiseSource source,
             Action<HashSet<Noise>, Noise> changer)
         {
@@ -43,7 +31,7 @@ namespace GameThief.GameModel.ServiceClasses
         private static void UpdateNeighboringPoint(Tuple<Point, Noise> currentNoise,
             Dictionary<Point, Noise> potentialTransition, HashSet<Point> visited, Map<HashSet<Noise>> noises)
         {
-            foreach (var point in GetPossibleTransition(currentNoise.Item1, noises, visited))
+            foreach (var point in GetPossibleTransition(currentNoise.Item1, visited))
             {
                 var newIntensity = currentNoise.Item2.Intensity - MapManager.Map[point.X, point.Y]
                                        .ObjectContainer.TotalNoiseSuppression - 1;
@@ -57,18 +45,11 @@ namespace GameThief.GameModel.ServiceClasses
             }
         }
 
-        private static IEnumerable<Point> GetPossibleTransition(Point position, Map<HashSet<Noise>> noises,
-            HashSet<Point> visited)
+        private static IEnumerable<Point> GetPossibleTransition(Point position, HashSet<Point> visited)
         {
-            return offsets
-                .Select(offset => position + offset)
-                .Where(point => InBound(noises, point) && !visited.Contains(point));
-        }
-
-        private static bool InBound(Map<HashSet<Noise>> noises, Point point)
-        {
-            return point.X >= 0 && point.X < noises.Wigth &&
-                   point.Y >= 0 && point.Y < noises.Height;
+            return position
+                .FindNeighbours()
+                .Where(point => MapManager.InBounds(point) && !visited.Contains(point));
         }
 
         private static Tuple<Point, Noise> GetLowestCostPoint(Dictionary<Point, Noise> potentialTransition)

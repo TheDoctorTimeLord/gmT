@@ -12,13 +12,13 @@ using NUnit.Framework;
 namespace GameThief.Tests
 {
     [TestFixture]
-    public class Player_test
+    public class Player_Tests
     {
         [Test]
         public void TestMovePlayer()
         {
             GameSetter.SetSampleMap(3, 3);
-            var player = new Player(new InitializationMobileObject(
+            var player = new Player(new MobileObjectInitialization(
                 new Point(1, 1), Direction.Down));
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {player});
 
@@ -41,7 +41,7 @@ namespace GameThief.Tests
         public void TestMovePlayerMore()
         {
             GameSetter.SetSampleMap(3, 3);
-            var player = new Player(new InitializationMobileObject(
+            var player = new Player(new MobileObjectInitialization(
                 new Point(1, 1), Direction.Down));
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {player});
 
@@ -68,7 +68,7 @@ namespace GameThief.Tests
         public void TestPlayerCreate()
         {
             GameSetter.SetSampleMap(3, 3);
-            var player = new Player(new InitializationMobileObject(
+            var player = new Player(new MobileObjectInitialization(
                 new Point(1, 1), Direction.Down));
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {player});
             Assert.True(MapManager.Map[1, 1].Creature is Player);

@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace GameThief.Tests
 {
     [TestFixture]
-    public class Dijkstra_tests
+    public class Dijkstra_Tests
     {
         public Map<HashSet<Noise>> GetMap(int width, int height)
         {

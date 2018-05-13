@@ -45,7 +45,7 @@ namespace GameThief.Tests
         public void TestAddingCreature()
         {
             GameSetter.SetSampleMap(3, 3);
-            var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Up));
+            var player = new Player(new MobileObjectInitialization(new Point(0, 0), Direction.Up));
             MapManager.AddCreatureToMap(player);
             Assert.IsTrue(MapManager.Map[0, 0].Creature is Player);
         }
@@ -56,7 +56,7 @@ namespace GameThief.Tests
             GameSetter.SetSampleMap(5, 5);
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
             {
-                new Guard(new InitializationMobileObject(new Point(2, 2), Direction.Up))
+                new Guard(new MobileObjectInitialization(new Point(2, 2), Direction.Up))
             });
 
             var expectedResult = new List<Point>
@@ -254,7 +254,7 @@ namespace GameThief.Tests
         public void TestMovingCreature()
         {
             GameSetter.SetSampleMap(3, 3);
-            var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Up));
+            var player = new Player(new MobileObjectInitialization(new Point(0, 0), Direction.Up));
             MapManager.AddCreatureToMap(player);
             MapManager.MoveCreature(player, new Point(0, 1));
             Assert.IsTrue(MapManager.Map[0, 1].Creature is Player);
@@ -264,7 +264,7 @@ namespace GameThief.Tests
         public void TestRemovingCreature()
         {
             GameSetter.SetSampleMap(3, 3);
-            var player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Up));
+            var player = new Player(new MobileObjectInitialization(new Point(0, 0), Direction.Up));
             MapManager.AddCreatureToMap(player);
             MapManager.RemoveCreatureFromMap(player);
             Assert.IsTrue(MapManager.Map[0, 0].Creature == null);

@@ -23,7 +23,7 @@ namespace GameThief.GameModel.Managers
             }
         }
 
-        public static void CreateCreature(CreatureTypes type, InitializationMobileObject init)
+        public static void CreateCreature(CreatureTypes type, MobileObjectInitialization init)
         {
             AddCreature(GetCreatureByNameAndInitParams(type, init));
         }
@@ -63,17 +63,17 @@ namespace GameThief.GameModel.Managers
             deletedMobileObjects.Add(creature);
         }
 
-        public static ICreature GetCreatureByNameAndInitParams(CreatureTypes type, InitializationMobileObject init)
+        public static ICreature GetCreatureByNameAndInitParams(CreatureTypes type, MobileObjectInitialization init)
         {
             switch (type)
             {
                 case CreatureTypes.Player:
                     return init.IsDefaultInitialization
-                        ? new Player(new InitializationMobileObject(init.Position, init.Direction))
+                        ? new Player(new MobileObjectInitialization(init.Position, init.Direction))
                         : new Player(init);
                 case CreatureTypes.Guard:
                     return init.IsDefaultInitialization
-                        ? new Guard(new InitializationMobileObject(init.Position, init.Direction))
+                        ? new Guard(new MobileObjectInitialization(init.Position, init.Direction))
                         : new Guard(init);
                 default:
                     throw new Exception("Попытка создания несуществующего Creature: " + type);

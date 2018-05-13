@@ -29,7 +29,7 @@ namespace GameThief.GameModel.MobileObjects.Creature
 
         private Point target = Point.Empty;
 
-        public Guard(InitializationMobileObject init) : base(init)
+        public Guard(MobileObjectInitialization init) : base(init)
         {
             foreach (var pameter in init.Parameters)
                 switch (pameter.Item1)
@@ -50,16 +50,16 @@ namespace GameThief.GameModel.MobileObjects.Creature
             switch (levelOfAlertness)
             {
                 case LevelOfAlertness.Calm:
-                    UpdateActionQueueWithClam();
+                    UpdateActionQueueWhileClam();
                     break;
-                case LevelOfAlertness.Wary:
-                    UpdateActionQueueWithWary();
+                case LevelOfAlertness.Suspicious:
+                    UpdateActionQueueWhileSuspicious();
                     break;
                 case LevelOfAlertness.Angry:
-                    UpdateActionQueueWithAngry();
+                    UpdateActionQueueWhileAngry();
                     break;
                 case LevelOfAlertness.Alert:
-                    UpdateActionQueueWithAlert();
+                    UpdateActionQueueWhileAlert();
                     break;
             }
 
@@ -88,7 +88,7 @@ namespace GameThief.GameModel.MobileObjects.Creature
             }
         }
 
-        public override void Interative(ICreature creature)
+        public override void InteractWith(ICreature creature)
         {
             if (creature is Player)
             {
@@ -100,26 +100,26 @@ namespace GameThief.GameModel.MobileObjects.Creature
             }
         }
 
-        private void UpdateActionQueueWithClam()
+        private void UpdateActionQueueWhileClam()
         {
             if (actionQueue.Count == 0)
                 ExecuteCurrentInstruction();
         }
 
-        private void UpdateActionQueueWithWary()
+        private void UpdateActionQueueWhileSuspicious()
         {
             if (changedLevelOfAlertness)
                 CheckTheSituation();
             else if (actionQueue.Count == 0) levelOfAlertness = LevelOfAlertness.Calm;
         }
 
-        private void UpdateActionQueueWithAngry()
+        private void UpdateActionQueueWhileAngry()
         {
             if (changedLevelOfAlertness && searchTime != 0 && actionQueue.Count == 0)
-                SearchPlayer();
+                SearchForPlayer();
         }
 
-        private void UpdateActionQueueWithAlert()
+        private void UpdateActionQueueWhileAlert()
         {
             СhasePlayer();
         }
@@ -132,7 +132,7 @@ namespace GameThief.GameModel.MobileObjects.Creature
             actionQueue.PushBack(Query.Interaction);
         }
 
-        private void SearchPlayer()
+        private void SearchForPlayer()
         {
             for (var i = 0; i < searchTime; i++)
                 actionQueue.PushBack(GameState.Random.Next(0, 1) == 0 ? Query.RotateLeft : Query.RotateRight);
@@ -192,15 +192,15 @@ namespace GameThief.GameModel.MobileObjects.Creature
 
             foreach (var noise in AudibleNoises)
                 if (!FamiliarNoises.Contains(noise.Source.Type))
-                    if (levelOfAlertness < LevelOfAlertness.Wary)
-                        ChangeLevelOfAlertness(LevelOfAlertness.Wary, noise.Source.Position);
+                    if (levelOfAlertness < LevelOfAlertness.Suspicious)
+                        ChangeLevelOfAlertness(LevelOfAlertness.Suspicious, noise.Source.Position);
         }
 
-        private void ChangeLevelOfAlertness(LevelOfAlertness newLevel, Point point)
+        private void ChangeLevelOfAlertness(LevelOfAlertness newLevel, Point target)
         {
             levelOfAlertness = newLevel;
             changedLevelOfAlertness = true;
-            target = point;
+            this.target = target;
         }
     }
 }

@@ -3,7 +3,7 @@
     public enum LevelOfAlertness
     {
         Calm,
-        Wary,
+        Suspicious,
         Angry,
         Alert
     }

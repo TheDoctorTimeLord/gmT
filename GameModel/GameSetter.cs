@@ -88,7 +88,7 @@ namespace GameThief.GameModel
 
             var guard = MobileObjectsManager.GetCreatureByNameAndInitParams(
                 CreatureTypes.Guard,
-                new InitializationMobileObject(new Point(2, 0), 10, 10, Direction.Right, 1, 5, 2, 0, new Inventory(10),
+                new MobileObjectInitialization(new Point(2, 0), 10, 10, Direction.Right, 1, 5, 2, 0, new Inventory(10),
                     new List<Tuple<string, string>>()));
             //guard.Inventory.AddItem(new Key());
             MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {player, guard});

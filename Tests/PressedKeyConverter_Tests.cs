@@ -7,12 +7,12 @@ using NUnit.Framework;
 namespace GameThief.Tests
 {
     [TestFixture]
-    public class ConverterPressedKey_Tests
+    public class PressedKeyConverter_Tests
     {
         [Test]
         public void TestChangingMatching()
         {
-            ConverterPressedKey.CreateConverter(new Dictionary<Keys, Query>
+            PressedKeyConverter.CreateConverter(new Dictionary<Keys, Query>
             {
                 {Keys.D, Query.RotateRight},
                 {Keys.W, Query.Move},
@@ -20,15 +20,15 @@ namespace GameThief.Tests
                 {Keys.E, Query.Interaction}
             });
 
-            Assert.AreEqual(Query.Move, ConverterPressedKey.Convert(Keys.W));
-            ConverterPressedKey.ChangeMatching(Keys.Up, Query.Move);
-            Assert.AreEqual(Query.Move, ConverterPressedKey.Convert(Keys.Up));
+            Assert.AreEqual(Query.Move, PressedKeyConverter.Convert(Keys.W));
+            PressedKeyConverter.ChangeMatching(Keys.Up, Query.Move);
+            Assert.AreEqual(Query.Move, PressedKeyConverter.Convert(Keys.Up));
         }
 
         [Test]
         public void TestConverter()
         {
-            ConverterPressedKey.CreateConverter(new Dictionary<Keys, Query>
+            PressedKeyConverter.CreateConverter(new Dictionary<Keys, Query>
             {
                 {Keys.D, Query.RotateRight},
                 {Keys.W, Query.Move},
@@ -36,10 +36,10 @@ namespace GameThief.Tests
                 {Keys.E, Query.Interaction}
             });
 
-            Assert.AreEqual(Query.RotateRight, ConverterPressedKey.Convert(Keys.D));
-            Assert.AreEqual(Query.Move, ConverterPressedKey.Convert(Keys.W));
-            Assert.AreEqual(Query.RotateLeft, ConverterPressedKey.Convert(Keys.A));
-            Assert.AreEqual(Query.Interaction, ConverterPressedKey.Convert(Keys.E));
+            Assert.AreEqual(Query.RotateRight, PressedKeyConverter.Convert(Keys.D));
+            Assert.AreEqual(Query.Move, PressedKeyConverter.Convert(Keys.W));
+            Assert.AreEqual(Query.RotateLeft, PressedKeyConverter.Convert(Keys.A));
+            Assert.AreEqual(Query.Interaction, PressedKeyConverter.Convert(Keys.E));
         }
     }
 }

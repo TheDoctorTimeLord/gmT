@@ -15,6 +15,6 @@ namespace GameThief.GameModel.MobileObjects
         void ActionTaken(Query query);
         void ActionRejected(Query query);
 
-        void Interative(ICreature creature);
+        void InteractWith(ICreature creature);
     }
 }
