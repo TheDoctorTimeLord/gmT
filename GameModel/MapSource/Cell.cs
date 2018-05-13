@@ -1,4 +1,5 @@
-﻿using GameThief.GameModel.Enums;
+﻿using System;
+using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.MobileObjects;
 
@@ -12,7 +13,8 @@ namespace GameThief.GameModel.MapSource
 
         public Cell(string background)
         {
-            Type = CellType.Wood;
+            Enum.TryParse(background, true, out CellType type);
+            Type = type;
             Creature = null;
             ObjectContainer = new ObjectsContainer();
         }

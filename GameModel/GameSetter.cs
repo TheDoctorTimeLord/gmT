@@ -22,7 +22,7 @@ namespace GameThief.GameModel
             {
                 for (var x = 0; x < width; x++)
                 {
-                    content.Add(new List<string> { "." });
+                    content.Add(new List<string> { "wood" });
                 }
             }
             MapManager.CreateMap(width, height, content);
