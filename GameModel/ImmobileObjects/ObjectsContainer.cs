@@ -84,7 +84,7 @@ namespace GameThief.GameModel.ImmobileObjects
             {"opened_door", () => new OpenedDoor()},
             {"wall", () => new Wall()},
             {"key", () => new Key()},
-            {"painting", () => new Painting()},
+            {"painting", () => new PaintingFlowers()},
             {"treasure", () => new Treasure()},
             {"vase", () => new Vase()},
             {"jewel", () => new Jewel()}

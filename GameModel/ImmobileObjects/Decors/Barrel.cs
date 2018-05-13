@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using GameThief.GameModel.Enums;
 
-namespace GameThief.GameModel.ImmobileObjects
+namespace GameThief.GameModel.ImmobileObjects.Decors
 {
-    public interface IItem
+    public class Barrel : ImmobileObject
     {
-        int Price { get; }
-        DecorType Type { get; }
+        public Barrel() : base(DecorType.Barrel, 10, 0, true, false) { }
     }
 }

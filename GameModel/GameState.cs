@@ -7,12 +7,15 @@ using GameThief.GameModel.Enums;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.MapSource;
 using GameThief.GameModel.MobileObjects;
+using GameThief.GameModel.MobileObjects.Creature;
 using GameThief.GameModel.ServiceClasses;
 
 namespace GameThief.GameModel
 {
     public class GameState
     {
+        public readonly Player Player = new Player(new InitializationMobileObject(new Point(0, 0), Direction.Right));
+
         public static Random Random = new Random();
 
         public static Keys KeyPressed;
@@ -29,6 +32,8 @@ namespace GameThief.GameModel
 
         public GameState()
         {
+            GameSetter.CreateLevel(Player);
+
             ConverterPressedKey.CreateConverter(new Dictionary<Keys, Query>
             {
                 {Keys.D, Query.RotateRight},

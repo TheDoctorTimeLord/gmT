@@ -34,9 +34,9 @@ namespace GameThief.Tests
         public void TestDecorsOrded()
         {
             var container = new ObjectsContainer();
-            container.AddDecor(new Painting());
+            container.AddDecor(new PaintingFlowers());
             container.AddDecor(new Wall());
-            Assert.True(container.ShowDecor() is Painting);
+            Assert.True(container.ShowDecor() is PaintingFlowers);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace GameThief.Tests
         {
             var container = new ObjectsContainer();
             container.AddDecor(new Wall());
-            container.AddDecor(new Painting());
+            container.AddDecor(new PaintingFlowers());
             Assert.True(container.IsOpaque);
         }
 

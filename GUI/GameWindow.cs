@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameThief.GameModel;
 using GameThief.GameModel.Enums;
+using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.Managers;
 
 namespace GameThief.GUI
@@ -16,22 +17,22 @@ namespace GameThief.GUI
     {
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         private readonly GameState gameState;
-        private readonly Keys pressedKeys;
-        private const int timerInterval = 300;
-        private const int ElementSize = 32;
+        private const int TimerInterval = 300;
+        private const int ElementSize = 42;
 
         public GameWindow(DirectoryInfo imagesDirectory = null)
         {
             gameState = new GameState();
+            gameState.UpdateState();
             ClientSize = new Size(
-                ElementSize * MapManager.Map.Wigth,
+                ElementSize * (MapManager.Map.Wigth + 1),
                 ElementSize * MapManager.Map.Height);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             if (imagesDirectory == null)
                 imagesDirectory = new DirectoryInfo("Images");
             foreach (var e in imagesDirectory.GetFiles("*.png"))
-                bitmaps[e.Name] = (Bitmap) Image.FromFile(e.FullName);
-            var timer = new Timer {Interval = timerInterval};
+                bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
+            var timer = new Timer { Interval = TimerInterval };
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -51,27 +52,59 @@ namespace GameThief.GUI
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.FillRectangle(
-                Brushes.Black, 0, 0, ElementSize * MapManager.Map.Wigth,
+                Brushes.Lavender, 0, 0, ElementSize * MapManager.Map.Wigth,
                 ElementSize * MapManager.Map.Height);
 
+            DrawMap(e);
+
+            foreach (var a in MobileObjectsManager.MobileObjects)
+                e.Graphics.DrawImage(bitmaps[CreatureFilenames[Tuple.Create(a.Type, a.Direction)]],
+                    new Point((a.Position.X + 1) * ElementSize, a.Position.Y * ElementSize));
+
+            CoverInvisible(e);
+
+            foreach (var noise in gameState.Player.AudibleNoises)
+            {
+                e.Graphics.DrawImage(bitmaps["sound.png"],
+                    new Point((noise.Source.Position.X + 1) * ElementSize, noise.Source.Position.Y * ElementSize));
+            }
+
+            var k = 0;
+            foreach (var item in gameState.Player.Inventory.Items)
+            {
+                e.Graphics.DrawImage(bitmaps[DecorFilenames[item.Type]], new Point(0, k * ElementSize));
+                k++;
+            }
+        }
+
+        private void CoverInvisible(PaintEventArgs e)
+        {
+            for (var i = 0; i < MapManager.Map.Wigth; i++)
+            for (var j = 0; j < MapManager.Map.Height; j++)
+            {
+                if (!gameState.Player.VisibleCells.Contains(new Point(i, j)))
+                    e.Graphics.DrawImage(bitmaps["darkness.png"],
+                        new Point((i + 1) * ElementSize, j * ElementSize));
+            }
+        }
+
+        private void DrawMap(PaintEventArgs e)
+        {
             for (var i = 0; i < MapManager.Map.Wigth; i++)
             for (var j = 0; j < MapManager.Map.Height; j++)
             {
                 e.Graphics.DrawImage(bitmaps[BackgroundFilenames[MapManager.Map[i, j].Type]],
-                    new Point(i * ElementSize, j * ElementSize));
+                    new Point((i + 1) * ElementSize, j * ElementSize));
 
                 foreach (var decor in MapManager.Map[i, j].ObjectContainer.GetAllDecors())
                 {
+                    if (decor is Item && !gameState.Player.VisibleCells.Contains(new Point(i, j)))
+                        continue;
+
                     e.Graphics.DrawImage(bitmaps[DecorFilenames[decor.Type]],
-                        new Point(i * ElementSize, j * ElementSize));
+                        new Point((i + 1) * ElementSize, j * ElementSize));
                 }
             }
-
-            foreach (var a in MobileObjectsManager.MobileObjects)
-                e.Graphics.DrawImage(bitmaps[CreatureFilenames[Tuple.Create(a.Type, a.Direction)]],
-                    new Point(a.Position.X * ElementSize, a.Position.Y * ElementSize));
-
-            e.Graphics.ResetTransform();
         }
 
         private void TimerTick(object sender, EventArgs args)
@@ -85,8 +118,14 @@ namespace GameThief.GUI
         private readonly Dictionary<Tuple<CreatureTypes, Direction>, string> CreatureFilenames =
             new Dictionary<Tuple<CreatureTypes, Direction>, string>
             {
-                {Tuple.Create(CreatureTypes.Guard, Direction.Down), "guard.png"},
-                {Tuple.Create(CreatureTypes.Player, Direction.Down), "player.png"}
+                {Tuple.Create(CreatureTypes.Guard, Direction.Up), "guard_back.png"},
+                {Tuple.Create(CreatureTypes.Guard, Direction.Down), "guard_front.png"},
+                {Tuple.Create(CreatureTypes.Guard, Direction.Left), "guard_left.png"},
+                {Tuple.Create(CreatureTypes.Guard, Direction.Right), "guard_rigth.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Up), "player_back.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Down), "player_front.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Left), "player_left.png"},
+                {Tuple.Create(CreatureTypes.Player, Direction.Right), "player_rigth.png"}
             };
 
         private readonly Dictionary<CellType, string> BackgroundFilenames = new Dictionary<CellType, string>
@@ -96,23 +135,28 @@ namespace GameThief.GUI
 
         private readonly Dictionary<DecorType, string> DecorFilenames = new Dictionary<DecorType, string>
         {
-            {DecorType.BrokenPieces, "broken_pieces.png"},
-            {DecorType.Button, "button.png"},
-            {DecorType.Carpet, "carpet.png"},
+            //{DecorType.BrokenPieces, "broken_pieces.png"},
+            //{DecorType.Button, "button.png"},
+            //{DecorType.Carpet, "carpet.png"},
             {DecorType.Chair, "chair.png"},
             {DecorType.ClosedDoor, "closed_door.png"},
-            {DecorType.ClosedCupboard, "closed_cupboard.png"},
-            {DecorType.Lock, "lock.png"},
-            {DecorType.OpenedCuboard, "opened_cupboard.png"},
+            //{DecorType.ClosedCupboard, "closed_cupboard.png"},
+            //{DecorType.Lock, "lock.png"},
+            //{DecorType.OpenedCuboard, "opened_cupboard.png"},
             {DecorType.OpenedDoor, "opened_door.png"},
             {DecorType.Table, "table.png"},
             {DecorType.Wall, "wall.png"},
-            {DecorType.BurglaryToolkit, "burglary_toolkit.png"},
+            //{DecorType.BurglaryToolkit, "burglary_toolkit.png"},
             {DecorType.Jewel, "jewel.png"},
-            {DecorType.Key, "key.png"},
-            {DecorType.Painting, "painting.png"},
+            //{DecorType.Key, "key.png"},
+            {DecorType.PaintingFlowers, "painting_flowers.png"},
+            {DecorType.PaintingHouse, "painting_house.png"},
             {DecorType.Treasure, "treasure.png"},
-            {DecorType.Vase, "vase.png"}
+            {DecorType.Vase, "vase.png"},
+            {DecorType.Mirror, "mirror.png"},
+            {DecorType.Barrel, "barrel.png"},
+            {DecorType.Plant, "plant.png"},
+            {DecorType.Window, "window.png"}
         };
     }
 }

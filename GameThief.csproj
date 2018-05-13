@@ -56,6 +56,7 @@
     <Compile Include="GameModel\Enums\CellType.cs" />
     <Compile Include="GameModel\Enums\LevelOfAlertness.cs" />
     <Compile Include="GameModel\Enums\DecorType.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Barrel.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\BrokenPieces.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Button.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Carpet.cs" />
@@ -63,14 +64,18 @@
     <Compile Include="GameModel\ImmobileObjects\Decors\ClosedCupboard.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\ClosedDoor.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Lock.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Mirror.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Plant.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Decors\Window.cs" />
     <Compile Include="GameModel\ImmobileObjects\Item.cs" />
     <Compile Include="GameModel\ImmobileObjects\Items\BurglaryToolkit.cs" />
     <Compile Include="GameModel\ImmobileObjects\Items\Jewel.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\OpenedCupboard.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\OpenedDoor.cs" />
     <Compile Include="GameModel\ImmobileObjects\Items\Key.cs" />
-    <Compile Include="GameModel\ImmobileObjects\Items\Painting.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Items\PaintingFlowers.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Table.cs" />
+    <Compile Include="GameModel\ImmobileObjects\Items\PaintingHouse.cs" />
     <Compile Include="GameModel\ImmobileObjects\Items\Treasure.cs" />
     <Compile Include="GameModel\ImmobileObjects\Items\Vase.cs" />
     <Compile Include="GameModel\ImmobileObjects\Decors\Wall.cs" />

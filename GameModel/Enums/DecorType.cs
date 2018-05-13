@@ -15,9 +15,14 @@
         Wall,
         Jewel,
         Key,
-        Painting,
+        PaintingFlowers,
         Treasure,
         Vase,
-        BurglaryToolkit
+        BurglaryToolkit,
+        Barrel,
+        Mirror,
+        PaintingHouse,
+        Plant,
+        Window
     }
 }
