@@ -94,7 +94,40 @@ namespace GameThief.GameModel.ServiceClasses
             for (var j = 8; j < 13; j++)
                 MapManager.Map[10, j].ObjectContainer.AddDecor(new Wall());
 
-            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature> {gameState.Player});
+            GameInformationManager.CreateTrackByName(new Dictionary<string, List<Instruction>>
+            {
+                {"path", new List<Instruction>
+                {
+                    new Instruction(new List<string> {"MoveTo", "18", "8"}),
+                    new Instruction(new List<string> {"MoveTo", "3", "1"})
+                }}
+            });
+
+            MobileObjectsManager.InitializationMobileOjects(new HashSet<ICreature>
+            {
+                gameState.Player,
+                MobileObjectsManager.GetCreatureByNameAndInitParams(CreatureTypes.Guard,
+                    new MobileObjectInitialization(new Point(3, 1), 10, 10, Direction.Right, 1, 5, 2, 3,
+                        new Inventory(new HashSet<IItem>(), 10), new List<Tuple<string, string>> {Tuple.Create("path", "path")}))
+            });
+
+            MapManager.LevelCost = CountLevelCost();
+        }
+
+        private static int CountLevelCost()
+        {
+            var cost = 0;
+            for (var i = 0; i < MapManager.Map.Wigth; i++)
+            for (var j = 0; j < MapManager.Map.Height; j++)
+            {
+                foreach (var decor in MapManager.Map[i, j].ObjectContainer.GetAllDecors())
+                {
+                    if (decor is IItem)
+                        cost += ((IItem)decor).Price;
+                }
+            }
+
+            return cost;
         }
 
         //public static void CreateLevel(GameState gameState)

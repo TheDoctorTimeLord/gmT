@@ -17,6 +17,9 @@ namespace GameThief.GameModel
 
         public static Keys KeyPressed;
 
+        public bool PlayerWon = false;
+        public bool PlayerLost = false;
+
         public static readonly Dictionary<Direction, Size> ConvertDirectionToSize = new Dictionary<Direction, Size>
         {
             {Direction.Up, new Size(0, -1)},
@@ -27,18 +30,8 @@ namespace GameThief.GameModel
 
         public readonly Player Player = new Player(new MobileObjectInitialization(new Point(1, 1), Direction.Right));
 
-        //public GameState(string gameConfigurationFilename)
-        //{
-        //    var mapInfo = FileManager.ReadMapState(gameConfigurationFilename);
-        //    if (!mapInfo.WasSuccessful)
-        //        throw new Exception("Некорректное задание стартовых данных. Файл: " + gameConfigurationFilename);
-        //    MapManager.CreateMap(mapInfo.Width, mapInfo.Height, mapInfo.MapInfo);
-        //}
-
         public GameState()
         {
-            //GameSetter.CreateLevel(Player);
-
             PressedKeyConverter.CreateConverter(new Dictionary<Keys, Query>
             {
                 {Keys.D, Query.RotateRight},
@@ -55,6 +48,18 @@ namespace GameThief.GameModel
 
         public void UpdateState()
         {
+            if (!MobileObjectsManager.CreatureContainsInGame(Player))
+            {
+                PlayerLost = true;
+                return;
+            }
+
+            if (Player.Inventory.Cost == MapManager.LevelCost)
+            {
+                PlayerWon = true;
+                return;
+            }
+
             foreach (var creature in MobileObjectsManager.MobileObjects)
             {
                 var query = creature.GetIntention();

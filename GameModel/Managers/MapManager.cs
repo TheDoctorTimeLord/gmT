@@ -14,6 +14,7 @@ namespace GameThief.GameModel.Managers
         public static Map<Cell> Map;
         public static NoiseController NoiseController;
         public static LightController LightController;
+        public static int LevelCost { get; set; }
 
         public static void CreateMap(int width, int height, List<List<string>> content)
         {
