@@ -13,8 +13,12 @@ namespace GameThief.GUI
 {
     public class GameWindow : Form
     {
+        private readonly int LevelCost;
         private const int TimerInterval = 300;
         private const int ElementSize = 42;
+        private bool playerWon;
+        private bool playerLost;
+        private readonly Timer Timer;
 
         private readonly Dictionary<CellType, string> BackgroundFilenames = new Dictionary<CellType, string>
         {
@@ -69,6 +73,7 @@ namespace GameThief.GUI
             gameState = new GameState();
             GameSetter.CreateLevel(gameState);
             gameState.UpdateState();
+            LevelCost = CountLevelCost();
             ClientSize = new Size(
                 ElementSize * (MapManager.Map.Wigth + 1),
                 ElementSize * MapManager.Map.Height);
@@ -77,9 +82,25 @@ namespace GameThief.GUI
                 imagesDirectory = new DirectoryInfo("Images");
             foreach (var e in imagesDirectory.GetFiles("*.png"))
                 bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
-            var timer = new Timer { Interval = TimerInterval };
-            timer.Tick += TimerTick;
-            timer.Start();
+            Timer = new Timer { Interval = TimerInterval };
+            Timer.Tick += TimerTick;
+            Timer.Start();
+        }
+
+        private int CountLevelCost()
+        {
+            var cost = 0;
+            for (var i = 0; i < MapManager.Map.Wigth; i++)
+            for (var j = 0; j < MapManager.Map.Height; j++)
+            {
+                foreach (var decor in MapManager.Map[i, j].ObjectContainer.GetAllDecors())
+                {
+                    if (decor is IItem)
+                        cost += ((IItem) decor).Price;
+                }
+            }
+
+            return cost;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -106,7 +127,7 @@ namespace GameThief.GUI
                 e.Graphics.DrawImage(bitmaps[CreatureFilenames[Tuple.Create(a.Type, a.Direction)]],
                     new Point((a.Position.X + 1) * ElementSize, a.Position.Y * ElementSize));
 
-            //CoverInvisible(e);
+            CoverInvisible(e);
 
             foreach (var noise in gameState.Player.AudibleNoises)
                 e.Graphics.DrawImage(bitmaps["sound.png"],
@@ -118,6 +139,9 @@ namespace GameThief.GUI
                 e.Graphics.DrawImage(bitmaps[DecorFilenames[item.Type]], new Point(0, k * ElementSize));
                 k++;
             }
+
+            //if (playerWon)
+            //    MessageBox.Show("Вы победили!", "Победа!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void CoverInvisible(PaintEventArgs e)
@@ -139,8 +163,8 @@ namespace GameThief.GUI
 
                     foreach (var decor in MapManager.Map[i, j].ObjectContainer.GetAllDecors())
                     {
-                        //if (decor is Item && !gameState.Player.VisibleCells.Contains(new Point(i, j)))
-                        //    continue;
+                        if (decor is Item && !gameState.Player.VisibleCells.Contains(new Point(i, j)))
+                            continue;
 
                         e.Graphics.DrawImage(bitmaps[DecorFilenames[decor.Type]],
                         new Point((i + 1) * ElementSize, j * ElementSize));
@@ -151,8 +175,12 @@ namespace GameThief.GUI
         private void TimerTick(object sender, EventArgs args)
         {
             gameState.UpdateState();
-            Invalidate();
+            MessageBox.Show("Вы победили!", "Победа!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //Timer.Stop();
+            this.Close();
 
+            playerWon = gameState.Player.Inventory.Cost == LevelCost;
+            Invalidate();
             GameState.KeyPressed = Keys.None;
         }
     }
