@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Media;
+using System.Threading;
 using System.Windows.Forms;
 using GameThief.GameModel;
 using GameThief.GameModel.Enums;
 using GameThief.GameModel.ImmobileObjects;
 using GameThief.GameModel.Managers;
 using GameThief.GameModel.ServiceClasses;
+using Timer = System.Windows.Forms.Timer;
 
 namespace GameThief.GUI
 {
@@ -151,8 +153,8 @@ namespace GameThief.GUI
             if (gameState.PlayerLost)
             {
                 e.Graphics.DrawString("YOU DEAD", new Font(new FontFamily("Impact"), 150), Brushes.Red, messagePosionion);
-                Sounds[Noises[NoiseType.Hit]].Play();
-                Sounds[Noises[NoiseType.Pain]].Play();
+                var act = new Action(PlaySounds);
+                act.BeginInvoke(null, null);
             }
         }
 
@@ -187,8 +189,19 @@ namespace GameThief.GUI
         private void TimerTick(object sender, EventArgs args)
         {
             gameState.UpdateState();
+            //if (gameState.PlayerLost)
+            //{
+            //    Sounds[Noises[NoiseType.Hit]].Play();
+            //    Sounds[Noises[NoiseType.Pain]].Play();
+            //}
             Invalidate();
             GameState.KeyPressed = Keys.None;
+        }
+
+        private void PlaySounds()
+        {
+            Sounds[Noises[NoiseType.Hit]].PlaySync();
+            Sounds[Noises[NoiseType.Pain]].PlaySync();
         }
     }
 }
