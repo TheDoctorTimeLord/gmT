@@ -15,8 +15,8 @@ namespace GameThief.GUI
     {
         private const int TimerInterval = 300;
         private const int ElementSize = 42;
-        private Point messagePosionion = new Point(200, 200);
-        private readonly Timer Timer;
+        private Point messagePosionion = new Point(180, 180);
+        public readonly Timer Timer;
 
         private readonly Dictionary<CellType, string> BackgroundFilenames = new Dictionary<CellType, string>
         {
@@ -75,6 +75,7 @@ namespace GameThief.GUI
                 ElementSize * (MapManager.Map.Wigth + 1),
                 ElementSize * MapManager.Map.Height);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             if (imagesDirectory == null)
                 imagesDirectory = new DirectoryInfo("Images");
             foreach (var e in imagesDirectory.GetFiles("*.png"))
@@ -123,9 +124,10 @@ namespace GameThief.GUI
             }
 
             if (gameState.PlayerWon)
-                e.Graphics.DrawString($"WIN!!! SCORE: {gameState.Player.Inventory.Cost}", new Font(new FontFamily("Times new roman"), 60), Brushes.Green, messagePosionion);
+                e.Graphics.DrawString($"WIN!!! SCORE: {gameState.Player.Inventory.Cost}",
+                    new Font(new FontFamily("Impact"), 90), Brushes.LawnGreen, new Point(120, 180));
             if (gameState.PlayerLost)
-                e.Graphics.DrawString("YOU DEAD", new Font(new FontFamily("Times new roman"), 100), Brushes.Red, messagePosionion);
+                e.Graphics.DrawString("YOU DEAD", new Font(new FontFamily("Impact"), 150), Brushes.Red, messagePosionion);
         }
 
         private void CoverInvisible(PaintEventArgs e)
@@ -159,8 +161,6 @@ namespace GameThief.GUI
         private void TimerTick(object sender, EventArgs args)
         {
             gameState.UpdateState();
-            //MessageBox.Show("Вы победили!", "Победа!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            ////Timer.Stop();
             Invalidate();
             GameState.KeyPressed = Keys.None;
         }

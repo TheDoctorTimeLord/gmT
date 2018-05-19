@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\MenuWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GUI\PressedKeyConverter.cs" />
     <Compile Include="GameModel\Enums\CreatureTypes.cs" />
     <Compile Include="GameModel\Enums\CellType.cs" />
@@ -112,6 +115,9 @@
     <Compile Include="GameModel\MobileObjects\Creature\Player.cs" />
     <Compile Include="GameModel\Managers\TemporaryObjectsManager.cs" />
     <Compile Include="GUI\GameWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SettingsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />

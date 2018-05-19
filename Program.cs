@@ -12,7 +12,7 @@ namespace GameThief
         [STAThread]
         private static void Main()
         {
-            Application.Run(new GameWindow());
+            Application.Run(new MenuWindow());
         }
     }
 }
