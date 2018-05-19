@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Media;
 using System.Windows.Forms;
 using GameThief.GameModel;
 using GameThief.GameModel.Enums;
@@ -24,6 +25,7 @@ namespace GameThief.GUI
         };
 
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
+        private readonly Dictionary<string, SoundPlayer> Sounds = new Dictionary<string, SoundPlayer>();
 
         private readonly Dictionary<Tuple<CreatureTypes, Direction>, string> CreatureFilenames =
             new Dictionary<Tuple<CreatureTypes, Direction>, string>
@@ -64,6 +66,15 @@ namespace GameThief.GUI
             {DecorType.Window, "window.png"}
         };
 
+        private readonly Dictionary<NoiseType, string> Noises = new Dictionary<NoiseType, string>
+        {
+            {NoiseType.StepsOfGuard, "guard_steps.wav"},
+            {NoiseType.StepsOfThief, "burglar_steps.wav"},
+            {NoiseType.Pain, "pain.wav"},
+            {NoiseType.Interact, "interact.wav"},
+            {NoiseType.Hit, "hit.wav"}
+        };
+
         private readonly GameState gameState;
 
         public GameWindow(DirectoryInfo imagesDirectory = null)
@@ -80,6 +91,12 @@ namespace GameThief.GUI
                 imagesDirectory = new DirectoryInfo("Images");
             foreach (var e in imagesDirectory.GetFiles("*.png"))
                 bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
+
+            var soundsDirectory = new DirectoryInfo("Sounds");
+
+            foreach (var e in soundsDirectory.GetFiles("*.wav"))
+                Sounds[e.Name] = new SoundPlayer(e.FullName);
+
             Timer = new Timer { Interval = TimerInterval };
             Timer.Tick += TimerTick;
             Timer.Start();
@@ -113,8 +130,13 @@ namespace GameThief.GUI
             CoverInvisible(e);
 
             foreach (var noise in gameState.Player.AudibleNoises)
+            {
                 e.Graphics.DrawImage(bitmaps["sound.png"],
                     new Point((noise.Source.Position.X + 1) * ElementSize, noise.Source.Position.Y * ElementSize));
+
+                if (Noises.ContainsKey(noise.Source.Type))
+                    Sounds[Noises[noise.Source.Type]].Play();
+            }
 
             var k = 0;
             foreach (var item in gameState.Player.Inventory.Items)
@@ -127,7 +149,11 @@ namespace GameThief.GUI
                 e.Graphics.DrawString($"WIN!!! SCORE: {gameState.Player.Inventory.Cost}",
                     new Font(new FontFamily("Impact"), 90), Brushes.LawnGreen, new Point(120, 180));
             if (gameState.PlayerLost)
+            {
                 e.Graphics.DrawString("YOU DEAD", new Font(new FontFamily("Impact"), 150), Brushes.Red, messagePosionion);
+                Sounds[Noises[NoiseType.Hit]].Play();
+                Sounds[Noises[NoiseType.Pain]].Play();
+            }
         }
 
         private void CoverInvisible(PaintEventArgs e)

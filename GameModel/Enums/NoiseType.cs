@@ -5,6 +5,9 @@
         StepsOfGuard,
         GuardVoice,
         GuardScream,
-        StepsOfThief
+        StepsOfThief,
+        Pain,
+        Interact, 
+        Hit
     }
 }
