@@ -168,7 +168,7 @@ namespace GameThief.GUI
                     new Font(new FontFamily("Impact"), 90), Brushes.LawnGreen, new Point(120, 180));
                 //Action act = () => Sounds[Noises[NoiseType.Win]].PlayLooping();
                 //act.BeginInvoke(null, null);
-                PlayingSound = PlayWon.BeginInvoke(null, null);
+                PlayWon.BeginInvoke(null, null);
             }
             if (gameState.PlayerLost)
             {
@@ -176,7 +176,7 @@ namespace GameThief.GUI
                 //PlaySounds.BeginInvoke(null, null);
                 //Action act = () => Sounds[Noises[NoiseType.Pain]].PlaySync();
                 //act.BeginInvoke(null, null);
-                //PlayingSound = PlayLost.BeginInvoke(null, null);
+                PlayLost.BeginInvoke(null, null);
                 //Sounds[Noises[NoiseType.Pain]].Play();
             }
         }
@@ -212,17 +212,12 @@ namespace GameThief.GUI
         private void TimerTick(object sender, EventArgs args)
         {
             gameState.UpdateState();
-            //if (gameState.PlayerLost)
-            //{
-            //    PlaySounds.BeginInvoke(null, null);
-            //    Sounds[Noises[NoiseType.Pain]].Play();
-            //}
             Invalidate();
             GameState.KeyPressed = Keys.None;
         }
 
         private readonly Action PlayLost = () => Sounds[Noises[NoiseType.Pain]].PlaySync();
         private readonly Action PlayWon = () => Sounds[Noises[NoiseType.Win]].PlaySync();
-        private IAsyncResult PlayingSound;
+        //private IAsyncResult PlayingSound;
     }
 }
