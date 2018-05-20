@@ -27,7 +27,7 @@ namespace GameThief.GUI
         };
 
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
-        private readonly Dictionary<string, SoundPlayer> Sounds = new Dictionary<string, SoundPlayer>();
+        private static readonly Dictionary<string, SoundPlayer> Sounds = new Dictionary<string, SoundPlayer>();
 
         private readonly Dictionary<Tuple<CreatureTypes, Direction>, string> CreatureFilenames =
             new Dictionary<Tuple<CreatureTypes, Direction>, string>
@@ -68,13 +68,13 @@ namespace GameThief.GUI
             {DecorType.Window, "window.png"}
         };
 
-        private readonly Dictionary<NoiseType, string> Noises = new Dictionary<NoiseType, string>
+        private static readonly Dictionary<NoiseType, string> Noises = new Dictionary<NoiseType, string>
         {
             {NoiseType.StepsOfGuard, "guard_steps.wav"},
             {NoiseType.StepsOfThief, "burglar_steps.wav"},
             {NoiseType.Pain, "pain.wav"},
             {NoiseType.Interact, "interact.wav"},
-            {NoiseType.Hit, "hit.wav"}
+            {NoiseType.Win, "win.wav"}
         };
 
         private readonly GameState gameState;
@@ -102,6 +102,21 @@ namespace GameThief.GUI
             Timer = new Timer { Interval = TimerInterval };
             Timer.Tick += TimerTick;
             Timer.Start();
+
+            //FormClosed += (sender, args) =>
+            //{
+            //    if (gameState.PlayerLost)
+            //    {
+            //        Sounds[Noises[NoiseType.Pain]].Stop();
+            //        //PlayLost.EndInvoke(PlayingSound);
+            //    }
+
+            //    if (gameState.PlayerWon)
+            //    {
+            //        Sounds[Noises[NoiseType.Win]].Stop(); ;
+            //        //PlayWon.EndInvoke(PlayingSound);
+            //    }
+            //};
         }
 
         protected override void OnLoad(EventArgs e)
@@ -148,13 +163,21 @@ namespace GameThief.GUI
             }
 
             if (gameState.PlayerWon)
+            {
                 e.Graphics.DrawString($"WIN!!! SCORE: {gameState.Player.Inventory.Cost}",
                     new Font(new FontFamily("Impact"), 90), Brushes.LawnGreen, new Point(120, 180));
+                //Action act = () => Sounds[Noises[NoiseType.Win]].PlayLooping();
+                //act.BeginInvoke(null, null);
+                PlayingSound = PlayWon.BeginInvoke(null, null);
+            }
             if (gameState.PlayerLost)
             {
                 e.Graphics.DrawString("YOU DEAD", new Font(new FontFamily("Impact"), 150), Brushes.Red, messagePosionion);
-                var act = new Action(PlaySounds);
-                act.BeginInvoke(null, null);
+                //PlaySounds.BeginInvoke(null, null);
+                //Action act = () => Sounds[Noises[NoiseType.Pain]].PlaySync();
+                //act.BeginInvoke(null, null);
+                //PlayingSound = PlayLost.BeginInvoke(null, null);
+                //Sounds[Noises[NoiseType.Pain]].Play();
             }
         }
 
@@ -191,17 +214,15 @@ namespace GameThief.GUI
             gameState.UpdateState();
             //if (gameState.PlayerLost)
             //{
-            //    Sounds[Noises[NoiseType.Hit]].Play();
+            //    PlaySounds.BeginInvoke(null, null);
             //    Sounds[Noises[NoiseType.Pain]].Play();
             //}
             Invalidate();
             GameState.KeyPressed = Keys.None;
         }
 
-        private void PlaySounds()
-        {
-            Sounds[Noises[NoiseType.Hit]].PlaySync();
-            Sounds[Noises[NoiseType.Pain]].PlaySync();
-        }
+        private readonly Action PlayLost = () => Sounds[Noises[NoiseType.Pain]].PlaySync();
+        private readonly Action PlayWon = () => Sounds[Noises[NoiseType.Win]].PlaySync();
+        private IAsyncResult PlayingSound;
     }
 }

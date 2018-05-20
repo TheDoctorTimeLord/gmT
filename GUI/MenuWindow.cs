@@ -81,6 +81,7 @@ namespace GameThief.GUI
 
             saveButton.Click += (sender, args) =>
             {
+                System.Media.SystemSounds.Exclamation.Play();
                 MessageBox.Show("No saved games!", ":(", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             };
 
@@ -91,7 +92,11 @@ namespace GameThief.GUI
             };
 
             settingsWindow.FormClosed += (sender, args) => Show();
-            gameWindow.FormClosed += (sender, args) => Show();
+            gameWindow.FormClosed += (sender, args) =>
+            {
+                //System.Media.SoundPlayer;
+                Show();
+            };
         }
 
         protected override void OnLoad(EventArgs e)

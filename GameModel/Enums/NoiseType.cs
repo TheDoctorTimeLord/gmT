@@ -7,7 +7,7 @@
         GuardScream,
         StepsOfThief,
         Pain,
-        Interact, 
-        Hit
+        Interact,
+        Win
     }
 }
